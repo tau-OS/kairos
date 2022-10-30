@@ -104,9 +104,9 @@ public class MainWindow : He.ApplicationWindow {
         alert_label.button = _("Refresh Location");
 
         alert_label.action_button.clicked.connect(() => {
+            set_style ();
             get_location.begin ();
             weather_info.update ();
-            set_style ();
         });
 
         stack = new Gtk.Stack () {
@@ -134,9 +134,9 @@ public class MainWindow : He.ApplicationWindow {
         set_size_request (360, 150);
 
         refresh_button.clicked.connect (() => {
+            set_style ();
             get_location.begin ();
             weather_info.update ();
-            set_style ();
         });
 
         weather_info.updated.connect (() => {
