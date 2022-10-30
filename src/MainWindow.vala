@@ -26,6 +26,10 @@ public class MainWindow : He.ApplicationWindow {
     private string color_primary = "#58a8fa";
     private string color_secondary = "#fafafa";
 
+    public string wind {get; set;}
+    public string dew {get; set;}
+    public string temphilo {get; set;}
+
     [GtkChild]
     unowned Gtk.Label location_label;
     [GtkChild]
@@ -34,12 +38,6 @@ public class MainWindow : He.ApplicationWindow {
     unowned Gtk.Label weather_label;
     [GtkChild]
     unowned Gtk.Label temp_label;
-    [GtkChild]
-    unowned Gtk.Label temphilo_label;
-    [GtkChild]
-    unowned Gtk.Label dew_label;
-    [GtkChild]
-    unowned Gtk.Label wind_label;
     [GtkChild]
     unowned He.EmptyPage alert_label;
     [GtkChild]
@@ -148,13 +146,17 @@ public class MainWindow : He.ApplicationWindow {
         weather_info.get_value_temp_min (GWeather.TemperatureUnit.DEFAULT, out templo);
 
         if (temphi != 0 && templo != 0) {
-            temphilo_label.label = _("%s° / %s°").printf (weather_info.get_temp_max (), weather_info.get_temp_min ());
+            temphilo = _("High: %s° / Low: %s°").printf (weather_info.get_temp_max (), weather_info.get_temp_min ());
         } else {
-            temphilo_label.label = _("%s°").printf (weather_info.get_apparent ().replace("°F", "").replace("°C", "").replace("°K", ""));
+            temphilo = _("Feels Like: %s°").printf (weather_info.get_apparent ().replace("°F", "").replace("°C", "").replace("°K", ""));
         }
 
-        wind_label.label = _("Wind:") + " " + weather_info.get_wind ();
-        dew_label.label = _("Dew Point:") + " " + weather_info.get_dew ();
+        double win; GWeather.WindDirection windir;
+        weather_info.get_value_wind (GWeather.SpeedUnit.DEFAULT, out win, out windir);
+        wind = _("Wind:") + " " + "%.0f %s".printf(win, GWeather.SpeedUnit.DEFAULT.to_string ());
+        double deew;
+        weather_info.get_value_dew (GWeather.TemperatureUnit.DEFAULT, out deew);
+        dew = _("Dew Point:") + " " + "%.0f°".printf(deew);
 
         switch (weather_icon.icon_name) {
             case "weather-clear-night-symbolic":
@@ -170,8 +172,8 @@ public class MainWindow : He.ApplicationWindow {
                 color_secondary = "#fafafa";
                 break;
             case "weather-snow-symbolic":
-                color_primary = "#6a6a6f";
-                color_secondary = "#fafafa";
+                color_primary = "#fafcff";
+                color_secondary = "#2d2d2d";
                 break;
             default:
                 color_primary = "#58a8fa";
@@ -190,5 +192,18 @@ public class MainWindow : He.ApplicationWindow {
         var colored_css = COLOR_PRIMARY.printf (color_primary, color_secondary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
+    }
+
+    [GtkCallback]
+    string get_wind_label () {
+        return wind;
+    }
+    [GtkCallback]
+    string get_dew_label () {
+        return dew;
+    }
+    [GtkCallback]
+    string get_temphilo_label () {
+        return temphilo;
     }
 }
