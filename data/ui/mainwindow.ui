@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="MainWindow" parent="HeApplicationWindow">
+    <property name="title"></property>
+    <style>
+      <class name="window-bg"/>
+    </style>
+    <child>
+      <object class="GtkBox" id="main_box">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="HeAppBar">
+            <property name="flat">1</property>
+            <property name="show-buttons">1</property>
+            <property name="show-back">0</property>
+            <child>
+              <object class="GtkButton" id="refresh_button">
+                <property name="icon-name">view-refresh-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkStack" id="stack">
+            <property name="margin-top">18</property>
+            <property name="margin-bottom">18</property>
+            <property name="margin-start">18</property>
+            <property name="margin-end">18</property>
+            <property name="transition_type">crossfade</property>
+            <property name="vhomogeneous">true</property>
+            <property name="vexpand">true</property>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">load</property>
+                <property name="child">
+                  <object class="GtkSpinner" id="load_page">
+                    <property name="spinning">true</property>
+                    <property name="halign">center</property>
+                    <property name="valign">center</property>
+                    <property name="vexpand">true</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">alert</property>
+                <property name="child">
+                  <object class="HeEmptyPage" id="alert_label">
+                    <property name="title">Unable To Get Weather Info</property>
+                    <property name="description">Refresh location to see weather info.</property>
+                    <property name="icon">location-services-disabled-symbolic</property>
+                    <property name="button">Refresh Location</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkStackPage">
+                <property name="name">weather</property>
+                <property name="child">
+                  <object class="GtkBox" id="weather_page">
+                    <property name="vexpand">true</property>
+                    <property name="hexpand">true</property>
+                    <property name="valign">center</property>
+                    <property name="spacing">18</property>
+                    <child>
+                      <object class="GtkImage" id="weather_icon">
+                        <property name="pixel-size">64</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="temp_label">
+                            <property name="halign">start</property>
+                            <style>
+                              <class name="display"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="temphilo_label">
+                            <property name="halign">start</property>
+                            <style>
+                              <class name="cb-title"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="hexpand">true</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkLabel" id="weather_label">
+                            <property name="halign">end</property>
+                            <property name="hexpand">true</property>
+                            <style>
+                              <class name="cb-title"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="location_label">
+                            <property name="halign">end</property>
+                            <style>
+                              <class name="cb-subtitle"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="wind_label">
+                            <property name="halign">end</property>
+                            <style>
+                              <class name="caption"/>
+                            </style>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkLabel" id="dew_label">
+                            <property name="halign">end</property>
+                            <style>
+                              <class name="caption"/>
+                            </style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>
