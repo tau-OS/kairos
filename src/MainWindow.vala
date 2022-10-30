@@ -148,11 +148,10 @@ public class MainWindow : He.ApplicationWindow {
 
     public async void get_location () {
         try {
-            var simple = yield new GClue.Simple.with_thresholds.end(Config.APP_ID, GClue.AccuracyLevel.CITY, 0, 1000, null);
+            var simple = yield new GClue.Simple (Config.APP_ID, GClue.AccuracyLevel.CITY, null);
 
             if (simple.client != null && simple != null) {
                 var client = simple.get_client();
-                client.distance_threshold = 1000;
 
                 simple.notify["location"].connect (() => {
                     on_location_updated (simple);
@@ -160,6 +159,12 @@ public class MainWindow : He.ApplicationWindow {
 
                 on_location_updated (simple);
             }
+
+            simple.notify["location"].connect (() => {
+                on_location_updated (simple);
+            });
+
+            on_location_updated (simple);
         } catch (Error e) {
             warning ("Failed to connect to GeoClue2 service: %s, fallbacking to (0,0) coords.", e.message);
             location = GWeather.Location.get_world().find_nearest_city(0.0, 0.0);
