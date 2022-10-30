@@ -1,0 +1,53 @@
+/*
+* Copyright (c) 2017 Daniel Foré (http://danielfore.com)
+*
+* This program is free software; you can redistribute it and/or
+* modify it under the terms of the GNU General Public
+* License as published by the Free Software Foundation; either
+* version 2 of the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+* General Public License for more details.
+*
+* You should have received a copy of the GNU General Public
+* License along with this program; if not, write to the
+* Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+* Boston, MA 02110-1301 USA
+*
+*/
+
+public class Kairos.Application : He.Application {
+    private const GLib.ActionEntry app_entries[] = {
+        { "quit", quit },
+    };
+
+    public Application () {
+        Object (application_id: Config.APP_ID);
+    }
+    public static int main (string[] args) {
+        Intl.bindtextdomain (Config.GETTEXT_PACKAGE, Config.LOCALEDIR);
+        Intl.textdomain (Config.GETTEXT_PACKAGE);
+        Intl.bind_textdomain_codeset (Config.GETTEXT_PACKAGE, "UTF-8");
+
+        var app = new Kairos.Application ();
+        return app.run (args);
+    }
+    protected override void startup () {
+        Gdk.RGBA accent_color = { 0 };
+        accent_color.parse("#58a8fa");
+        default_accent_color = He.Color.from_gdk_rgba(accent_color);
+
+        resource_base_path = "/co/tauos/Kairos";
+
+        base.startup ();
+
+        add_action_entries (app_entries, this);
+
+        new MainWindow (this);
+    }
+    protected override void activate () {
+        active_window?.present ();
+    }
+}

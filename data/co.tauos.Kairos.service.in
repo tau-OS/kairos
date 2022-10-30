@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=co.tauos.Kairos
+Exec=@pkgdatadir@/co.tauos.Kairos

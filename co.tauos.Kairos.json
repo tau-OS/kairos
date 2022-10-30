@@ -1,0 +1,78 @@
+{
+    "app-id" : "co.tauos.Kairos",
+    "runtime" : "co.tauos.Platform",
+    "runtime-version" : "daily",
+    "sdk" : "co.tauos.Sdk",
+    "command" : "co.tauos.Kairos",
+    "finish-args" : [
+        "--socket=wayland",
+        "--socket=fallback-x11",
+        "--share=ipc",
+        "--device=dri",
+        "--share=network"
+    ],
+    "desktop-file-name-suffix" : " (Development)",
+    "cleanup" : [
+        "/cache",
+        "/man",
+        "/share/aclocal",
+        "/share/devhelp",
+        "/lib/systemd",
+        "/include",
+        "/lib/pkgconfig",
+        "/lib/libvala*",
+        "/share/gtk-doc",
+        "/share/man",
+        "/share/vala",
+        "*.a",
+        "*.la"
+    ],
+    "modules" : [
+        {
+            "name" : "geocode-glib",
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Denable-installed-tests=false",
+                "-Denable-introspection=true",
+                "-Denable-gtk-doc=false",
+                "-Dsoup2=false"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://gitlab.gnome.org/GNOME/geocode-glib.git"
+                }
+            ]
+        },
+        {
+          "name" : "gweather",
+          "buildsystem" : "meson",
+          "config-opts" : [
+              "-Dgtk_doc=false",
+              "-Dsoup2=false",
+              "-Denable_vala=true"
+          ],
+          "sources" : [
+              {
+                  "type" : "git",
+                  "url" : "https://gitlab.gnome.org/GNOME/libgweather.git",
+                  "branch": "main"
+              }
+          ]
+        },
+        {
+            "name" : "kairos",
+            "builddir" : true,
+            "buildsystem" : "meson",
+            "config-opts" : [
+                "-Ddevelopment=true"
+            ],
+            "sources" : [
+                {
+                    "type" : "dir",
+                    "path" : "."
+                }
+            ]
+        }
+    ]
+}

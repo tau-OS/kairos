@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Kairos
+Comment=Check the weather outside
+Exec=co.tauos.Kairos
+Icon=co.tauos.Kairos
+Keywords=weather;temperature;
+Terminal=false
+Type=Application
+StartupNotify=true
+Categories=GTK;Utility;
+DBusActivatable=true
+X-Geoclue-Reason=Allows your location to be shown on the app.
