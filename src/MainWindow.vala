@@ -51,7 +51,7 @@ public class MainWindow : He.ApplicationWindow {
 
         get_location.begin ();
         weather_info = new GWeather.Info (location);
-        weather_info.set_contact_info ("");
+        weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.ALL);
         weather_info.update ();
 
@@ -106,6 +106,7 @@ public class MainWindow : He.ApplicationWindow {
         alert_label.action_button.clicked.connect(() => {
             get_location.begin ();
             weather_info.update ();
+            set_style ();
         });
 
         stack = new Gtk.Stack () {
@@ -135,6 +136,7 @@ public class MainWindow : He.ApplicationWindow {
         refresh_button.clicked.connect (() => {
             get_location.begin ();
             weather_info.update ();
+            set_style ();
         });
 
         weather_info.updated.connect (() => {
