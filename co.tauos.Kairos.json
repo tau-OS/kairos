@@ -1,7 +1,7 @@
 {
     "app-id" : "co.tauos.Kairos",
     "runtime" : "co.tauos.Platform",
-    "runtime-version" : "daily",
+    "runtime-version" : "stable",
     "sdk" : "co.tauos.Sdk",
     "command" : "co.tauos.Kairos",
     "finish-args" : [
@@ -11,7 +11,6 @@
         "--device=dri",
         "--share=network"
     ],
-    "desktop-file-name-suffix" : " (Development)",
     "cleanup" : [
         "/cache",
         "/man",
@@ -65,7 +64,7 @@
             "builddir" : true,
             "buildsystem" : "meson",
             "config-opts" : [
-                "-Ddevelopment=true"
+                "-Ddevelopment=false"
             ],
             "sources" : [
                 {
