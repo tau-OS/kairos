@@ -23,7 +23,7 @@
             <property name="flat">1</property>
             <property name="show-buttons">1</property>
             <property name="show-back">0</property>
-            <child type="end">
+            <child>
               <object class="GtkMenuButton" id="menu_button">
                 <property name="icon-name">open-menu-symbolic</property>
                 <property name="menu-model">menu</property>
@@ -32,6 +32,33 @@
             <child>
               <object class="GtkButton" id="refresh_button">
                 <property name="icon-name">view-refresh-symbolic</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkToggleButton" id="search_button">
+                <property name="icon-name">edit-find-symbolic</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkRevealer" id="search_revealer">
+            <property name="reveal-child" bind-source="search_button" bind-property="active" bind-flags="sync-create"/>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkSearchEntry" id="search_entry">
+                    <property name="placeholder-text" translatable="yes">Search for a location…</property>
+                    <property name="margin-start">18</property>
+                    <property name="margin-end">18</property>
+                    <property name="margin-bottom">18</property>
+                    <property name="halign">start</property>
+                    <style>
+                      <class name="sblock"/>
+                    </style>
+                  </object>
+                </child>
               </object>
             </child>
           </object>
@@ -90,7 +117,7 @@
                         <child>
                           <object class="GtkLabel" id="temp_label">
                             <property name="halign">center</property>
-                            <property name="label">30°C</property>
+                            <property name="label">—°C</property>
                             <style>
                               <class name="temp-display"/>
                             </style>
@@ -105,7 +132,7 @@
                               <object class="GtkLabel" id="weather_label">
                                 <property name="halign">center</property>
                                 <property name="hexpand">true</property>
-                                <property name="label">Broken Clouds</property>
+                                <property name="label">————</property>
                                 <style>
                                   <class name="cb-title"/>
                                 </style>
@@ -114,7 +141,7 @@
                             <child>
                               <object class="GtkLabel" id="location_label">
                                 <property name="halign">center</property>
-                                <property name="label">Accra</property>
+                                <property name="label">—————</property>
                                 <style>
                                   <class name="cb-subtitle"/>
                                 </style>

@@ -56,6 +56,8 @@ public class MainWindow : He.ApplicationWindow {
     unowned Gtk.Button refresh_button;
     [GtkChild]
     unowned Gtk.Stack stack;
+    [GtkChild]
+    unowned Gtk.SearchEntry search_entry;
 
     public MainWindow (He.Application application) {
         Object (
@@ -65,6 +67,10 @@ public class MainWindow : He.ApplicationWindow {
             resizable: false,
             title: _("Kairos")
         );
+
+        set_style ();
+        get_location.begin ();
+        weather_info.update ();
     }
 
     construct {
@@ -108,15 +114,21 @@ public class MainWindow : He.ApplicationWindow {
 
         weather_info.updated.connect (() => {
             set_style ();
+            get_location.begin ();
+        });
+
+        search_entry.search_changed.connect (() => {
+
         });
 
         add_css_class ("window-bg");
         set_size_request (360, 150);
+        stack.visible_child_name = "load";
     }
 
     public async void get_location () {
         try {
-            var simple = yield new GClue.Simple (Config.APP_ID, GClue.AccuracyLevel.CITY, null);
+            var simple = yield new GClue.Simple.with_thresholds (Config.APP_ID, GClue.AccuracyLevel.CITY, 0, 100, null);
 
             if (simple.client != null && simple != null) {
                 simple.notify["location"].connect (() => {
@@ -147,7 +159,6 @@ public class MainWindow : He.ApplicationWindow {
         location = GWeather.Location.get_world().find_nearest_city(geoclueLocation.latitude, geoclueLocation.longitude);
         weather_info.location = location;
         weather_info.update ();
-        stack.visible_child_name = "weather";
         set_style ();
     }
 
@@ -189,13 +200,13 @@ public class MainWindow : He.ApplicationWindow {
 
         switch (weather_icon.icon_name) {
             case "weather-clear-night-symbolic":
-            case "weather-few-clouds-night-symbolic":
                 color_primary = "#22262b";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/night.svg";
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
+            case "weather-few-clouds-night-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/cloudy.svg";
@@ -232,6 +243,8 @@ public class MainWindow : He.ApplicationWindow {
         var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
+
+        stack.visible_child_name = "weather";
     }
 
     [GtkCallback]
