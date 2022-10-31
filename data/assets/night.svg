@@ -1,0 +1,25 @@
+<svg width="360" height="646" viewBox="0 0 360 646" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2_2)">
+<rect width="360" height="646" fill="url(#paint0_linear_2_2)"/>
+<circle cx="59" cy="53" r="150" fill="#FEE8AF" fill-opacity="0.1"/>
+<circle cx="63.5" cy="57.5" r="109.5" fill="#FEE8AF" fill-opacity="0.1"/>
+<circle cx="58.5" cy="53.5" r="78.5" fill="#FEE8AF"/>
+<circle cx="32" cy="18" r="18" fill="#DCC58A" fill-opacity="0.2"/>
+<circle cx="95" cy="65" r="16" fill="#DCC58A" fill-opacity="0.2"/>
+<circle cx="39" cy="88" r="11" fill="#DCC58A" fill-opacity="0.2"/>
+<rect x="253.722" y="77.5" width="11" height="11" transform="rotate(-45 253.722 77.5)" fill="#FEE8AF" fill-opacity="0.1"/>
+<rect x="225" y="123.778" width="11" height="11" transform="rotate(-45 225 123.778)" fill="#FEE8AF" fill-opacity="0.1"/>
+<rect x="286" y="131.778" width="11" height="11" transform="rotate(-45 286 131.778)" fill="#FEE8AF" fill-opacity="0.1"/>
+<rect x="262" y="165.778" width="11" height="11" transform="rotate(-45 262 165.778)" fill="#FEE8AF" fill-opacity="0.1"/>
+<rect x="225" y="210.778" width="11" height="11" transform="rotate(-45 225 210.778)" fill="#FEE8AF" fill-opacity="0.1"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_2_2" x1="180" y1="0" x2="180" y2="646" gradientUnits="userSpaceOnUse">
+<stop stop-color="#22262B"/>
+<stop offset="1" stop-color="#3B3449"/>
+</linearGradient>
+<clipPath id="clip0_2_2">
+<rect width="360" height="646" fill="white"/>
+</clipPath>
+</defs>
+</svg>
