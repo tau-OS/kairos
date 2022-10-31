@@ -30,6 +30,15 @@ public class MainWindow : He.ApplicationWindow {
     public string dew {get; set;}
     public string temphilo {get; set;}
 
+    public SimpleActionGroup actions { get; construct; }
+    public const string ACTION_PREFIX = "win.";
+    public const string ACTION_ABOUT = "action_about";
+
+    private const GLib.ActionEntry[] ACTION_ENTRIES = {
+          {ACTION_ABOUT, action_about }
+    };
+    public static Gee.MultiMap<string, string> action_accelerators = new Gee.HashMultiMap<string, string> ();
+
     [GtkChild]
     unowned Gtk.Label location_label;
     [GtkChild]
@@ -38,6 +47,8 @@ public class MainWindow : He.ApplicationWindow {
     unowned Gtk.Label weather_label;
     [GtkChild]
     unowned Gtk.Label temp_label;
+    [GtkChild]
+    unowned Gtk.Label kudos_label;
     [GtkChild]
     unowned He.EmptyPage alert_label;
     [GtkChild]
@@ -56,16 +67,30 @@ public class MainWindow : He.ApplicationWindow {
     }
 
     construct {
+        // Actions
+        actions = new SimpleActionGroup ();
+        actions.add_action_entries (ACTION_ENTRIES, this);
+        insert_action_group ("win", actions);
+
+        foreach (var action in action_accelerators.get_keys ()) {
+            var accels_array = action_accelerators[action].to_array ();
+            accels_array += null;
+
+            app.set_accels_for_action (ACTION_PREFIX + action, accels_array);
+        }
+        app.set_accels_for_action("app.quit", {"<Ctrl>q"});
+        app.set_accels_for_action ("win.action_keys", {"<Ctrl>question"});
+
         var theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
         theme.add_resource_path ("/co/tauos/Kairos/");
 
         provider = new Gtk.CssProvider ();
-        set_style ();
 
-        get_location.begin ();
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
+        set_style ();
+        get_location.begin ();
         weather_info.update ();
 
         alert_label.action_button.clicked.connect(() => {
@@ -93,8 +118,6 @@ public class MainWindow : He.ApplicationWindow {
             var simple = yield new GClue.Simple (Config.APP_ID, GClue.AccuracyLevel.CITY, null);
 
             if (simple.client != null && simple != null) {
-                var client = simple.get_client();
-
                 simple.notify["location"].connect (() => {
                     on_location_updated (simple);
                 });
@@ -145,10 +168,13 @@ public class MainWindow : He.ApplicationWindow {
         weather_info.get_value_temp_max (GWeather.TemperatureUnit.DEFAULT, out temphi);
         weather_info.get_value_temp_min (GWeather.TemperatureUnit.DEFAULT, out templo);
 
+        double appr;
+        weather_info.get_value_apparent (GWeather.TemperatureUnit.DEFAULT, out appr);
+
         if (temphi != 0 && templo != 0) {
-            temphilo = _("High: %s° / Low: %s°").printf (weather_info.get_temp_max (), weather_info.get_temp_min ());
+            temphilo = _("High: %.0f° / Low: %.0f°").printf (temphi, templo);
         } else {
-            temphilo = _("Feels Like: %s°").printf (weather_info.get_apparent ().replace("°F", "").replace("°C", "").replace("°K", ""));
+            temphilo = _("Feels Like: %.0f°").printf (appr);
         }
 
         double win; GWeather.WindDirection windir;
@@ -158,10 +184,12 @@ public class MainWindow : He.ApplicationWindow {
         weather_info.get_value_dew (GWeather.TemperatureUnit.DEFAULT, out deew);
         dew = _("Dew Point:") + " " + "%.0f°".printf(deew);
 
+        kudos_label.label = weather_info.get_attribution ();
+
         switch (weather_icon.icon_name) {
             case "weather-clear-night-symbolic":
             case "weather-few-clouds-night-symbolic":
-                color_primary = "#1b07a2";
+                color_primary = "#22262b";
                 color_secondary = "#fafafa";
                 break;
             case "weather-few-clouds-symbolic":
@@ -183,7 +211,7 @@ public class MainWindow : He.ApplicationWindow {
 
         string COLOR_PRIMARY = """
             .window-bg {
-                background: %s;
+                background-color: %s;
                 color: %s;
                 transition: all 600ms ease-in-out;
             }
@@ -205,5 +233,25 @@ public class MainWindow : He.ApplicationWindow {
     [GtkCallback]
     string get_temphilo_label () {
         return temphilo;
+    }
+
+    public void action_about () {
+        var about = new He.AboutWindow (
+            this,
+            "Kairos",
+            Config.APP_ID,
+            Config.VERSION,
+            Config.APP_ID,
+            "https://github.com/tau-os/kairos/tree/main/po",
+            "https://github.com/tau-os/kairos/issues/new",
+            "https://github.com/tau-os/kairos",
+            // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'
+            {(_("…"))},
+            {"Lains"},
+            2022,
+            He.AboutWindow.Licenses.GPLv3,
+            He.Colors.NONE
+        );
+        about.present ();
     }
 }

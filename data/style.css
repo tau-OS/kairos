@@ -1,3 +1,7 @@
 .block {
-    background: alpha(@view_bg_color, 0.25);
+  background: alpha(@view_bg_color, 0.25);
+}
+
+.temp-display {
+  font-size: 56px;
 }
