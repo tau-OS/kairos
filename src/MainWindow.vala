@@ -246,7 +246,7 @@ public class MainWindow : He.ApplicationWindow {
             "https://github.com/tau-os/kairos/issues/new",
             "https://github.com/tau-os/kairos",
             // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'
-            {(_("…"))},
+            {},
             {"Lains"},
             2022,
             He.AboutWindow.Licenses.GPLv3,
