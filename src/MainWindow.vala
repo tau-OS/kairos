@@ -196,11 +196,15 @@ public class MainWindow : He.ApplicationWindow {
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
+                color_primary = "#828292";
+                color_secondary = "#fafafa";
+                graphic = "resource://co/tauos/Kairos/cloudy.svg";
+                break;
             case "weather-showers-symbolic":
             case "weather-showers-scattered-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
-                graphic = "resource://co/tauos/Kairos/cloudy.svg";
+                graphic = "resource://co/tauos/Kairos/rain.svg";
                 break;
             case "weather-snow-symbolic":
                 color_primary = "#fafcff";
