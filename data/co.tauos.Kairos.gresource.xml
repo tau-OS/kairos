@@ -3,6 +3,11 @@
   <gresource prefix="/co/tauos/Kairos">
     <file alias="style.css">style.css</file>
 
+    <file alias="cloudy.svg">assets/cloudy.svg</file>
+    <file alias="rain.svg">assets/rain.svg</file>
+    <file alias="snow.svg">assets/snow.svg</file>
+    <file alias="sunny.svg">assets/sunny.svg</file>
+
     <file alias="mainwindow.ui">ui/mainwindow.ui</file>
   </gresource>
 </gresources>

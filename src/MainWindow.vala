@@ -1,10 +1,10 @@
 /*
-* Copyright (c) 2017-2019 Daniel Foré (http://danielfore.com)
+* Copyright (c) 2022 Fyra Labs
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
 * License as published by the Free Software Foundation; either
-* version 2 of the License, or (at your option) any later version.
+* version 3 of the License, or (at your option) any later version.
 *
 * This program is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -25,6 +25,7 @@ public class MainWindow : He.ApplicationWindow {
     private Gtk.CssProvider provider;
     private string color_primary = "#58a8fa";
     private string color_secondary = "#fafafa";
+    private string graphic = "";
 
     public string wind {get; set;}
     public string dew {get; set;}
@@ -191,6 +192,7 @@ public class MainWindow : He.ApplicationWindow {
             case "weather-few-clouds-night-symbolic":
                 color_primary = "#22262b";
                 color_secondary = "#fafafa";
+                graphic = "resource://co/tauos/Kairos/night.svg";
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
@@ -198,26 +200,32 @@ public class MainWindow : He.ApplicationWindow {
             case "weather-showers-scattered-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
+                graphic = "resource://co/tauos/Kairos/cloudy.svg";
                 break;
             case "weather-snow-symbolic":
                 color_primary = "#fafcff";
                 color_secondary = "#2d2d2d";
+                graphic = "resource://co/tauos/Kairos/snow.svg";
                 break;
             default:
                 color_primary = "#58a8fa";
                 color_secondary = "#fafafa";
+                graphic = "resource://co/tauos/Kairos/sunny.svg";
                 break;
         }
 
         string COLOR_PRIMARY = """
             .window-bg {
+                background-image: url(%s);
+                background-position: 50% 50%;
+                background-repeat: repeat;
                 background-color: %s;
                 color: %s;
                 transition: all 600ms ease-in-out;
             }
         """;
 
-        var colored_css = COLOR_PRIMARY.printf (color_primary, color_secondary);
+        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
     }
