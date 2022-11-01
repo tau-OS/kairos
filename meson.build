@@ -44,6 +44,7 @@ asresources = gnome.compile_resources(
 sources = [
   'src/Application.vala',
   'src/MainWindow.vala',
+  'src/Utils.vala',
 ]
 
 gweather = dependency('gweather4', version: '>= 3.90.0')

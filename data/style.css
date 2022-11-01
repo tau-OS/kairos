@@ -1,5 +1,13 @@
 .block {
   background: alpha(@view_bg_color, 0.25);
+  color: @view_bg_color;
+}
+
+.content-list row {
+  background: none;
+}
+.content-list row:hover .mini-content-block {
+  background: alpha(@accent_bg_color, 0.25);
 }
 
 .sblock {

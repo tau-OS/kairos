@@ -17,15 +17,69 @@
 * Boston, MA 02110-1301 USA
 */
 
+private class WeatherLocation : Object {
+    public GWeather.Location loc { get; construct set; }
+    public bool selected { get; set; }
+
+    public WeatherLocation (GWeather.Location loc, bool selected) {
+        Object (loc: loc, selected: selected);
+    }
+}
+
+private class LocationRow : Gtk.ListBoxRow {
+    public WeatherLocation data { get; construct set; }
+
+    public string? lname { get; set; default = null; }
+    public string? location { get; set; default = null; }
+    public bool loc_selected { get; set; default = false; }
+
+    public LocationRow (WeatherLocation data) {
+        Object (data: data);
+
+        lname = data.loc.get_name ();
+        location = data.loc.get_country_name ();
+        data.bind_property ("selected", this, "loc-selected", SYNC_CREATE);
+
+        var loc_label = new Gtk.Label (lname);
+        loc_label.halign = Gtk.Align.START;
+        loc_label.add_css_class ("cb-title");
+        var loc_ct_label = new Gtk.Label (location);
+        loc_ct_label.halign = Gtk.Align.START;
+        loc_ct_label.add_css_class ("cb-subtitle");
+
+        var loc_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
+        loc_box.append (loc_label);
+        loc_box.append (loc_ct_label);
+
+        var main_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        main_box.add_css_class ("mini-content-block");
+        main_box.add_css_class ("block");
+        main_box.append (loc_box);
+
+        this.set_child (main_box);
+    }
+}
+
 [GtkTemplate (ui = "/co/tauos/Kairos/mainwindow.ui")]
-public class MainWindow : He.ApplicationWindow {
+public class Kairos.MainWindow : He.ApplicationWindow {
     private GWeather.Location location;
+    private ListStore locations;
     private GWeather.Info weather_info;
+    private GClue.Simple simple;
     public He.Application app {get; construct;}
     private Gtk.CssProvider provider;
     private string color_primary = "#58a8fa";
     private string color_secondary = "#fafafa";
     private string graphic = "";
+    private const int RESULT_COUNT_LIMIT = 6;
+    private LocationRow? _selected_row = null;
+    private LocationRow? selected_row {
+        get {
+            return _selected_row;
+        } set {
+            _selected_row = value;
+        }
+    }
 
     public string wind {get; set;}
     public string dew {get; set;}
@@ -53,9 +107,19 @@ public class MainWindow : He.ApplicationWindow {
     [GtkChild]
     unowned He.EmptyPage alert_label;
     [GtkChild]
+    unowned He.EmptyPage search_label;
+    [GtkChild]
     unowned Gtk.Button refresh_button;
     [GtkChild]
     unowned Gtk.Stack stack;
+    [GtkChild]
+    unowned Gtk.Stack search_stack;
+    [GtkChild]
+    unowned Gtk.ListBox listbox;
+    [GtkChild]
+    unowned Gtk.Box main_box;
+    [GtkChild]
+    unowned Gtk.Box side_box;
     [GtkChild]
     unowned Gtk.SearchEntry search_entry;
 
@@ -67,13 +131,14 @@ public class MainWindow : He.ApplicationWindow {
             resizable: false,
             title: _("Kairos")
         );
-
-        set_style ();
-        get_location.begin ();
-        weather_info.update ();
     }
 
     construct {
+        locations = new ListStore (typeof (WeatherLocation));
+        listbox.bind_model (locations, (data) => {
+            return new LocationRow ((WeatherLocation) data);
+        });
+
         // Actions
         actions = new SimpleActionGroup ();
         actions.add_action_entries (ACTION_ENTRIES, this);
@@ -92,43 +157,161 @@ public class MainWindow : He.ApplicationWindow {
         theme.add_resource_path ("/co/tauos/Kairos/");
 
         provider = new Gtk.CssProvider ();
+        main_box.add_css_class ("window-bg");
+        side_box.add_css_class ("side-window-bg");
+        this.add_css_class ("side-window-bg");
 
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
-        set_style ();
-        get_location.begin ();
-        weather_info.update ();
+        if (selected_row != null) {
+            query_locations (location, "");
+            set_style (selected_row.data.loc);
+            weather_info.update ();
+        } else {
+            set_style (location);
+            get_location.begin ();
+            weather_info.update ();
+        }
+
+        search_label.action_button.visible = false;
 
         alert_label.action_button.clicked.connect(() => {
-            set_style ();
+            set_style (location);
             get_location.begin ();
             weather_info.update ();
         });
 
         refresh_button.clicked.connect (() => {
-            set_style ();
+            set_style (location);
             get_location.begin ();
             weather_info.update ();
         });
 
         weather_info.updated.connect (() => {
-            set_style ();
-            get_location.begin ();
+            if (selected_row != null) {
+                query_locations (location, "");
+                set_style (selected_row.data.loc);
+                weather_info.update ();
+            } else {
+                set_style (location);
+                get_location.begin ();
+                weather_info.update ();
+            }
         });
 
         search_entry.search_changed.connect (() => {
+            selected_row = null;
 
+            // Remove old results
+            locations.remove_all ();
+
+            if (search_entry.text == "") {
+                return;
+            }
+
+            string search = search_entry.text.normalize ().casefold ();
+            var world = GWeather.Location.get_world ();
+            if (world == null) {
+                return;
+            }
+
+            query_locations ((GWeather.Location) world, search);
+
+            if (locations.get_n_items () == 0) {
+                return;
+            }
+            locations.sort ((a, b) => {
+                var name_a = ((WeatherLocation) a).loc.get_sort_name ();
+                var name_b = ((WeatherLocation) b).loc.get_sort_name ();
+                return strcmp (name_a, name_b);
+            });
+            search_stack.visible_child_name = "results";
+        });
+        search_entry.notify["text"].connect (() => {
+            if (search_entry.text == "")
+                search_stack.visible_child_name = "empty";
         });
 
-        add_css_class ("window-bg");
         set_size_request (360, 150);
         stack.visible_child_name = "load";
     }
 
+    private void query_locations (GWeather.Location lc, string search) {
+        if (locations.get_n_items () >= RESULT_COUNT_LIMIT) return;
+
+        switch (lc.get_level ()) {
+            case CITY:
+                var contains_name = lc.get_sort_name ().contains (search);
+
+                var country_name = lc.get_country_name ();
+                if (country_name != null) {
+                    country_name = ((string) country_name).normalize ().casefold ();
+                }
+                var contains_country_name = country_name != null && ((string) country_name).contains (search);
+
+                if (contains_name || contains_country_name) {
+                    bool selected = location_exists (lc);
+                    locations.append (new WeatherLocation (lc, selected));
+                }
+                return;
+            default:
+                break;
+        }
+
+        var l = lc.next_child (null);
+        while (l != null) {
+            query_locations (l, search);
+            if (locations.get_n_items () >= RESULT_COUNT_LIMIT) {
+                return;
+            }
+            l = lc.next_child (l);
+        }
+    }
+
+    public bool location_exists (GWeather.Location loc) {
+        var exists = false;
+        var n = locations.get_n_items ();
+        for (int i = 0; i < n; i++) {
+            var l = locations.get_object (i);
+            if (l == loc) {
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
+    }
+
+    public GWeather.Location? get_selected_location () {
+        if (selected_row == null)
+            return null;
+        return ((LocationRow) selected_row).data.loc;
+    }
+
+    [GtkCallback]
+    private void item_activated (Gtk.ListBoxRow listbox_row) {
+        var row = (LocationRow) listbox_row;
+
+        if (selected_row != null && selected_row != row) {
+            ((LocationRow) selected_row).data.selected = false;
+        }
+
+        row.data.selected = !row.data.selected;
+        if (row.data.selected) {
+            selected_row = row;
+            set_style (row.data.loc);
+            location = row.data.loc;
+            weather_info.location = row.data.loc;
+            weather_info.update ();
+        } else {
+            selected_row = null;
+        }
+    }
+
     public async void get_location () {
         try {
-            var simple = yield new GClue.Simple.with_thresholds (Config.APP_ID, GClue.AccuracyLevel.CITY, 0, 100, null);
+            simple = yield new GClue.Simple.with_thresholds (Config.APP_ID, GClue.AccuracyLevel.CITY, 0, 100, null);
 
             if (simple.client != null && simple != null) {
                 simple.notify["location"].connect (() => {
@@ -145,11 +328,11 @@ public class MainWindow : He.ApplicationWindow {
             on_location_updated (simple);
         } catch (Error e) {
             warning ("Failed to connect to GeoClue2 service: %s, fallbacking to (0,0) coords.", e.message);
-            location = GWeather.Location.get_world().find_nearest_city(0.0, 0.0);
-            weather_info.location = location;
+            var ln = GWeather.Location.get_world().find_nearest_city(0.0, 0.0);
+            weather_info.location = ln;
             weather_info.update ();
             stack.visible_child_name = "weather";
-            set_style ();
+            set_style (ln);
             return;
         }
     }
@@ -159,15 +342,15 @@ public class MainWindow : He.ApplicationWindow {
         location = GWeather.Location.get_world().find_nearest_city(geoclueLocation.latitude, geoclueLocation.longitude);
         weather_info.location = location;
         weather_info.update ();
-        set_style ();
+        set_style (null);
     }
 
-    public void set_style () {
-        if (location == null) {
+    public void set_style (GWeather.Location? loc) {
+        if (loc == null) {
             return;
         }
 
-        location_label.label = dgettext ("libgweather-locations", location.get_city_name ());
+        location_label.label = dgettext ("libgweather-locations", loc.get_city_name ());
 
         weather_icon.icon_name = weather_info.get_symbolic_icon_name ();
         weather_label.label = dgettext ("libgweather", weather_info.get_sky ());
@@ -180,33 +363,31 @@ public class MainWindow : He.ApplicationWindow {
         weather_info.get_value_temp_max (GWeather.TemperatureUnit.DEFAULT, out temphi);
         weather_info.get_value_temp_min (GWeather.TemperatureUnit.DEFAULT, out templo);
 
-        double appr;
-        weather_info.get_value_apparent (GWeather.TemperatureUnit.DEFAULT, out appr);
+        string appr = weather_info.get_temp_summary ();
 
         if (temphi != 0 && templo != 0) {
             temphilo = _("High: %.0f° / Low: %.0f°").printf (temphi, templo);
         } else {
-            temphilo = _("Feels Like: %.0f°").printf (appr);
+            temphilo = _("Feels Like: %s").printf (appr);
         }
 
         double win; GWeather.WindDirection windir;
         weather_info.get_value_wind (GWeather.SpeedUnit.DEFAULT, out win, out windir);
         wind = _("Wind:") + " " + "%.0f %s".printf(win, GWeather.SpeedUnit.DEFAULT.to_string ());
-        double deew;
-        weather_info.get_value_dew (GWeather.TemperatureUnit.DEFAULT, out deew);
-        dew = _("Dew Point:") + " " + "%.0f°".printf(deew);
+        string deew = weather_info.get_dew ();
+        dew = _("Dew Point:") + " " + "%s".printf(deew);
 
         kudos_label.label = weather_info.get_attribution ();
 
         switch (weather_icon.icon_name) {
             case "weather-clear-night-symbolic":
+            case "weather-few-clouds-night-symbolic":
                 color_primary = "#22262b";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/night.svg";
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
-            case "weather-few-clouds-night-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/cloudy.svg";
@@ -238,11 +419,17 @@ public class MainWindow : He.ApplicationWindow {
                 color: %s;
                 transition: all 600ms ease-in-out;
             }
+            .side-window-bg {
+                background-color: shade(%s, 1.1);
+                color: %s;
+            }
         """;
 
-        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary);
+        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_primary, color_secondary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
+        main_box.get_style_context().add_provider(provider, 999);
+        side_box.get_style_context().add_provider(provider, 999);
 
         stack.visible_child_name = "weather";
     }
