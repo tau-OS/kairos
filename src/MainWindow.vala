@@ -33,6 +33,8 @@ private class LocationRow : Gtk.ListBoxRow {
     public string? location { get; set; default = null; }
     public bool loc_selected { get; set; default = false; }
 
+    public Gtk.Box main_box;
+
     public LocationRow (WeatherLocation data) {
         Object (data: data);
 
@@ -51,9 +53,8 @@ private class LocationRow : Gtk.ListBoxRow {
         loc_box.append (loc_label);
         loc_box.append (loc_ct_label);
 
-        var main_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
+        main_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         main_box.add_css_class ("mini-content-block");
-        main_box.add_css_class ("block");
         main_box.append (loc_box);
 
         this.set_child (main_box);
@@ -122,6 +123,12 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     unowned Gtk.Box side_box;
     [GtkChild]
     unowned Gtk.SearchEntry search_entry;
+    [GtkChild]
+    unowned He.MiniContentBlock temp_block;
+    [GtkChild]
+    unowned He.MiniContentBlock dew_block;
+    [GtkChild]
+    unowned He.MiniContentBlock wind_block;
 
     public MainWindow (He.Application application) {
         Object (
@@ -134,11 +141,6 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     }
 
     construct {
-        locations = new ListStore (typeof (WeatherLocation));
-        listbox.bind_model (locations, (data) => {
-            return new LocationRow ((WeatherLocation) data);
-        });
-
         // Actions
         actions = new SimpleActionGroup ();
         actions.add_action_entries (ACTION_ENTRIES, this);
@@ -156,14 +158,24 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         var theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
         theme.add_resource_path ("/co/tauos/Kairos/");
 
-        provider = new Gtk.CssProvider ();
-        main_box.add_css_class ("window-bg");
-        side_box.add_css_class ("side-window-bg");
-        this.add_css_class ("side-window-bg");
+        locations = new ListStore (typeof (WeatherLocation));
+        listbox.bind_model (locations, (data) => {
+            var locrow = new LocationRow ((WeatherLocation) data);
+            return locrow;
+        });
 
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
+
+        provider = new Gtk.CssProvider ();
+        main_box.add_css_class ("window-bg");
+        side_box.add_css_class ("side-window-bg");
+        this.add_css_class ("side-window-bg");
+        wind_block.add_css_class ("block");
+        temp_block.add_css_class ("block");
+        dew_block.add_css_class ("block");
+
         if (selected_row != null) {
             query_locations (location, "");
             set_style (selected_row.data.loc);
@@ -419,17 +431,25 @@ public class Kairos.MainWindow : He.ApplicationWindow {
                 color: %s;
                 transition: all 600ms ease-in-out;
             }
-            .side-window-bg {
-                background-color: shade(%s, 1.1);
+            .block {
+                background-color: alpha(%s, 0.1);
                 color: %s;
+                transition: all 600ms ease-in-out;
+            }
+            .side-window-bg {
+                background-color: mix(@window_bg_color, %s, 0.02);
+                transition: all 600ms ease-in-out;
             }
         """;
 
-        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_primary, color_secondary);
+        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_secondary, color_secondary, color_primary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
         main_box.get_style_context().add_provider(provider, 999);
         side_box.get_style_context().add_provider(provider, 999);
+        temp_block.get_style_context().add_provider(provider, 999);
+        wind_block.get_style_context().add_provider(provider, 999);
+        dew_block.get_style_context().add_provider(provider, 999);
 
         stack.visible_child_name = "weather";
     }
