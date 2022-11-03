@@ -36,7 +36,7 @@ public class Kairos.Application : He.Application {
     }
     protected override void startup () {
         Gdk.RGBA accent_color = { 0 };
-        accent_color.parse("#FCCA6F");
+        accent_color.parse("#bf8856");
         default_accent_color = He.Color.from_gdk_rgba(accent_color);
 
         resource_base_path = "/co/tauos/Kairos";
