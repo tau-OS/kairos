@@ -482,7 +482,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             {"Lains"},
             2022,
             He.AboutWindow.Licenses.GPLv3,
-            He.Colors.NONE
+            He.Colors.BROWN
         );
         about.present ();
     }
