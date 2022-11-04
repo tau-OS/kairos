@@ -427,6 +427,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
                 background-image: url(%s);
                 background-position: 50% 50%;
                 background-repeat: repeat;
+                background-size: cover;
                 background-color: %s;
                 color: %s;
                 transition: all 600ms ease-in-out;
