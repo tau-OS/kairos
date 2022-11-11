@@ -44,6 +44,7 @@ asresources = gnome.compile_resources(
 sources = [
   'src/Application.vala',
   'src/MainWindow.vala',
+  'src/WorldLocationFinder.vala',
   'src/Utils.vala',
 ]
 

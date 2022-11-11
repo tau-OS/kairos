@@ -17,76 +17,22 @@
 * Boston, MA 02110-1301 USA
 */
 
-private class WeatherLocation : Object {
-    public GWeather.Location loc { get; construct set; }
-    public bool selected { get; set; }
-
-    public WeatherLocation (GWeather.Location loc, bool selected) {
-        Object (loc: loc, selected: selected);
-    }
-}
-
-private class LocationRow : Gtk.ListBoxRow {
-    public WeatherLocation data { get; construct set; }
-
-    public string? lname { get; set; default = null; }
-    public string? location { get; set; default = null; }
-    public bool loc_selected { get; set; default = false; }
-
-    public Gtk.Box main_box;
-
-    public LocationRow (WeatherLocation data) {
-        Object (data: data);
-
-        lname = data.loc.get_name ();
-        location = data.loc.get_country_name ();
-        data.bind_property ("selected", this, "loc-selected", SYNC_CREATE);
-
-        var loc_label = new Gtk.Label (lname);
-        loc_label.halign = Gtk.Align.START;
-        loc_label.add_css_class ("cb-title");
-        var loc_ct_label = new Gtk.Label (location);
-        loc_ct_label.halign = Gtk.Align.START;
-        loc_ct_label.add_css_class ("cb-subtitle");
-
-        var loc_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
-        loc_box.append (loc_label);
-        loc_box.append (loc_ct_label);
-
-        main_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
-        main_box.add_css_class ("mini-content-block");
-        main_box.append (loc_box);
-
-        this.set_child (main_box);
-    }
-}
-
 [GtkTemplate (ui = "/co/tauos/Kairos/mainwindow.ui")]
 public class Kairos.MainWindow : He.ApplicationWindow {
-    private GWeather.Location location;
-    private ListStore locations;
-    private GWeather.Info weather_info;
     private GClue.Simple simple;
-    public He.Application app {get; construct;}
     private Gtk.CssProvider provider;
+    private GWeather.Location location;
     private string color_primary = "#58a8fa";
     private string color_secondary = "#fafafa";
     private string graphic = "";
-    private const int RESULT_COUNT_LIMIT = 6;
-    private LocationRow? _selected_row = null;
-    private LocationRow? selected_row {
-        get {
-            return _selected_row;
-        } set {
-            _selected_row = value;
-        }
-    }
 
-    public string wind {get; set;}
+    public GWeather.Info weather_info;
+    public He.Application app {get; construct;}
     public string dew {get; set;}
     public string temphilo {get; set;}
-
+    public string wind {get; set;}
     public SimpleActionGroup actions { get; construct; }
+
     public const string ACTION_PREFIX = "win.";
     public const string ACTION_ABOUT = "action_about";
 
@@ -106,23 +52,15 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkChild]
     unowned Gtk.Label kudos_label;
     [GtkChild]
-    unowned He.EmptyPage alert_label;
+    unowned Gtk.Stack stack;
     [GtkChild]
-    unowned He.EmptyPage search_label;
+    unowned He.EmptyPage alert_label;
     [GtkChild]
     unowned Gtk.Button refresh_button;
     [GtkChild]
-    unowned Gtk.Stack stack;
-    [GtkChild]
-    unowned Gtk.Stack search_stack;
-    [GtkChild]
-    unowned Gtk.ListBox listbox;
+    unowned Gtk.Button search_button;
     [GtkChild]
     unowned Gtk.Box main_box;
-    [GtkChild]
-    unowned Gtk.Box side_box;
-    [GtkChild]
-    unowned Gtk.SearchEntry search_entry;
     [GtkChild]
     unowned He.MiniContentBlock temp_block;
     [GtkChild]
@@ -158,35 +96,19 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         var theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
         theme.add_resource_path ("/co/tauos/Kairos/");
 
-        locations = new ListStore (typeof (WeatherLocation));
-        listbox.bind_model (locations, (data) => {
-            var locrow = new LocationRow ((WeatherLocation) data);
-            return locrow;
-        });
-
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
 
         provider = new Gtk.CssProvider ();
         main_box.add_css_class ("window-bg");
-        side_box.add_css_class ("side-window-bg");
-        this.add_css_class ("side-window-bg");
         wind_block.add_css_class ("block");
         temp_block.add_css_class ("block");
         dew_block.add_css_class ("block");
 
-        if (selected_row != null) {
-            query_locations (location, "");
-            set_style (selected_row.data.loc);
-            weather_info.update ();
-        } else {
-            set_style (location);
-            get_location.begin ();
-            weather_info.update ();
-        }
-
-        search_label.action_button.visible = false;
+        set_style (location);
+        get_location.begin ();
+        weather_info.update ();
 
         alert_label.action_button.clicked.connect(() => {
             set_style (location);
@@ -201,124 +123,26 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         });
 
         weather_info.updated.connect (() => {
-            if (selected_row != null) {
-                query_locations (location, "");
-                set_style (selected_row.data.loc);
-                weather_info.update ();
-            } else {
-                set_style (location);
-                get_location.begin ();
-                weather_info.update ();
-            }
+            set_style (location);
+            get_location.begin ();
+            weather_info.update ();
         });
 
-        search_entry.search_changed.connect (() => {
-            selected_row = null;
+        search_button.clicked.connect (() => {
+            var dialog = new WorldLocationFinder ((Gtk.Window) get_root (), this);
 
-            // Remove old results
-            locations.remove_all ();
+            dialog.location_added.connect (() => {
+                    var loc = dialog.get_selected_location ();
+                    if (loc != null)
+                        location = loc;
 
-            if (search_entry.text == "") {
-                return;
-            }
-
-            string search = search_entry.text.normalize ().casefold ();
-            var world = GWeather.Location.get_world ();
-            if (world == null) {
-                return;
-            }
-
-            query_locations ((GWeather.Location) world, search);
-
-            if (locations.get_n_items () == 0) {
-                return;
-            }
-            locations.sort ((a, b) => {
-                var name_a = ((WeatherLocation) a).loc.get_sort_name ();
-                var name_b = ((WeatherLocation) b).loc.get_sort_name ();
-                return strcmp (name_a, name_b);
-            });
-            search_stack.visible_child_name = "results";
-        });
-        search_entry.notify["text"].connect (() => {
-            if (search_entry.text == "")
-                search_stack.visible_child_name = "empty";
+                    dialog.destroy ();
+                });
+            dialog.present ();
         });
 
         set_size_request (360, 150);
         stack.visible_child_name = "load";
-    }
-
-    private void query_locations (GWeather.Location lc, string search) {
-        if (locations.get_n_items () >= RESULT_COUNT_LIMIT) return;
-
-        switch (lc.get_level ()) {
-            case CITY:
-                var contains_name = lc.get_sort_name ().contains (search);
-
-                var country_name = lc.get_country_name ();
-                if (country_name != null) {
-                    country_name = ((string) country_name).normalize ().casefold ();
-                }
-                var contains_country_name = country_name != null && ((string) country_name).contains (search);
-
-                if (contains_name || contains_country_name) {
-                    bool selected = location_exists (lc);
-                    locations.append (new WeatherLocation (lc, selected));
-                }
-                return;
-            default:
-                break;
-        }
-
-        var l = lc.next_child (null);
-        while (l != null) {
-            query_locations (l, search);
-            if (locations.get_n_items () >= RESULT_COUNT_LIMIT) {
-                return;
-            }
-            l = lc.next_child (l);
-        }
-    }
-
-    public bool location_exists (GWeather.Location loc) {
-        var exists = false;
-        var n = locations.get_n_items ();
-        for (int i = 0; i < n; i++) {
-            var l = locations.get_object (i);
-            if (l == loc) {
-                exists = true;
-                break;
-            }
-        }
-
-        return exists;
-    }
-
-    public GWeather.Location? get_selected_location () {
-        if (selected_row == null)
-            return null;
-        return ((LocationRow) selected_row).data.loc;
-    }
-
-    [GtkCallback]
-    private void item_activated (Gtk.ListBoxRow listbox_row) {
-        var row = (LocationRow) listbox_row;
-
-        if (selected_row != null && selected_row != row) {
-            ((LocationRow) selected_row).data.selected = false;
-        }
-
-        row.data.selected = !row.data.selected;
-        if (row.data.selected) {
-            selected_row = row;
-            set_style (row.data.loc);
-            location = row.data.loc;
-            weather_info.location = row.data.loc;
-            weather_info.update ();
-        } else {
-            selected_row = null;
-        }
     }
 
     public async void get_location () {
@@ -447,7 +271,6 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
         main_box.get_style_context().add_provider(provider, 999);
-        side_box.get_style_context().add_provider(provider, 999);
         temp_block.get_style_context().add_provider(provider, 999);
         wind_block.get_style_context().add_provider(provider, 999);
         dew_block.get_style_context().add_provider(provider, 999);

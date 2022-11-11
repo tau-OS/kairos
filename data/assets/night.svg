@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="360"
-   height="705"
-   viewBox="0 0 360 705"
+   width="414"
+   height="646"
+   viewBox="0 0 414 646"
    fill="none"
    version="1.1"
    id="svg38"
@@ -23,10 +23,10 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
      inkscape:zoom="1.2105263"
-     inkscape:cx="180.5"
+     inkscape:cx="125.97826"
      inkscape:cy="190.82609"
      inkscape:window-width="2560"
-     inkscape:window-height="911"
+     inkscape:window-height="927"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -95,7 +95,7 @@
      id="rect16"
      clip-path="none"
      mask="none"
-     style="fill:#fee8af;fill-opacity:0.30000001" />
+     style="fill:#fee8af;fill-opacity:0.3" />
   <rect
      x="71.57476"
      y="246.62329"
@@ -107,7 +107,7 @@
      id="rect18"
      clip-path="none"
      mask="none"
-     style="fill:#fee8af;fill-opacity:0.30000001" />
+     style="fill:#fee8af;fill-opacity:0.3" />
   <rect
      x="109.05142"
      y="295.41367"
@@ -119,7 +119,7 @@
      id="rect20"
      clip-path="none"
      mask="none"
-     style="fill:#fee8af;fill-opacity:0.30000001" />
+     style="fill:#fee8af;fill-opacity:0.3" />
   <rect
      x="68.03923"
      y="302.48471"
@@ -131,7 +131,7 @@
      id="rect22"
      clip-path="none"
      mask="none"
-     style="fill:#fee8af;fill-opacity:0.30000001" />
+     style="fill:#fee8af;fill-opacity:0.3" />
   <rect
      x="10.056473"
      y="308.14157"
@@ -143,7 +143,7 @@
      id="rect24"
      clip-path="none"
      mask="none"
-     style="fill:#fee8af;fill-opacity:0.30000001" />
+     style="fill:#fee8af;fill-opacity:0.3" />
   <defs
      id="defs36">
     <linearGradient
