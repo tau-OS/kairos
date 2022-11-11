@@ -22,8 +22,9 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     private GClue.Simple simple;
     private Gtk.CssProvider provider;
     private GWeather.Location location;
-    private string color_primary = "#58a8fa";
-    private string color_secondary = "#fafafa";
+    private GWeather.Location dlocation;
+    private string color_primary = "";
+    private string color_secondary = "";
     private string graphic = "";
 
     public GWeather.Info weather_info;
@@ -106,26 +107,50 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         temp_block.add_css_class ("block");
         dew_block.add_css_class ("block");
 
-        set_style (location);
-        get_location.begin ();
-        weather_info.update ();
-
-        alert_label.action_button.clicked.connect(() => {
+        if (dlocation != null) {
+            set_style (dlocation);
+            weather_info.location = dlocation;
+            weather_info.update ();
+        } else {
             set_style (location);
             get_location.begin ();
             weather_info.update ();
+        }
+
+        alert_label.action_button.clicked.connect(() => {
+            if (dlocation != null) {
+                set_style (dlocation);
+                weather_info.location = dlocation;
+                weather_info.update ();
+            } else {
+                set_style (location);
+                get_location.begin ();
+                weather_info.update ();
+            }
         });
 
         refresh_button.clicked.connect (() => {
-            set_style (location);
-            get_location.begin ();
-            weather_info.update ();
+            if (dlocation != null) {
+                set_style (dlocation);
+                weather_info.location = dlocation;
+                weather_info.update ();
+            } else {
+                set_style (location);
+                get_location.begin ();
+                weather_info.update ();
+            }
         });
 
         weather_info.updated.connect (() => {
-            set_style (location);
-            get_location.begin ();
-            weather_info.update ();
+            if (dlocation != null) {
+                set_style (dlocation);
+                weather_info.location = dlocation;
+                weather_info.update ();
+            } else {
+                set_style (location);
+                get_location.begin ();
+                weather_info.update ();
+            }
         });
 
         search_button.clicked.connect (() => {
@@ -134,7 +159,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             dialog.location_added.connect (() => {
                     var loc = dialog.get_selected_location ();
                     if (loc != null)
-                        location = loc;
+                        dlocation = loc;
 
                     dialog.destroy ();
                 });

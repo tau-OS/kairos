@@ -151,9 +151,6 @@ public class Kairos.WorldLocationFinder : He.Window {
     [GtkCallback]
     private void add_button_clicked () {
         location_added ();
-        query_locations (selected_row.data.loc, "");
-        win.set_style (selected_row.data.loc);
-        win.weather_info.update ();
         close ();
     }
 
