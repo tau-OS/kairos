@@ -6,6 +6,7 @@
           <child>
             <object class="GtkBox" id="side_box">
               <property name="orientation">vertical</property>
+              <property name="spacing">12</property>
               <child>
                 <object class="HeAppBar">
                   <property name="flat">1</property>
