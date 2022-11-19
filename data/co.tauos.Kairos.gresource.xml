@@ -10,6 +10,7 @@
     <file alias="sunny.svg">assets/sunny.svg</file>
 
     <file alias="mainwindow.ui">ui/mainwindow.ui</file>
+    <file alias="weatherpage.ui">ui/weatherpage.ui</file>
     <file alias="worldlocationfinder.ui">ui/worldlocationfinder.ui</file>
   </gresource>
 </gresources>

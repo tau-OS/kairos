@@ -1,0 +1,163 @@
+<interface>
+    <requires lib="gtk" version="4.0"/>
+    <template class="KairosWeatherPage" parent="HeBin">
+        <property name="vexpand">true</property>
+        <property name="hexpand">true</property>
+        <child>
+            <object class="GtkBox" id="weather_page">
+                <property name="vexpand">true</property>
+                <property name="hexpand">true</property>
+                <property name="spacing">18</property>
+                <property name="margin-top">18</property>
+                <property name="margin-bottom">18</property>
+                <property name="margin-start">18</property>
+                <property name="margin-end">18</property>
+                <property name="orientation">vertical</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="hexpand">true</property>
+                        <property name="spacing">6</property>
+                        <property name="margin-top">47</property>
+                        <child>
+                            <object class="GtkLabel" id="location_label">
+                                <property name="halign">end</property>
+                                <property name="label">—————</property>
+                                <style>
+                                    <class name="view-title"/>
+                                </style>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="BisCarouselIndicatorDots" id="lines">
+                                <property name="halign">end</property>
+                                <binding name="carousel">
+                                    <lookup name="car" type="KairosWeatherPage" />
+                                </binding>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="spacing">18</property>
+                                <property name="margin-top">100</property>
+                                <child>
+                                    <object class="GtkImage" id="weather_icon">
+                                        <property name="valign">center</property>
+                                        <property name="pixel-size">96</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="orientation">vertical</property>
+                                        <property name="hexpand">true</property>
+                                        <property name="spacing">6</property>
+                                        <child>
+                                            <object class="GtkLabel" id="temp_label">
+                                                <property name="valign">end</property>
+                                                <property name="halign">start</property>
+                                                <property name="label">—°C</property>
+                                                <style>
+                                                    <class name="temp-display"/>
+                                                </style>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkLabel" id="weather_label">
+                                                <property name="halign">start</property>
+                                                <property name="hexpand">true</property>
+                                                <property name="label">————</property>
+                                                <style>
+                                                    <class name="cb-title"/>
+                                                </style>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="HeDisclosureButton" id="refresh_button">
+                                        <property name="halign">end</property>
+                                        <property name="valign">end</property>
+                                        <property name="icon">view-refresh-symbolic</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">6</property>
+                                <property name="margin-top">18</property>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="spacing">12</property>
+                                        <property name="homogeneous">1</property>
+                                        <child>
+                                            <object class="HeMiniContentBlock" id="wind_block">
+                                                <property name="icon">weather-windy-symbolic</property>
+                                                <property name="title" translatable="true">Wind</property>
+                                                <binding name="subtitle">
+                                                    <closure type="gchararray" function="get_wind_label">
+                                                        <lookup name="wind" type="KairosWeatherPage"/>
+                                                    </closure>
+                                                </binding>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="HeMiniContentBlock" id="dew_block">
+                                                <property name="icon">emoji-nature-symbolic</property>
+                                                <property name="title" translatable="true">Dew Point</property>
+                                                <binding name="subtitle">
+                                                    <closure type="gchararray" function="get_dew_label">
+                                                        <lookup name="dew" type="KairosWeatherPage"/>
+                                                    </closure>
+                                                </binding>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="spacing">12</property>
+                                        <property name="homogeneous">1</property>
+                                        <child>
+                                            <object class="HeMiniContentBlock" id="temp_block">
+                                                <property name="icon">system-switch-user-symbolic</property>
+                                                <property name="title" translatable="true">Feels Like</property>
+                                                <binding name="subtitle">
+                                                    <closure type="gchararray" function="get_temphilo_label">
+                                                        <lookup name="temphilo" type="KairosWeatherPage"/>
+                                                    </closure>
+                                                </binding>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="HeMiniContentBlock" id="pressure_block">
+                                                <property name="icon">folder-download-symbolic</property>
+                                                <property name="title" translatable="true">Pressure</property>
+                                                <binding name="subtitle">
+                                                    <closure type="gchararray" function="get_pressure_label">
+                                                        <lookup name="pressure" type="KairosWeatherPage"/>
+                                                    </closure>
+                                                </binding>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel" id="kudos_label">
+                                <property name="halign">center</property>
+                                <property name="use-markup">1</property>
+                                <property name="margin-top">6</property>
+                                <style>
+                                    <class name="caption"/>
+                                </style>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

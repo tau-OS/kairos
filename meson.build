@@ -44,11 +44,15 @@ asresources = gnome.compile_resources(
 sources = [
   'src/Application.vala',
   'src/MainWindow.vala',
+  'src/WeatherPage.vala',
   'src/WorldLocationFinder.vala',
   'src/Utils.vala',
 ]
 
 gweather = dependency('gweather4', version: '>= 3.90.0')
+libbismuth_dep = meson.get_compiler('c').find_library('libbismuth', required: false)
+cc = meson.get_compiler('c')
+math = cc.find_library('m', required: false)
 dependencies = [
   dependency('gio-2.0'),
   dependency('gtk4'),
@@ -56,7 +60,10 @@ dependencies = [
   dependency('gobject-2.0'),
   dependency('gee-0.8'),
   dependency('libhelium-1'),
+  dependency('libbismuth-1', fallback: [ 'libbismuth', 'libbismuth_dep' ], version: '>=1.0.0'),
+  dependency('geocode-glib-2.0', version: '>=1.0'),
   gweather,
+  math,
   dependency('libgeoclue-2.0', version: '>= 0.12.99'),
   dependency('gmodule-2.0')
 ]

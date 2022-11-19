@@ -17,3 +17,28 @@
 .search {
   border-radius: 999px;
 }
+
+.scrim {
+  color: #fafafa;
+  padding: 0;
+  margin: 0;
+}
+.scrim headerbar,
+.scrim .disclosure-button {
+  color: #fafafa;
+}
+.scrim box > label,
+.scrim .image-text-button label,
+.scrim entry text,
+.scrim widget > label {
+  text-shadow: 0 1px 1px #2d2d2d;
+}
+.scrim image {
+  -gtk-icon-shadow: 0 1px 1px #2d2d2d;
+}
+.scrim .close image,
+.scrim .maximize image,
+.scrim .image-text-button,
+.scrim .disclosure-button {
+  box-shadow: 0 1px 1px 2px alpha(#2d2d2d, 0.2);
+}
