@@ -21,18 +21,19 @@
 public class Kairos.MainWindow : He.ApplicationWindow {
     private GClue.Simple simple;
     private Gtk.CssProvider provider;
-    private GWeather.Location location;
     private GWeather.Location dlocation;
+    private GWeather.Location location;
     private string color_primary = "";
     private string color_secondary = "";
     private string graphic = "";
 
     public GWeather.Info weather_info;
     public He.Application app {get; construct;}
+    public SimpleActionGroup actions { get; construct; }
     public string dew {get; set;}
+    public string pressure {get; set;}
     public string temphilo {get; set;}
     public string wind {get; set;}
-    public SimpleActionGroup actions { get; construct; }
 
     public const string ACTION_PREFIX = "win.";
     public const string ACTION_ABOUT = "action_about";
@@ -68,6 +69,8 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     unowned He.MiniContentBlock dew_block;
     [GtkChild]
     unowned He.MiniContentBlock wind_block;
+    [GtkChild]
+    unowned He.MiniContentBlock pressure_block;
 
     public MainWindow (He.Application application) {
         Object (
@@ -106,6 +109,12 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         wind_block.add_css_class ("block");
         temp_block.add_css_class ("block");
         dew_block.add_css_class ("block");
+        pressure_block.add_css_class ("block");
+
+        ((Gtk.Box) wind_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
+        ((Gtk.Box) temp_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
+        ((Gtk.Box) dew_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
+        ((Gtk.Box) pressure_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
 
         if (dlocation != null) {
             set_style (dlocation);
@@ -220,23 +229,17 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         weather_info.get_value_temp (GWeather.TemperatureUnit.DEFAULT, out temp);
         temp_label.label = _("%i°").printf ((int) temp);
 
-        double temphi; double templo;
-        weather_info.get_value_temp_max (GWeather.TemperatureUnit.DEFAULT, out temphi);
-        weather_info.get_value_temp_min (GWeather.TemperatureUnit.DEFAULT, out templo);
-
         string appr = weather_info.get_temp_summary ();
-
-        if (temphi != 0 && templo != 0) {
-            temphilo = _("High: %.0f° / Low: %.0f°").printf (temphi, templo);
-        } else {
-            temphilo = _("Feels Like: %s").printf (appr);
-        }
+        temphilo = _("%s").printf (appr);
 
         double win; GWeather.WindDirection windir;
         weather_info.get_value_wind (GWeather.SpeedUnit.DEFAULT, out win, out windir);
-        wind = _("Wind:") + " " + "%.0f %s".printf(win, GWeather.SpeedUnit.DEFAULT.to_string ());
+        wind = "%.0f %s".printf(win, GWeather.SpeedUnit.DEFAULT.to_string ());
         string deew = weather_info.get_dew ();
-        dew = _("Dew Point:") + " " + "%s".printf(deew);
+        dew = "%s".printf(deew);
+
+        string pres = weather_info.get_pressure ();
+        pressure = _("%s").printf (pres);
 
         kudos_label.label = weather_info.get_attribution ();
 
@@ -299,6 +302,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         temp_block.get_style_context().add_provider(provider, 999);
         wind_block.get_style_context().add_provider(provider, 999);
         dew_block.get_style_context().add_provider(provider, 999);
+        pressure_block.get_style_context().add_provider(provider, 999);
 
         stack.visible_child_name = "weather";
     }
@@ -314,6 +318,10 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkCallback]
     string get_temphilo_label () {
         return temphilo;
+    }
+    [GtkCallback]
+    string get_pressure_label () {
+        return pressure;
     }
 
     public void action_about () {

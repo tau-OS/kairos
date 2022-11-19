@@ -131,33 +131,59 @@
                                     <property name="spacing">6</property>
                                     <property name="margin-top">12</property>
                                     <child>
-                                      <object class="HeMiniContentBlock" id="wind_block">
-                                        <property name="icon">weather-windy-symbolic</property>
-                                        <binding name="title">
-                                          <closure type="gchararray" function="get_wind_label">
-                                            <lookup name="wind" type="KairosMainWindow"/>
-                                          </closure>
-                                        </binding>
+                                      <object class="GtkBox">
+                                        <property name="spacing">12</property>
+                                        <property name="homogeneous">1</property>
+                                        <child>
+                                          <object class="HeMiniContentBlock" id="wind_block">
+                                            <property name="icon">weather-windy-symbolic</property>
+                                            <property name="title" translatable="true">Wind</property>
+                                            <binding name="subtitle">
+                                              <closure type="gchararray" function="get_wind_label">
+                                                <lookup name="wind" type="KairosMainWindow"/>
+                                              </closure>
+                                            </binding>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="HeMiniContentBlock" id="dew_block">
+                                            <property name="icon">emoji-nature-symbolic</property>
+                                            <property name="title" translatable="true">Dew Point</property>
+                                            <binding name="subtitle">
+                                              <closure type="gchararray" function="get_dew_label">
+                                                <lookup name="dew" type="KairosMainWindow"/>
+                                              </closure>
+                                            </binding>
+                                          </object>
+                                        </child>
                                       </object>
                                     </child>
                                     <child>
-                                      <object class="HeMiniContentBlock" id="dew_block">
-                                        <property name="icon">emoji-nature-symbolic</property>
-                                        <binding name="title">
-                                          <closure type="gchararray" function="get_dew_label">
-                                            <lookup name="dew" type="KairosMainWindow"/>
-                                          </closure>
-                                        </binding>
-                                      </object>
-                                    </child>
-                                    <child>
-                                      <object class="HeMiniContentBlock" id="temp_block">
-                                        <property name="icon">system-switch-user-symbolic</property>
-                                        <binding name="title">
-                                          <closure type="gchararray" function="get_temphilo_label">
-                                            <lookup name="temphilo" type="KairosMainWindow"/>
-                                          </closure>
-                                        </binding>
+                                      <object class="GtkBox">
+                                        <property name="spacing">12</property>
+                                        <property name="homogeneous">1</property>
+                                        <child>
+                                          <object class="HeMiniContentBlock" id="temp_block">
+                                            <property name="icon">system-switch-user-symbolic</property>
+                                            <property name="title" translatable="true">Feels Like</property>
+                                            <binding name="subtitle">
+                                              <closure type="gchararray" function="get_temphilo_label">
+                                                <lookup name="temphilo" type="KairosMainWindow"/>
+                                              </closure>
+                                            </binding>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="HeMiniContentBlock" id="pressure_block">
+                                            <property name="icon">folder-download-symbolic</property>
+                                            <property name="title" translatable="true">Pressure</property>
+                                            <binding name="subtitle">
+                                              <closure type="gchararray" function="get_pressure_label">
+                                                <lookup name="pressure" type="KairosMainWindow"/>
+                                              </closure>
+                                            </binding>
+                                          </object>
+                                        </child>
                                       </object>
                                     </child>
                                   </object>
