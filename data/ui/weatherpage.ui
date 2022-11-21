@@ -1,12 +1,12 @@
 <interface>
     <requires lib="gtk" version="4.0"/>
     <template class="KairosWeatherPage" parent="HeBin">
-        <property name="vexpand">true</property>
-        <property name="hexpand">true</property>
+        <property name="vexpand">1</property>
+        <property name="hexpand">1</property>
         <child>
             <object class="GtkBox" id="weather_page">
-                <property name="vexpand">true</property>
-                <property name="hexpand">true</property>
+                <property name="vexpand">1</property>
+                <property name="hexpand">1</property>
                 <property name="spacing">18</property>
                 <property name="margin-top">18</property>
                 <property name="margin-bottom">18</property>
@@ -16,24 +16,33 @@
                 <child>
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>
-                        <property name="hexpand">true</property>
+                        <property name="hexpand">1</property>
                         <property name="spacing">6</property>
                         <property name="margin-top">47</property>
                         <child>
-                            <object class="GtkLabel" id="location_label">
-                                <property name="halign">end</property>
-                                <property name="label">—————</property>
-                                <style>
-                                    <class name="view-title"/>
-                                </style>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="BisCarouselIndicatorDots" id="lines">
-                                <property name="halign">end</property>
-                                <binding name="carousel">
-                                    <lookup name="car" type="KairosWeatherPage" />
-                                </binding>
+                            <object class="GtkBox">
+                                <property name="orientation">vertical</property>
+                                <property name="hexpand">1</property>
+                                <property name="spacing">6</property>
+                                <child>
+                                    <object class="GtkLabel" id="location_label">
+                                        <property name="xalign">1</property>
+                                        <property name="hexpand">1</property>
+                                        <property name="label">—————</property>
+                                        <style>
+                                            <class name="view-title"/>
+                                        </style>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="BisCarouselIndicatorDots" id="lines">
+                                        <property name="halign">end</property>
+                                        <property name="hexpand">1</property>
+                                        <binding name="carousel">
+                                            <lookup name="car" type="KairosWeatherPage" />
+                                        </binding>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                         <child>
@@ -49,7 +58,7 @@
                                 <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
-                                        <property name="hexpand">true</property>
+                                        <property name="hexpand">1</property>
                                         <property name="spacing">6</property>
                                         <child>
                                             <object class="GtkLabel" id="temp_label">
@@ -64,7 +73,7 @@
                                         <child>
                                             <object class="GtkLabel" id="weather_label">
                                                 <property name="halign">start</property>
-                                                <property name="hexpand">true</property>
+                                                <property name="hexpand">1</property>
                                                 <property name="label">————</property>
                                                 <style>
                                                     <class name="cb-title"/>

@@ -118,7 +118,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             }
 
             var wp = new WeatherPage (this, found_location);
-            carousel.append (wp);
+            carousel.prepend (wp);
         });
 
         yield geo_info.seek ();
