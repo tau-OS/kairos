@@ -153,6 +153,10 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         var row = (AddedLocationRow) listbox_row;
 
         row.loc_delete_button.clicked.connect (() => {
+            for (var car = 0; car <= carousel.get_n_pages (); car++) {
+                if (locations.get_item (car) == row.data)
+                    carousel.remove (carousel.get_nth_page (car));
+            }
             locations.remove (row.data);
         });
     }
