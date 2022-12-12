@@ -13,4 +13,7 @@
     <file alias="weatherpage.ui">ui/weatherpage.ui</file>
     <file alias="worldlocationfinder.ui">ui/worldlocationfinder.ui</file>
   </gresource>
+  <gresource prefix="/co/tauos/Kairos/icons">
+    <file alias="scalable/actions/city-symbolic.svg">icons/128/city-symbolic.svg</file>
+  </gresource>
 </gresources>

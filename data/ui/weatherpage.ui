@@ -8,8 +8,6 @@
                 <property name="vexpand">1</property>
                 <property name="hexpand">1</property>
                 <property name="spacing">18</property>
-                <property name="margin-top">18</property>
-                <property name="margin-bottom">18</property>
                 <property name="margin-start">18</property>
                 <property name="margin-end">18</property>
                 <property name="orientation">vertical</property>
@@ -26,21 +24,12 @@
                                 <property name="spacing">6</property>
                                 <child>
                                     <object class="GtkLabel" id="location_label">
-                                        <property name="xalign">1</property>
+                                        <property name="xalign">0</property>
                                         <property name="hexpand">1</property>
                                         <property name="label">—————</property>
                                         <style>
                                             <class name="view-title"/>
                                         </style>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="BisCarouselIndicatorDots" id="lines">
-                                        <property name="halign">end</property>
-                                        <property name="hexpand">1</property>
-                                        <binding name="carousel">
-                                            <lookup name="car" type="KairosWeatherPage" />
-                                        </binding>
                                     </object>
                                 </child>
                             </object>
@@ -155,10 +144,22 @@
                             </object>
                         </child>
                         <child>
+                            <object class="BisCarouselIndicatorDots" id="lines">
+                                <property name="hexpand">1</property>
+                                <property name="halign">center</property>
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">18</property>
+                                <binding name="carousel">
+                                    <lookup name="car" type="KairosWeatherPage" />
+                                </binding>
+                            </object>
+                        </child>
+                        <child>
                             <object class="GtkLabel" id="kudos_label">
                                 <property name="halign">center</property>
                                 <property name="use-markup">1</property>
                                 <property name="margin-top">6</property>
+                                <property name="margin-bottom">18</property>
                                 <style>
                                     <class name="caption"/>
                                 </style>

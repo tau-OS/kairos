@@ -53,6 +53,8 @@ public class Kairos.WeatherPage : He.Bin {
     unowned He.MiniContentBlock pressure_block;
     [GtkChild]
     unowned He.DisclosureButton refresh_button;
+    [GtkChild]
+    public unowned Bis.CarouselIndicatorDots lines;
     
     public WeatherPage (MainWindow win, GWeather.Location location) {
         Object (
@@ -78,7 +80,7 @@ public class Kairos.WeatherPage : He.Bin {
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
-        
+
         set_info (location);
         set_style (location);
         weather_info.update ();
@@ -91,16 +93,12 @@ public class Kairos.WeatherPage : He.Bin {
         
         weather_info.updated.connect (() => {
             set_info (location);
-            this.notify["location"].connect (() => {
-                set_style (location);
-            });
+            set_style (location);
             weather_info.update ();
         });
 
         car = win.carousel;
         win.carousel.page_changed.connect ((page) => {
-            set_info (location);
-            set_style (location);
             weather_info.update ();
         });
     }
@@ -138,31 +136,33 @@ public class Kairos.WeatherPage : He.Bin {
         switch (weather_info.get_symbolic_icon_name ()) {
             case "weather-clear-night-symbolic":
             case "weather-few-clouds-night-symbolic":
-                color_primary = "#22262b";
+                color_primary = "#2d2d2d";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/night.svg";
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
+            case "weather-fog-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/cloudy.svg";
                 break;
             case "weather-showers-symbolic":
             case "weather-showers-scattered-symbolic":
+            case "weather-storm-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
                 graphic = "resource://co/tauos/Kairos/rain.svg";
                 break;
             case "weather-snow-symbolic":
-                color_primary = "#fafcff";
+                color_primary = "#efefef";
                 color_secondary = "#2d2d2d";
                 graphic = "resource://co/tauos/Kairos/snow.svg";
                 break;
             default:
-                color_primary = "#58a8fa";
-                color_secondary = "#fafafa";
-                graphic = "resource://co/tauos/Kairos/sunny.svg";
+                color_primary = "#f0f0f2";
+                color_secondary = "#2d2d2d";
+                graphic = "";
                 break;
         }
         

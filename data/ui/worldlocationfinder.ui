@@ -45,6 +45,8 @@
                               <property name="title">No Location Searched</property>
                               <property name="description">Search for a location.</property>
                               <property name="icon">location-services-disabled-symbolic</property>
+                              <property name="margin-top">18</property>
+                              <property name="margin-bottom">18</property>
                             </object>
                           </property>
                         </object>
