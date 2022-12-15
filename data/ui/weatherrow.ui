@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <template class="KairosWeatherRow" parent="HeBin">
+    <property name="hexpand">1</property>
+    <property name="vexpand">1</property>
+    <property name="margin_top">12</property>
+    <property name="margin_bottom">12</property>
+    <child>
+        <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <property name="spacing">12</property>
+            <child>
+                <object class="GtkLabel" id="time_label">
+                    <property name="label">Now</property>
+                </object>
+            </child>
+            <child>
+                <object class="GtkImage" id="image">
+                    <property name="valign">start</property>
+                    <property name="vexpand">1</property>
+                    <property name="pixel_size">32</property>
+                    <property name="icon_name">weather-showers-symbolic</property>
+                </object>
+            </child>
+            <child>
+                <object class="GtkLabel" id="forecast_label">
+                    <property name="valign">2</property>
+                    <property name="label">13°</property>
+                </object>
+            </child>
+        </object>
+    </child>
+  </template>
+</interface>

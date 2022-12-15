@@ -45,6 +45,7 @@ sources = [
   'src/Application.vala',
   'src/MainWindow.vala',
   'src/WeatherPage.vala',
+  'src/WeatherRow.vala',
   'src/WorldLocationFinder.vala',
   'src/Utils.vala',
 ]

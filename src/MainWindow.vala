@@ -188,6 +188,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             }
 
             var wp = new WeatherPage (this, found_location);
+            wp.set_style (found_location);
             carousel.prepend (wp);
         });
 

@@ -11,6 +11,7 @@
 
     <file alias="mainwindow.ui">ui/mainwindow.ui</file>
     <file alias="weatherpage.ui">ui/weatherpage.ui</file>
+    <file alias="weatherrow.ui">ui/weatherrow.ui</file>
     <file alias="worldlocationfinder.ui">ui/worldlocationfinder.ui</file>
   </gresource>
   <gresource prefix="/co/tauos/Kairos/icons">

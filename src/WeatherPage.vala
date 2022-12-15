@@ -32,6 +32,12 @@ public class Kairos.WeatherPage : He.Bin {
     public string pressure {get; set;}
     public string temphilo {get; set;}
     public string wind {get; set;}
+
+    private const int ONE_HOUR = 60 * 60 * 1000 * 1000;
+    private const int TWENTY_FOUR_HOURS = 24 * ONE_HOUR;
+
+    private GLib.SList<weak GWeather.Info> hourly_info = new GLib.SList<weak GWeather.Info>();
+    private bool has_forecast_info = false;
     
     [GtkChild]
     unowned Gtk.Label location_label;
@@ -43,6 +49,8 @@ public class Kairos.WeatherPage : He.Bin {
     unowned Gtk.Label temp_label;
     [GtkChild]
     unowned Gtk.Label kudos_label;
+    [GtkChild]
+    unowned Gtk.Box timeline;
     [GtkChild]
     unowned He.MiniContentBlock temp_block;
     [GtkChild]
@@ -83,17 +91,20 @@ public class Kairos.WeatherPage : He.Bin {
 
         set_info (location);
         set_style (location);
+        update_timeline (weather_info);
         weather_info.update ();
 
         refresh_button.clicked.connect (() => {
             set_info (location);
             set_style (location);
+            update_timeline (weather_info);
             weather_info.update ();
         });
         
         weather_info.updated.connect (() => {
             set_info (location);
             set_style (location);
+            update_timeline (weather_info);
             weather_info.update ();
         });
 
@@ -101,8 +112,54 @@ public class Kairos.WeatherPage : He.Bin {
         win.carousel.page_changed.connect ((page) => {
             weather_info.update ();
         });
+
+        has_forecast_info = false;
     }
-    
+
+    public GLib.SList<GWeather.Info> preprocess(GLib.DateTime now, GWeather.Info forecast_info, GLib.SList<weak GWeather.Info> infos) {
+        GLib.SList<GWeather.Info> combo_info = new GLib.SList<GWeather.Info>();
+        combo_info.append (forecast_info);
+        foreach (var ib in infos) {
+            combo_info.append (ib);
+        }
+        return combo_info;
+    }
+    public void add_hour_entry(GWeather.Info info, GLib.TimeZone tz, bool now) {
+        string time_label; string time_format;
+        long date; info.get_value_update(out date);
+        var datetime = new GLib.DateTime.from_unix_utc(date).to_timezone(tz);
+
+        if (now) {
+            time_label = _("Now");
+        } else {
+            time_format = "%R";
+            time_label = datetime.format(time_format);
+        }
+
+        var entry = new WeatherRow (info, time_label);
+        timeline.append(entry);
+    }
+
+    public void update_timeline (GWeather.Info info) {
+        var forecasts = info.get_forecast_list().copy ();
+        var tz = location.get_timezone();
+        var now = new GLib.DateTime.now(tz);
+
+        GLib.SList<GWeather.Info> hourlyinfo = preprocess(now, info, forecasts);
+        uint length = hourlyinfo.length ();
+        if (length > 0 && has_forecast_info == false) {
+            for (var i = 0; i < length; i++) {
+                var inf = hourlyinfo.nth (i).data;
+                var is_now = hourlyinfo.index(inf) == 0;
+                if (hourlyinfo.index(inf) > 12)
+                    add_hour_entry (inf, tz, is_now);
+                    has_forecast_info = true;
+            }
+        }
+
+        this.hourly_info = hourlyinfo.copy ();
+    }
+
     public void set_info (GWeather.Location? loc) {
         if (loc == null) {
             return;
@@ -158,6 +215,11 @@ public class Kairos.WeatherPage : He.Bin {
                 color_primary = "#efefef";
                 color_secondary = "#2d2d2d";
                 graphic = "resource://co/tauos/Kairos/snow.svg";
+                break;
+            case "weather-clear-symbolic":
+                color_primary = "#268ef9";
+                color_secondary = "#2d2d2d";
+                graphic = "resource://co/tauos/Kairos/sunny.svg";
                 break;
             default:
                 color_primary = "#f0f0f2";
