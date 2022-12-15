@@ -218,7 +218,7 @@ public class Kairos.WeatherPage : He.Bin {
                 break;
             case "weather-clear-symbolic":
                 color_primary = "#268ef9";
-                color_secondary = "#2d2d2d";
+                color_secondary = "#f0f0f2";
                 graphic = "resource://co/tauos/Kairos/sunny.svg";
                 break;
             default:
