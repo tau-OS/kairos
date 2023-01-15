@@ -4,7 +4,7 @@
         <property name="vexpand">1</property>
         <property name="hexpand">1</property>
         <child>
-            <object class="GtkBox">
+            <object class="GtkBox" id="weather_page">
                 <property name="vexpand">1</property>
                 <property name="hexpand">1</property>
                 <property name="spacing">18</property>
@@ -16,7 +16,7 @@
                         <property name="orientation">vertical</property>
                         <property name="hexpand">1</property>
                         <property name="spacing">6</property>
-                        <property name="margin-top">47</property>
+                        <property name="margin-top">53</property>
                         <child>
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
@@ -86,11 +86,13 @@
                                 <child>
                                     <object class="GtkBox" id="timeline">
                                         <property name="spacing">24</property>
+                                        <property name="vexpand_set">1</property>
                                     </object>
                                 </child>
                             </object>
                         </child>
-                            <object class="GtkScrolledWindow" id="weather_page">
+                        <child>
+                            <object class="GtkScrolledWindow">
                                 <property name="vexpand">1</property>
                                 <property name="hscrollbar_policy">never</property>
                                 <child>
