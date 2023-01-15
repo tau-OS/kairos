@@ -94,7 +94,6 @@
                                 <property name="vexpand">1</property>
                                 <property name="hscrollbar_policy">never</property>
                                 <child>
-                                <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <property name="spacing">6</property>
@@ -157,8 +156,8 @@
                                         </child>
                                     </object>
                                 </child>
-                              </object>
-                           </child>
+                            </object>
+                        </child>
                         <child>
                             <object class="BisCarouselIndicatorDots" id="lines">
                                 <property name="hexpand">1</property>
