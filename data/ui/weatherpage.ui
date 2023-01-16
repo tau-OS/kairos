@@ -59,7 +59,6 @@
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <property name="hexpand">1</property>
-                                        <property name="spacing">6</property>
                                         <child>
                                             <object class="GtkLabel" id="temp_label">
                                                 <property name="valign">end</property>
