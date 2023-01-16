@@ -1,5 +1,14 @@
 <interface>
     <requires lib="gtk" version="4.0"/>
+    <menu id="menu">
+        <item>
+        <attribute name="label" translatable="yes">About Kairos</attribute>
+        <attribute name="action">win.action_about</attribute>
+        </item>
+    </menu>
+</interface>
+<interface>
+    <requires lib="gtk" version="4.0"/>
     <template class="KairosWeatherPage" parent="HeBin">
         <property name="vexpand">1</property>
         <property name="hexpand">1</property>
@@ -8,8 +17,6 @@
                 <property name="vexpand">1</property>
                 <property name="hexpand">1</property>
                 <property name="spacing">18</property>
-                <property name="margin-start">18</property>
-                <property name="margin-end">18</property>
                 <property name="orientation">vertical</property>
                 <child>
                     <object class="GtkBox">
@@ -21,6 +28,8 @@
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="hexpand">1</property>
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">18</property>
                                 <property name="spacing">6</property>
                                 <child>
                                     <object class="GtkLabel" id="location_label">
@@ -36,12 +45,14 @@
                         </child>
                         <child>
                             <object class="GtkBox">
-                                <property name="spacing">18</property>
-                                <property name="margin-top">100</property>
+                                <property name="spacing">12</property>
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">18</property>
+                                <property name="margin-top">60</property>
                                 <child>
                                     <object class="GtkImage" id="weather_icon">
                                         <property name="valign">center</property>
-                                        <property name="pixel-size">96</property>
+                                        <property name="pixel-size">64</property>
                                     </object>
                                 </child>
                                 <child>
@@ -78,11 +89,36 @@
                                         <property name="icon">view-refresh-symbolic</property>
                                     </object>
                                 </child>
+                                <child>
+                                    <object class="GtkButton" id="search_button">
+                                        <property name="icon-name">city-symbolic</property>
+                                        <property name="halign">end</property>
+                                        <property name="valign">end</property>
+                                        <property name="tooltip-text" translatable="true">Manage Cities…</property>
+                                        <style>
+                                            <class name="disclosure-button"/>
+                                        </style>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkMenuButton" id="menu_button">
+                                        <property name="icon-name">open-menu-symbolic</property>
+                                        <property name="halign">end</property>
+                                        <property name="valign">end</property>
+                                        <property name="menu-model">menu</property>
+                                        <style>
+                                            <class name="disclosure-button"/>
+                                        </style>
+                                    </object>
+                                </child>
                             </object>
                         </child>
                         <child>
                             <object class="GtkScrolledWindow">
                                 <property name="vscrollbar_policy">never</property>
+                                <property name="margin-start">18</property>
+                                <property name="margin-end">18</property>
+                                <property name="margin-top">18</property>
                                 <child>
                                     <object class="GtkBox" id="timeline">
                                         <property name="spacing">24</property>
@@ -99,7 +135,8 @@
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <property name="spacing">6</property>
-                                        <property name="margin-top">18</property>
+                                        <property name="margin-start">18</property>
+                                        <property name="margin-end">18</property>
                                         <child>
                                             <object class="GtkBox">
                                                 <property name="spacing">12</property>

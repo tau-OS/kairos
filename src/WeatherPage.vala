@@ -63,6 +63,10 @@ public class Kairos.WeatherPage : He.Bin {
     unowned He.DisclosureButton refresh_button;
     [GtkChild]
     public unowned Bis.CarouselIndicatorDots lines;
+    [GtkChild]
+    unowned Gtk.Button search_button;
+    [GtkChild]
+    unowned Gtk.MenuButton menu_button;
     
     public WeatherPage (MainWindow win, GWeather.Location location) {
         Object (
@@ -79,6 +83,8 @@ public class Kairos.WeatherPage : He.Bin {
         dew_block.add_css_class ("block");
         pressure_block.add_css_class ("block");
         refresh_button.add_css_class ("block");
+        search_button.add_css_class ("block");
+        menu_button.add_css_class ("block");
         
         ((Gtk.Box) wind_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
         ((Gtk.Box) temp_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
@@ -111,6 +117,12 @@ public class Kairos.WeatherPage : He.Bin {
         car = win.carousel;
         win.carousel.page_changed.connect ((page) => {
             weather_info.update ();
+        });
+
+        search_button.clicked.connect (() => {
+            win.stack.visible_child_name = "list";
+            win.titlebar.show_back = true;
+            win.titlebar.remove_css_class ("scrim");
         });
 
         has_forecast_info = false;
@@ -151,7 +163,7 @@ public class Kairos.WeatherPage : He.Bin {
             for (var i = 0; i < length; i++) {
                 var inf = hourlyinfo.nth (i).data;
                 var is_now = hourlyinfo.index(inf) == 0;
-                if (hourlyinfo.index(inf) > 12)
+                if (hourlyinfo.index(inf) >= 12)
                     add_hour_entry (inf, tz, is_now);
                     has_forecast_info = true;
             }
@@ -239,6 +251,7 @@ public class Kairos.WeatherPage : He.Bin {
             transition: all 600ms ease-in-out;
         }
         .block {
+            background: alpha(%s, 0.1);
             background-color: alpha(%s, 0.1);
             color: %s;
             transition: all 600ms ease-in-out;
@@ -249,7 +262,7 @@ public class Kairos.WeatherPage : He.Bin {
         }
         """;
         
-        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_secondary, color_secondary, color_primary);
+        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_secondary, color_secondary, color_secondary, color_primary);
         provider.load_from_data ((uint8[])colored_css);
         this.get_style_context().add_provider(provider, 999);
         temp_block.get_style_context().add_provider(provider, 999);
@@ -257,6 +270,8 @@ public class Kairos.WeatherPage : He.Bin {
         dew_block.get_style_context().add_provider(provider, 999);
         pressure_block.get_style_context().add_provider(provider, 999);
         refresh_button.get_style_context().add_provider(provider, 999);
+        search_button.get_style_context().add_provider(provider, 999);
+        menu_button.get_style_context().add_provider(provider, 999);
     }
     
     [GtkCallback]

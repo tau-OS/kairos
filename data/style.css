@@ -17,6 +17,10 @@
 .search {
   border-radius: 999px;
 }
+.disclosure-button button {
+  border-radius: 999px;
+  background: alpha(@view_bg_color, 0.02);
+}
 
 .scrim {
   color: #fafafa;

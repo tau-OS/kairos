@@ -81,13 +81,11 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkChild]
     public unowned Bis.Carousel carousel;
     [GtkChild]
-    unowned Gtk.Button search_button;
-    [GtkChild]
-    unowned Gtk.Stack stack;
+    public unowned Gtk.Stack stack;
     [GtkChild]
     unowned Gtk.ListBox listbox2;
     [GtkChild]
-    unowned He.AppBar titlebar;
+    public unowned He.AppBar titlebar;
 
     public MainWindow (He.Application application) {
         Object (
@@ -118,13 +116,6 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         var theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
         theme.add_resource_path ("/co/tauos/Kairos/");
 
-        search_button.clicked.connect (() => {
-            stack.visible_child_name = "list";
-            titlebar.show_back = true;
-            titlebar.remove_css_class ("scrim");
-            search_button.visible = false;
-        });
-
         locations = new Utils.ContentStore ();
         locations.items_changed.connect ((position, removed, added) => {
             save ();
@@ -142,7 +133,6 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             if (stack.visible_child_name == "main")
                 titlebar.show_back = false;
                 titlebar.add_css_class ("scrim");
-                search_button.visible = true;
         });
 
         set_size_request (360, 150);
