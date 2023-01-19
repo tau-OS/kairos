@@ -6,8 +6,6 @@
         <attribute name="action">win.action_about</attribute>
         </item>
     </menu>
-</interface>
-<interface>
     <requires lib="gtk" version="4.0"/>
     <template class="KairosWeatherPage" parent="HeBin">
         <property name="vexpand">1</property>
@@ -28,9 +26,8 @@
                             <object class="GtkBox">
                                 <property name="orientation">vertical</property>
                                 <property name="hexpand">1</property>
-                                <property name="margin-start">18</property>
-                                <property name="margin-end">18</property>
-                                <property name="margin-top">18</property>
+                                <property name="margin-start">20</property>
+                                <property name="margin-top">11</property>
                                 <property name="spacing">6</property>
                                 <child>
                                     <object class="GtkLabel" id="location_label">
@@ -49,7 +46,7 @@
                                 <property name="spacing">12</property>
                                 <property name="margin-start">18</property>
                                 <property name="margin-end">18</property>
-                                <property name="margin-top">60</property>
+                                <property name="margin-top">18</property>
                                 <child>
                                     <object class="GtkImage" id="weather_icon">
                                         <property name="valign">center</property>
@@ -212,7 +209,6 @@
                             <object class="GtkLabel" id="kudos_label">
                                 <property name="halign">center</property>
                                 <property name="use-markup">1</property>
-                                <property name="margin-top">6</property>
                                 <property name="margin-bottom">18</property>
                                 <style>
                                     <class name="caption"/>
