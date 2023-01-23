@@ -42,7 +42,7 @@
                     <property name="name">list</property>
                     <property name="child">
                       <object class="GtkBox">
-                        <property name="margin-top">47</property>
+                        <property name="margin-top">53</property>
                         <property name="orientation">vertical</property>
                         <child>
                           <object class="HeViewTitle">
