@@ -9,7 +9,6 @@
               <property name="spacing">12</property>
               <child>
                 <object class="HeAppBar">
-                  <property name="flat">1</property>
                   <property name="show-buttons">1</property>
                   <property name="show-back">0</property>
                 </object>
