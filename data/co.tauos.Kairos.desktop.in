@@ -8,5 +8,4 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Categories=GTK;Utility;
-DBusActivatable=true
 X-Geoclue-Reason=Allows your location to be shown on the app.
