@@ -39,7 +39,7 @@ public class Kairos.Application : He.Application {
         accent_color.parse("#bf8856");
         default_accent_color = He.Color.from_gdk_rgba(accent_color);
 
-        resource_base_path = "/co/tauos/Kairos";
+        resource_base_path = "/com/fyralabs/Kairos";
 
         base.startup ();
 

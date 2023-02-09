@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-  <schema path="/co/tauos/Kairos/" id="co.tauos.Kairos" gettext-domain="co.tauos.Kairos">
+  <schema path="/com/fyralabs/Kairos/" id="com.fyralabs.Kairos" gettext-domain="com.fyralabs.Kairos">
     <key name="locations" type="aa{sv}">
       <default>[]</default>
       <summary>Configured world locations</summary>

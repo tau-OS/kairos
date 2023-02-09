@@ -17,7 +17,7 @@
 * Boston, MA 02110-1301 USA
 */
 
-[GtkTemplate (ui = "/co/tauos/Kairos/weatherpage.ui")]
+[GtkTemplate (ui = "/com/fyralabs/Kairos/weatherpage.ui")]
 public class Kairos.WeatherPage : He.Bin {
     private Gtk.CssProvider provider;
     private string color_primary = "";
@@ -92,7 +92,7 @@ public class Kairos.WeatherPage : He.Bin {
         ((Gtk.Box) pressure_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
 
         weather_info = new GWeather.Info (location);
-        weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/co.tauos.Kairos.doap");
+        weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/com.fyralabs.Kairos.doap");
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
 
         set_info (location);
@@ -207,31 +207,31 @@ public class Kairos.WeatherPage : He.Bin {
             case "weather-few-clouds-night-symbolic":
                 color_primary = "#2d2d2d";
                 color_secondary = "#fafafa";
-                graphic = "resource://co/tauos/Kairos/night.svg";
+                graphic = "resource://com/fyralabs/Kairos/night.svg";
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
             case "weather-fog-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
-                graphic = "resource://co/tauos/Kairos/cloudy.svg";
+                graphic = "resource://com/fyralabs/Kairos/cloudy.svg";
                 break;
             case "weather-showers-symbolic":
             case "weather-showers-scattered-symbolic":
             case "weather-storm-symbolic":
                 color_primary = "#828292";
                 color_secondary = "#fafafa";
-                graphic = "resource://co/tauos/Kairos/rain.svg";
+                graphic = "resource://com/fyralabs/Kairos/rain.svg";
                 break;
             case "weather-snow-symbolic":
                 color_primary = "#efefef";
                 color_secondary = "#2d2d2d";
-                graphic = "resource://co/tauos/Kairos/snow.svg";
+                graphic = "resource://com/fyralabs/Kairos/snow.svg";
                 break;
             case "weather-clear-symbolic":
                 color_primary = "#268ef9";
                 color_secondary = "#f0f0f2";
-                graphic = "resource://co/tauos/Kairos/sunny.svg";
+                graphic = "resource://com/fyralabs/Kairos/sunny.svg";
                 break;
             default:
                 color_primary = "#f0f0f2";

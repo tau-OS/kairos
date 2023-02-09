@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/co/tauos/Kairos">
+  <gresource prefix="/com/fyralabs/Kairos">
     <file alias="style.css">style.css</file>
 
     <file alias="cloudy.svg">assets/cloudy.svg</file>
@@ -14,7 +14,7 @@
     <file alias="weatherrow.ui">ui/weatherrow.ui</file>
     <file alias="worldlocationfinder.ui">ui/worldlocationfinder.ui</file>
   </gresource>
-  <gresource prefix="/co/tauos/Kairos/icons">
+  <gresource prefix="/com/fyralabs/Kairos/icons">
     <file alias="scalable/actions/city-symbolic.svg">icons/128/city-symbolic.svg</file>
   </gresource>
 </gresources>

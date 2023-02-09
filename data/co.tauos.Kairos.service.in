@@ -1,3 +1,0 @@
-[D-BUS Service]
-Name=co.tauos.Kairos
-Exec=co.tauos.Kairos --gapplication-service

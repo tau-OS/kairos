@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Kairos
 Comment=Check the weather outside
-Exec=co.tauos.Kairos
-Icon=co.tauos.Kairos
+Exec=com.fyralabs.Kairos
+Icon=com.fyralabs.Kairos
 Keywords=weather;temperature;
 Terminal=false
 Type=Application

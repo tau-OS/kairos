@@ -1,4 +1,4 @@
-[GtkTemplate (ui = "/co/tauos/Kairos/weatherrow.ui")]
+[GtkTemplate (ui = "/com/fyralabs/Kairos/weatherrow.ui")]
 public class Kairos.WeatherRow : He.Bin {
     [GtkChild]
     unowned Gtk.Label time_label;

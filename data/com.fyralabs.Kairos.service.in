@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.fyralabs.Kairos
+Exec=com.fyralabs.Kairos --gapplication-service

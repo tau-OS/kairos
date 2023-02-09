@@ -1,10 +1,9 @@
 {
-    "app-id" : "co.tauos.Kairos",
-    "runtime" : "co.tauos.Platform",
-    "runtime-version" : "daily",
-    "sdk" : "co.tauos.Sdk",
-    "command" : "co.tauos.Kairos",
-    "desktop-file-name-suffix" : " (Development)",
+    "app-id" : "com.fyralabs.Kairos",
+    "runtime" : "com.fyralabs.Platform",
+    "runtime-version" : "stable",
+    "sdk" : "com.fyralabs.Sdk",
+    "command" : "com.fyralabs.Kairos",
     "finish-args" : [
         "--socket=wayland",
         "--socket=fallback-x11",

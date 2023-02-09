@@ -27,7 +27,7 @@ jobs:
       name: "Build"
       with:
         bundle: kairos.flatpak
-        manifest-path: co.tauos.Kairos.json
+        manifest-path: com.fyralabs.Kairos.json
         cache-key: flatpak-builder-${{ github.sha }}
         repository-name: catalogue
         repository-url: https://repo.tauos.co/catalogue.flatpakrepo

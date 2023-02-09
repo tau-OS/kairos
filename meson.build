@@ -1,4 +1,4 @@
-project('co.tauos.Kairos', 'vala',
+project('com.fyralabs.Kairos', 'vala',
     version: '0.1.0'
 )
 
@@ -12,10 +12,10 @@ add_project_arguments([
 )
 
 if get_option('development')
-  app_id = 'co.tauos.Kairos'
+  app_id = 'com.fyralabs.Kairos'
   name_suffix = ' (Development)'
 else
-  app_id = 'co.tauos.Kairos'
+  app_id = 'com.fyralabs.Kairos'
   name_suffix = ''
 endif
 
@@ -36,7 +36,7 @@ add_project_arguments(
 )
 
 asresources = gnome.compile_resources(
-    'as-resources', 'data/co.tauos.Kairos.gresource.xml',
+    'as-resources', 'data/com.fyralabs.Kairos.gresource.xml',
     source_dir: 'data',
     c_name: 'as'
 )

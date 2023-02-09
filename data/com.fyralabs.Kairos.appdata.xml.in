@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component type="desktop-application">
-  <id>co.tauos.Kairos</id>
+  <id>com.fyralabs.Kairos</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+</project_license>
   <name>Kairos</name>
-  <launchable type="desktop-id">co.tauos.Kairos.desktop</launchable>
+  <launchable type="desktop-id">com.fyralabs.Kairos.desktop</launchable>
   <summary>Check the weather outside</summary>
   <description>
     <p>See the weather conditions with this app.</p>
@@ -21,7 +21,7 @@
     </release>
   </releases>
   <provides>
-    <binary>co.tauos.Kairos</binary>
+    <binary>com.fyralabs.Kairos</binary>
   </provides>
   <screenshots>
     <screenshot type="default">

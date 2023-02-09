@@ -68,7 +68,7 @@ public class Kairos.LocationRow : Gtk.ListBoxRow {
     }
 }
 
-[GtkTemplate (ui = "/co/tauos/Kairos/worldlocationfinder.ui")]
+[GtkTemplate (ui = "/com/fyralabs/Kairos/worldlocationfinder.ui")]
 public class Kairos.WorldLocationFinder : He.Window {
     private ListStore locations;
     private MainWindow win;

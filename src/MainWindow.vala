@@ -56,7 +56,7 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
     }
 }
 
-[GtkTemplate (ui = "/co/tauos/Kairos/mainwindow.ui")]
+[GtkTemplate (ui = "/com/fyralabs/Kairos/mainwindow.ui")]
 public class Kairos.MainWindow : He.ApplicationWindow {
     public Utils.ContentStore locations;
     private GLib.Settings settings;
@@ -98,7 +98,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     }
 
     construct {
-        settings = new GLib.Settings ("co.tauos.Kairos");
+        settings = new GLib.Settings ("com.fyralabs.Kairos");
         // Actions
         actions = new SimpleActionGroup ();
         actions.add_action_entries (ACTION_ENTRIES, this);
@@ -114,7 +114,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         app.set_accels_for_action ("win.action_keys", {"<Ctrl>question"});
 
         var theme = Gtk.IconTheme.get_for_display (Gdk.Display.get_default ());
-        theme.add_resource_path ("/co/tauos/Kairos/");
+        theme.add_resource_path ("/com/fyralabs/Kairos/");
 
         locations = new Utils.ContentStore ();
         locations.items_changed.connect ((position, removed, added) => {
@@ -239,8 +239,8 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             "https://github.com/tau-os/kairos",
             // TRANSLATORS: 'Name <email@domain.com>' or 'Name https://website.example'
             {},
-            {"Lains"},
-            2022,
+            {"Fyra Labs"},
+            2023,
             He.AboutWindow.Licenses.GPLv3,
             He.Colors.BROWN
         );

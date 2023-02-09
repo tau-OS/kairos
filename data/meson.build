@@ -45,7 +45,7 @@ service_conf.set('PACKAGE_NAME', meson.project_name())
 service_conf.set('pkgdatadir', pkgdatadir)
 
 configure_file(
-	input: 'co.tauos.Kairos.service.in',
+	input: 'com.fyralabs.Kairos.service.in',
 	output: app_id + '.service',
 	configuration: service_conf,
 	install: true,
