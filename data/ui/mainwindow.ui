@@ -52,6 +52,7 @@
                         </child>
                         <child>
                           <object class="HeOverlayButton">
+                            <property name="typeb">primary</property>
                             <property name="icon">list-add-symbolic</property>
                             <signal name="clicked" handler="add_button_clicked"/>
                             <child>
