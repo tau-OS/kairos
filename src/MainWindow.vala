@@ -241,7 +241,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             {},
             {"Fyra Labs"},
             2023,
-            He.AboutWindow.Licenses.GPLv3,
+            He.AboutWindow.Licenses.GPLV3,
             He.Colors.BROWN
         );
         about.present ();
