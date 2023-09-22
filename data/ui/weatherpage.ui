@@ -1,12 +1,5 @@
 <interface>
     <requires lib="gtk" version="4.0"/>
-    <menu id="menu">
-        <item>
-        <attribute name="label" translatable="yes">About Kairos</attribute>
-        <attribute name="action">win.action_about</attribute>
-        </item>
-    </menu>
-    <requires lib="gtk" version="4.0"/>
     <template class="KairosWeatherPage" parent="HeBin">
         <property name="vexpand">1</property>
         <property name="hexpand">1</property>
@@ -16,6 +9,7 @@
                 <property name="hexpand">1</property>
                 <property name="spacing">18</property>
                 <property name="orientation">vertical</property>
+                <property name="margin-start">260</property>
                 <child>
                     <object class="GtkBox">
                         <property name="orientation">vertical</property>
@@ -24,29 +18,9 @@
                         <property name="margin-top">53</property>
                         <child>
                             <object class="GtkBox">
-                                <property name="orientation">vertical</property>
-                                <property name="hexpand">1</property>
-                                <property name="margin-start">20</property>
-                                <property name="margin-top">11</property>
-                                <property name="spacing">6</property>
-                                <child>
-                                    <object class="GtkLabel" id="location_label">
-                                        <property name="xalign">0</property>
-                                        <property name="hexpand">1</property>
-                                        <property name="label">—————</property>
-                                        <style>
-                                            <class name="view-title"/>
-                                        </style>
-                                    </object>
-                                </child>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkBox">
                                 <property name="spacing">12</property>
                                 <property name="margin-start">18</property>
                                 <property name="margin-end">18</property>
-                                <property name="margin-top">18</property>
                                 <child>
                                     <object class="GtkImage" id="weather_icon">
                                         <property name="valign">center</property>
@@ -54,19 +28,21 @@
                                     </object>
                                 </child>
                                 <child>
+                                    <object class="GtkLabel" id="temp_label">
+                                        <property name="valign">end</property>
+                                        <property name="halign">start</property>
+                                        <property name="label">—°C</property>
+                                        <style>
+                                            <class name="temp-display"/>
+                                        </style>
+                                    </object>
+                                </child>
+                                <child>
                                     <object class="GtkBox">
                                         <property name="orientation">vertical</property>
                                         <property name="hexpand">1</property>
-                                        <child>
-                                            <object class="GtkLabel" id="temp_label">
-                                                <property name="valign">end</property>
-                                                <property name="halign">start</property>
-                                                <property name="label">—°C</property>
-                                                <style>
-                                                    <class name="temp-display"/>
-                                                </style>
-                                            </object>
-                                        </child>
+                                        <property name="spacing">12</property>
+                                        <property name="valign">center</property>
                                         <child>
                                             <object class="GtkLabel" id="weather_label">
                                                 <property name="halign">start</property>
@@ -74,6 +50,20 @@
                                                 <property name="label">————</property>
                                                 <style>
                                                     <class name="cb-title"/>
+                                                </style>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkLabel" id="temp_block">
+                                                <property name="halign">start</property>
+                                                <property name="hexpand">1</property>
+                                                <binding name="label">
+                                                    <closure type="gchararray" function="get_temphilo_label">
+                                                        <lookup name="temphilo" type="KairosWeatherPage"/>
+                                                    </closure>
+                                                </binding>
+                                                <style>
+                                                    <class name="cb-subtitle"/>
                                                 </style>
                                             </object>
                                         </child>
@@ -86,40 +76,40 @@
                                         <property name="icon">view-refresh-symbolic</property>
                                     </object>
                                 </child>
-                                <child>
-                                    <object class="GtkButton" id="search_button">
-                                        <property name="icon-name">city-symbolic</property>
-                                        <property name="halign">end</property>
-                                        <property name="valign">end</property>
-                                        <property name="tooltip-text" translatable="true">Manage Cities…</property>
-                                        <style>
-                                            <class name="disclosure-button"/>
-                                        </style>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkMenuButton" id="menu_button">
-                                        <property name="icon-name">open-menu-symbolic</property>
-                                        <property name="halign">end</property>
-                                        <property name="valign">end</property>
-                                        <property name="menu-model">menu</property>
-                                        <style>
-                                            <class name="disclosure-button"/>
-                                        </style>
-                                    </object>
-                                </child>
                             </object>
                         </child>
                         <child>
-                            <object class="GtkScrolledWindow">
-                                <property name="vscrollbar_policy">never</property>
+                            <object class="GtkBox">
+                                <property name="vexpand_set">1</property>
                                 <property name="margin-start">18</property>
                                 <property name="margin-end">18</property>
                                 <property name="margin-top">18</property>
+                                <property name="orientation">vertical</property>
+                                <style>
+                                    <class name="block"/>
+                                </style>
                                 <child>
-                                    <object class="GtkBox" id="timeline">
-                                        <property name="spacing">24</property>
+                                    <object class="GtkBox" id="graph">
                                         <property name="vexpand_set">1</property>
+                                        <property name="orientation">vertical</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="HeDivider">
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkScrolledWindow">
+                                        <property name="vscrollbar_policy">never</property>
+                                        <child>
+                                            <object class="GtkBox" id="timeline">
+                                                <property name="orientation">horizontal</property>
+                                                <property name="spacing">24</property>
+                                                <property name="margin-start">18</property>
+                                                <property name="margin-end">18</property>
+                                                <property name="vexpand_set">1</property>
+                                            </object>
+                                        </child>
                                     </object>
                                 </child>
                             </object>
@@ -133,6 +123,7 @@
                                         <property name="orientation">vertical</property>
                                         <property name="spacing">6</property>
                                         <property name="margin-start">18</property>
+                                        <property name="margin-top">18</property>
                                         <property name="margin-end">18</property>
                                         <child>
                                             <object class="GtkBox">
@@ -160,23 +151,6 @@
                                                         </binding>
                                                     </object>
                                                 </child>
-                                            </object>
-                                        </child>
-                                        <child>
-                                            <object class="GtkBox">
-                                                <property name="spacing">12</property>
-                                                <property name="homogeneous">1</property>
-                                                <child>
-                                                    <object class="HeMiniContentBlock" id="temp_block">
-                                                        <property name="icon">system-switch-user-symbolic</property>
-                                                        <property name="title" translatable="true">Feels Like</property>
-                                                        <binding name="subtitle">
-                                                            <closure type="gchararray" function="get_temphilo_label">
-                                                                <lookup name="temphilo" type="KairosWeatherPage"/>
-                                                            </closure>
-                                                        </binding>
-                                                    </object>
-                                                </child>
                                                 <child>
                                                     <object class="HeMiniContentBlock" id="pressure_block">
                                                         <property name="icon">folder-download-symbolic</property>
@@ -195,20 +169,10 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BisCarouselIndicatorDots" id="lines">
-                                <property name="hexpand">1</property>
-                                <property name="halign">center</property>
-                                <property name="margin-start">18</property>
-                                <property name="margin-end">18</property>
-                                <binding name="carousel">
-                                    <lookup name="car" type="KairosWeatherPage" />
-                                </binding>
-                            </object>
-                        </child>
-                        <child>
                             <object class="GtkLabel" id="kudos_label">
-                                <property name="halign">center</property>
+                                <property name="halign">end</property>
                                 <property name="use-markup">1</property>
+                                <property name="margin-end">18</property>
                                 <property name="margin-bottom">18</property>
                                 <style>
                                     <class name="caption"/>

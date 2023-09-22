@@ -19,7 +19,6 @@
 
 [GtkTemplate (ui = "/com/fyralabs/Kairos/weatherpage.ui")]
 public class Kairos.WeatherPage : He.Bin {
-    private Gtk.CssProvider provider;
     private string color_primary = "";
     private string color_secondary = "";
     private string graphic = "";
@@ -36,11 +35,9 @@ public class Kairos.WeatherPage : He.Bin {
     private const int ONE_HOUR = 60 * 60 * 1000 * 1000;
     private const int TWENTY_FOUR_HOURS = 24 * ONE_HOUR;
 
-    private GLib.SList<weak GWeather.Info> hourly_info = new GLib.SList<weak GWeather.Info>();
+    private GLib.SList<weak GWeather.Info> hourly_info = new GLib.SList<weak GWeather.Info> ();
     private bool has_forecast_info = false;
-    
-    [GtkChild]
-    unowned Gtk.Label location_label;
+
     [GtkChild]
     unowned Gtk.Image weather_icon;
     [GtkChild]
@@ -52,7 +49,7 @@ public class Kairos.WeatherPage : He.Bin {
     [GtkChild]
     unowned Gtk.Box timeline;
     [GtkChild]
-    unowned He.MiniContentBlock temp_block;
+    unowned Gtk.Box graph;
     [GtkChild]
     unowned He.MiniContentBlock dew_block;
     [GtkChild]
@@ -61,33 +58,26 @@ public class Kairos.WeatherPage : He.Bin {
     unowned He.MiniContentBlock pressure_block;
     [GtkChild]
     unowned He.DisclosureButton refresh_button;
-    [GtkChild]
-    public unowned Bis.CarouselIndicatorDots lines;
-    [GtkChild]
-    unowned Gtk.Button search_button;
-    [GtkChild]
-    unowned Gtk.MenuButton menu_button;
-    
+
     public WeatherPage (MainWindow win, GWeather.Location location) {
         Object (
             win: win,
             location: location
         );
     }
-    
+
     construct {
-        provider = new Gtk.CssProvider ();
         this.add_css_class ("window-bg");
+        win.add_css_class ("side-window-bg");
         wind_block.add_css_class ("block");
-        temp_block.add_css_class ("block");
         dew_block.add_css_class ("block");
         pressure_block.add_css_class ("block");
-        refresh_button.add_css_class ("block");
-        search_button.add_css_class ("block");
-        menu_button.add_css_class ("block");
-        
+        refresh_button.add_css_class ("block-button");
+        win.menu_button.add_css_class ("block-button");
+        win.listbox2.add_css_class ("block-row");
+        win.sidebar.add_css_class ("block-sidebar");
+
         ((Gtk.Box) wind_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
-        ((Gtk.Box) temp_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
         ((Gtk.Box) dew_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
         ((Gtk.Box) pressure_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
 
@@ -96,9 +86,9 @@ public class Kairos.WeatherPage : He.Bin {
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
 
         set_info (location);
-        set_style (location);
         update_timeline (weather_info);
         weather_info.update ();
+        set_style (location);
 
         refresh_button.clicked.connect (() => {
             set_info (location);
@@ -106,67 +96,71 @@ public class Kairos.WeatherPage : He.Bin {
             update_timeline (weather_info);
             weather_info.update ();
         });
-        
+
         weather_info.updated.connect (() => {
+            set_info (location);
+            update_timeline (weather_info);
+            weather_info.update ();
+        });
+
+        car = win.carousel;
+        car.page_changed.connect ((page) => {
             set_info (location);
             set_style (location);
             update_timeline (weather_info);
             weather_info.update ();
         });
 
-        car = win.carousel;
-        win.carousel.page_changed.connect ((page) => {
-            weather_info.update ();
-        });
-
-        search_button.clicked.connect (() => {
-            win.stack.visible_child_name = "list";
-            win.titlebar.show_back = true;
-            win.titlebar.remove_css_class ("scrim");
-        });
-
         has_forecast_info = false;
     }
 
-    public GLib.SList<GWeather.Info> preprocess(GLib.DateTime now, GWeather.Info forecast_info, GLib.SList<weak GWeather.Info> infos) {
-        GLib.SList<GWeather.Info> combo_info = new GLib.SList<GWeather.Info>();
+    public GLib.SList<GWeather.Info> preprocess (
+                                                 GLib.DateTime now,
+                                                 GWeather.Info forecast_info,
+                                                 GLib.SList<weak GWeather.Info> infos
+    ) {
+        GLib.SList<GWeather.Info> combo_info = new GLib.SList<GWeather.Info> ();
         combo_info.append (forecast_info);
         foreach (var ib in infos) {
             combo_info.append (ib);
         }
         return combo_info;
     }
-    public void add_hour_entry(GWeather.Info info, GLib.TimeZone tz, bool now) {
+    public void add_hour_entry (GWeather.Info info, bool now) {
         string time_label; string time_format;
-        long date; info.get_value_update(out date);
-        var datetime = new GLib.DateTime.from_unix_utc(date).to_timezone(tz);
+        long date; info.get_value_update (out date);
+        var datetime = new GLib.DateTime.from_unix_utc (date).to_local ();
 
         if (now) {
             time_label = _("Now");
         } else {
             time_format = "%R";
-            time_label = datetime.format(time_format);
+            time_label = datetime.format (time_format);
         }
 
         var entry = new WeatherRow (info, time_label);
-        timeline.append(entry);
+        timeline.append (entry);
     }
-
+    public void add_graph (GLib.SList<GWeather.Info> hourlyinfo) {
+        var entry = new WeatherGraph (hourlyinfo);
+        graph.prepend (entry);
+    }
     public void update_timeline (GWeather.Info info) {
-        var forecasts = info.get_forecast_list().copy ();
-        var tz = location.get_timezone();
-        var now = new GLib.DateTime.now(tz);
+        var forecasts = info.get_forecast_list ().copy ();
+        var now = new GLib.DateTime.now_local ();
 
-        GLib.SList<GWeather.Info> hourlyinfo = preprocess(now, info, forecasts);
+        GLib.SList<GWeather.Info> hourlyinfo = preprocess (now, info, forecasts);
         uint length = hourlyinfo.length ();
         if (length > 0 && has_forecast_info == false) {
             for (var i = 0; i < length; i++) {
                 var inf = hourlyinfo.nth (i).data;
-                var is_now = hourlyinfo.index(inf) == 0;
-                if (hourlyinfo.index(inf) >= 12)
-                    add_hour_entry (inf, tz, is_now);
+                var is_now = hourlyinfo.index (inf) == 0;
+                if (hourlyinfo.index (inf) >= 1)
+                    add_hour_entry (inf, is_now);
                     has_forecast_info = true;
             }
+            if (hourlyinfo.length () > 1)
+                add_graph (hourlyinfo);
         }
 
         this.hourly_info = hourlyinfo.copy ();
@@ -176,32 +170,31 @@ public class Kairos.WeatherPage : He.Bin {
         if (loc == null) {
             return;
         }
-        
-        location_label.label = dgettext ("libgweather-locations", loc.get_city_name ());
-        
+
         weather_icon.icon_name = weather_info.get_symbolic_icon_name ();
         weather_label.label = dgettext ("libgweather", weather_info.get_sky ());
-        
+
         double temp;
         weather_info.get_value_temp (GWeather.TemperatureUnit.DEFAULT, out temp);
         temp_label.label = _("%i°").printf ((int) temp);
-        
+
         string appr = weather_info.get_temp_summary ();
         temphilo = _("%s").printf (appr);
-        
+
         double windd; GWeather.WindDirection windir;
         weather_info.get_value_wind (GWeather.SpeedUnit.DEFAULT, out windd, out windir);
-        wind = "%.0f %s".printf(windd, GWeather.SpeedUnit.DEFAULT.to_string ());
+        wind = "%.0f %s".printf (windd, GWeather.SpeedUnit.DEFAULT.to_string ());
         string deew = weather_info.get_dew ();
-        dew = "%s".printf(deew);
-        
+        dew = "%s".printf (deew);
+
         string pres = weather_info.get_pressure ();
         pressure = _("%s").printf (pres);
-        
+
         kudos_label.label = weather_info.get_attribution ();
     }
 
     public void set_style (GWeather.Location? loc) {
+        var provider = new Gtk.CssProvider ();
         switch (weather_info.get_symbolic_icon_name ()) {
             case "weather-clear-night-symbolic":
             case "weather-few-clouds-night-symbolic":
@@ -239,41 +232,64 @@ public class Kairos.WeatherPage : He.Bin {
                 graphic = "";
                 break;
         }
-        
-        string COLOR_PRIMARY = """
+
+        string css = """
+        @define-color color_primary %s;
+        @define-color color_secondary %s;
+
         .window-bg {
             background-image: url(%s);
             background-position: 50% 50%;
             background-repeat: repeat;
             background-size: cover;
-            background-color: %s;
-            color: %s;
+            background-color: @color_primary;
+            color: @color_secondary;
             transition: all 600ms ease-in-out;
         }
         .block {
-            background: alpha(%s, 0.1);
-            background-color: alpha(%s, 0.1);
-            color: %s;
+            background: alpha(@color_secondary, 0.1);
+            color: @color_secondary;
+            border-radius: 12px;
             transition: all 600ms ease-in-out;
+            box-shadow: 0 0 4px 0 alpha(@window_bg_color, 0.25),
+                        0 4px 4px 0 alpha(@window_fg_color, 0.25),
+                        0 -1px 0 1px alpha(@window_bg_color, 0.25);
+        }
+        .block-row,.block-row-child {
+            color: @color_secondary;
+            background: none;
+        }
+        .block-row-child:hover,
+        .block-row-child:selected {
+            background: alpha(@color_secondary, 0.1);
+            color: @color_secondary;
+            transition: all 600ms ease-in-out;
+        }
+        .block-button {
+            background: alpha(@color_secondary, 0.08);
+            color: @color_secondary;
+            transition: all 600ms ease-in-out;
+        }
+        .block-sidebar {
+            background: alpha(@window_fg_color, 0.2);
+            color: @color_secondary;
+            transition: all 600ms ease-in-out;
+        }
+        .block-button:hover {
+            background: alpha(@color_secondary, 0.14);
+        }
+        .block-button:active {
+            background: alpha(@color_secondary, 0.15);
         }
         .side-window-bg {
-            background-color: mix(@window_bg_color, %s, 0.02);
-            transition: all 600ms ease-in-out;
+            background: mix(@color_secondary, @color_primary, 0.98);
+            box-shadow: inset 0 0 1px 0 alpha(@window_bg_color, 0.25);
         }
-        """;
-        
-        var colored_css = COLOR_PRIMARY.printf (graphic, color_primary, color_secondary, color_secondary, color_secondary, color_secondary, color_primary);
-        provider.load_from_data ((uint8[])colored_css);
-        this.get_style_context().add_provider(provider, 999);
-        temp_block.get_style_context().add_provider(provider, 999);
-        wind_block.get_style_context().add_provider(provider, 999);
-        dew_block.get_style_context().add_provider(provider, 999);
-        pressure_block.get_style_context().add_provider(provider, 999);
-        refresh_button.get_style_context().add_provider(provider, 999);
-        search_button.get_style_context().add_provider(provider, 999);
-        menu_button.get_style_context().add_provider(provider, 999);
+        """.printf(color_primary,color_secondary, graphic);
+        provider.load_from_data (css.data);
+        Gtk.StyleContext.add_provider_for_display (win.get_display (), provider, 999);
     }
-    
+
     [GtkCallback]
     string get_wind_label () {
         return wind;
@@ -284,7 +300,7 @@ public class Kairos.WeatherPage : He.Bin {
     }
     [GtkCallback]
     string get_temphilo_label () {
-        return temphilo;
+        return (_("Feels like ")) + temphilo;
     }
     [GtkCallback]
     string get_pressure_label () {

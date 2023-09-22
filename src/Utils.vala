@@ -3,6 +3,7 @@ namespace Kairos.Utils {
         public string? name { get; set; }
         public GWeather.Location location { get; set; }
         public bool automatic { get; set; default = false; }
+        public bool geo { get; set; default = false; }
 
         public ContentItem (GWeather.Location location) {
             Object (location: location);
@@ -79,6 +80,14 @@ namespace Kairos.Utils {
         public void add (ContentItem item) {
             if (sort_func == null) {
                 store.append (item);
+            } else {
+                store.insert_sorted (item, sort_func);
+            }
+        }
+
+        public void add_found (ContentItem item) {
+            if (sort_func == null) {
+                store.insert (0, item);
             } else {
                 store.insert_sorted (item, sort_func);
             }

@@ -9,9 +9,10 @@
     <child>
         <object class="GtkBox">
             <property name="orientation">vertical</property>
-            <property name="spacing">12</property>
+            <property name="spacing">6</property>
             <child>
                 <object class="GtkLabel" id="time_label">
+                    <property name="max-width-chars">5</property>
                     <property name="label">Now</property>
                 </object>
             </child>
@@ -26,6 +27,7 @@
             <child>
                 <object class="GtkLabel" id="forecast_label">
                     <property name="valign">2</property>
+                    <property name="max-width-chars">3</property>
                     <property name="label">13°</property>
                 </object>
             </child>

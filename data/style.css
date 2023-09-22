@@ -1,19 +1,6 @@
-.content-list row {
-  background: none;
-}
-.content-list row:hover .mini-content-block {
-  background: alpha(@accent_bg_color, 0.25);
-}
-
-.sblock {
-  background: alpha(@view_fg_color, 0.1);
-  border-radius: 999px;
-}
-
 .temp-display {
   font-size: 56px;
 }
-
 .search {
   border-radius: 999px;
 }
@@ -27,18 +14,8 @@
   padding: 0;
   margin: 0;
 }
-.scrim headerbar,
-.scrim .disclosure-button {
+.scrim headerbar {
   color: #fafafa;
-}
-.scrim box > label,
-.scrim .image-text-button label,
-.scrim entry text,
-.scrim widget > label {
-  text-shadow: 0 1px 1px #2d2d2d;
-}
-.scrim image {
-  -gtk-icon-shadow: 0 1px 1px #2d2d2d;
 }
 .scrim .close image,
 .scrim .maximize image,
@@ -47,6 +24,8 @@
 .scrim .disclosure-button {
   color: #fafafa;
   background: alpha(@accent_fg_color, 0.1);
-  box-shadow: 0 1px 1px 2px alpha(#2d2d2d, 0.2);
-  -gtk-icon-shadow: 0 1px 1px #2d2d2d;
+}
+
+.divider {
+  margin: 0;
 }

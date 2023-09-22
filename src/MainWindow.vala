@@ -22,15 +22,18 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
     public Utils.ContentItem data { get; construct set; }
     public string? lname { get; set; default = null; }
     public string? location { get; set; default = null; }
+    public bool geo { get; set; default = false; }
 
     public Gtk.Box main_box;
     public He.DisclosureButton loc_delete_button;
+    public Gtk.Image loc_geo_icon;
 
     public AddedLocationRow (Utils.ContentItem data) {
         Object (data: data);
 
         lname = data.location.get_city_name ();
         location = data.location.get_country_name ();
+        geo = data.geo;
 
         var loc_label = new Gtk.Label (lname);
         loc_label.halign = Gtk.Align.START;
@@ -39,7 +42,20 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         loc_ct_label.halign = Gtk.Align.START;
         loc_ct_label.add_css_class ("cb-subtitle");
 
+        loc_geo_icon = new Gtk.Image.from_icon_name ("user-trash-symbolic");
+        loc_geo_icon.add_css_class ("block");
+        loc_geo_icon.valign = Gtk.Align.START;
+        loc_geo_icon.halign = Gtk.Align.START;
+        loc_geo_icon.margin_end = 6;
+
+        if (data.geo) {
+            loc_geo_icon.visible = true;
+        } else {
+            loc_geo_icon.visible = false;
+        }
+
         loc_delete_button = new He.DisclosureButton ("user-trash-symbolic");
+        loc_delete_button.add_css_class ("block");
         loc_delete_button.halign = Gtk.Align.END;
         loc_delete_button.hexpand = true;
 
@@ -49,6 +65,8 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
 
         main_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 0);
         main_box.add_css_class ("mini-content-block");
+        main_box.add_css_class ("block-row-child");
+        main_box.append (loc_geo_icon);
         main_box.append (loc_box);
         main_box.append (loc_delete_button);
 
@@ -81,18 +99,23 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkChild]
     public unowned Bis.Carousel carousel;
     [GtkChild]
-    public unowned Gtk.Stack stack;
+    public unowned Gtk.ListBox listbox2;
     [GtkChild]
-    unowned Gtk.ListBox listbox2;
+    public unowned Gtk.Box main_box;
     [GtkChild]
-    public unowned He.AppBar titlebar;
+    public unowned He.SideBar sidebar;
+    [GtkChild]
+    public unowned He.AppBar tb;
+    [GtkChild]
+    public unowned Gtk.MenuButton menu_button;
+    [GtkChild]
+    public unowned He.OverlayButton add_button;
 
     public MainWindow (He.Application application) {
         Object (
             app: application,
             application: application,
             icon_name: Config.APP_ID,
-            resizable: false,
             title: _("Kairos")
         );
     }
@@ -126,20 +149,17 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         });
 
         listbox2.bind_model (locations, (data) => {
-            return new AddedLocationRow ((Utils.ContentItem) data);
-        });
-
-        stack.notify["visible-child-name"].connect (() => {
-            if (stack.visible_child_name == "main")
-                titlebar.show_back = false;
-                titlebar.add_css_class ("scrim");
+            var row = new AddedLocationRow ((Utils.ContentItem) data);
+            var wp = new WeatherPage (this, row.data.location);
+            wp.set_style (row.data.location);
+            return row;
         });
 
         set_size_request (360, 150);
     }
 
     [GtkCallback]
-    private void item_activated (Gtk.ListBoxRow listbox_row) {
+    private void item_activated (Gtk.ListBoxRow? listbox_row) {
         var row = (AddedLocationRow) listbox_row;
 
         row.loc_delete_button.clicked.connect (() => {
@@ -179,7 +199,8 @@ public class Kairos.MainWindow : He.ApplicationWindow {
 
             var wp = new WeatherPage (this, found_location);
             wp.set_style (found_location);
-            carousel.prepend (wp);
+            add_found_location ((GWeather.Location) found_location);
+            save ();
         });
 
         yield geo_info.seek ();
@@ -202,8 +223,16 @@ public class Kairos.MainWindow : He.ApplicationWindow {
 
     private void add_location_item (Utils.ContentItem item) {
         locations.add (item);
+        item.geo = false;
         var wp = new WeatherPage (this, item.location);
         carousel.append (wp);
+        save ();
+    }
+
+    private void add_found_location_item (Utils.ContentItem item) {
+        locations.add_found (item);
+        var wp = new WeatherPage (this, item.location);
+        carousel.prepend (wp);
         save ();
     }
 
@@ -224,6 +253,12 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     public void add_location (GWeather.Location location) {
         if (!location_exists (location)) {
             add_location_item (new Utils.ContentItem (location));
+        }
+    }
+
+    public void add_found_location (GWeather.Location location) {
+        if (!location_exists (location)) {
+            add_found_location_item (new Utils.ContentItem (location));
         }
     }
 
