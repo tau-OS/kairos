@@ -3,7 +3,7 @@ public class Kairos.WeatherGraph : He.Bin {
     private int margin = 18;
 
     public WeatherGraph (GLib.SList<GWeather.Info> info) {
-        for (var i = 0; i <= 16; i++) {
+        for (var i = 0; i <= 12; i++) {
             var inf = info.nth (i).data;
             if (info.index (inf) >= 0)
                 data += int.parse (inf.get_temp ());
@@ -16,7 +16,7 @@ public class Kairos.WeatherGraph : He.Bin {
         draw_area.vexpand = true;
         draw_area.set_size_request (504, 200);
 
-        draw_area.set_parent (this);
+        child = draw_area;
     }
 
     private void on_draw (Gtk.DrawingArea draw_area,
@@ -29,7 +29,7 @@ public class Kairos.WeatherGraph : He.Bin {
 
         int graph_height = height - margin * 5;
 
-        var x_scale = (double) 35;
+        var x_scale = (double) 42.75; // For some reason this fills up the graph perfectly
         var y_scale = (double) graph_height / get_max_value (data);
 
         cr.move_to (0, height);

@@ -73,7 +73,6 @@ public class Kairos.WeatherPage : He.Bin {
         weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
 
         set_info (location);
-        update_timeline (weather_info);
         weather_info.update ();
         set_style (location);
 
@@ -139,9 +138,9 @@ public class Kairos.WeatherPage : He.Bin {
         GLib.SList<GWeather.Info> hourlyinfo = preprocess (now, info, forecasts);
         uint length = hourlyinfo.length ();
         if (length > 0 && has_forecast_info == false) {
-            for (var i = 0; i < length; i++) {
+            for (var i = 0; i <= 12; i++) {
                 var inf = hourlyinfo.nth (i).data;
-                var is_now = hourlyinfo.index (inf) == 0;
+                var is_now = hourlyinfo.index (inf) == 1;
                 if (hourlyinfo.index (inf) >= 1)
                     add_hour_entry (inf, is_now);
                     has_forecast_info = true;
