@@ -269,7 +269,6 @@ public class Kairos.WeatherPage : He.Bin {
         }
         .side-window-bg {
             background: mix(@color_secondary, @color_primary, 0.98);
-            box-shadow: inset 0 0 1px 0 alpha(white, 0.25);
         }
         """.printf(color_primary,color_secondary, graphic);
         provider.load_from_data (css.data);
