@@ -2,6 +2,7 @@ public class Kairos.WeatherGraph : He.Bin {
     private int[] data = { };
     private int margin = 18;
     private int curr_time_x = 0;
+    private int curr_time_y = 0;
 
     private Gtk.DrawingArea draw_area;
 
@@ -25,8 +26,9 @@ public class Kairos.WeatherGraph : He.Bin {
 
         child = draw_area;
     }
-    private void on_mouse_motion(Gtk.EventControllerMotion controller, double x, double y) {
+    private void on_mouse_motion (Gtk.EventControllerMotion controller, double x, double y) {
         curr_time_x = (int)x;
+        curr_time_y = (int)y;
         draw_area.queue_draw();
     }
 
@@ -109,6 +111,28 @@ public class Kairos.WeatherGraph : He.Bin {
         cr.line_to(curr_time_x, height);
         cr.stroke();
         cr.set_dash(new double[] { }, 0);
+        cr.new_path();
+
+        int data_index = (int)(curr_time_x / x_scale);
+
+        cr.select_font_face("Manrope", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
+        cr.set_font_size(12);
+        cr.set_source_rgba(1, 1, 1, 0.88);
+
+        string data_value = data[data_index].to_string();
+
+        Cairo.TextExtents text_extents;
+        cr.text_extents(data_value, out text_extents);
+
+        double text_x = curr_time_x + margin;
+        double text_y = curr_time_y - text_extents.height / 2;
+
+        if (text_x + (text_extents.width + margin) / 2 >= min_x - margin && text_x - (text_extents.width + margin) / 2 <= max_x + margin) {
+            // The cursor's label overlaps, so don't draw it
+        } else {
+            cr.move_to(text_x - text_extents.width / 2, text_y);
+            cr.show_text(data_value);
+        }
     }
 
     private int get_max_value (int[] arr) {
