@@ -1,6 +1,9 @@
 public class Kairos.WeatherGraph : He.Bin {
     private int[] data = { };
     private int margin = 18;
+    private int curr_time_x = 0;
+
+    private Gtk.DrawingArea draw_area;
 
     public WeatherGraph (GLib.SList<GWeather.Info> info) {
         for (var i = 0; i <= 12; i++) {
@@ -11,12 +14,20 @@ public class Kairos.WeatherGraph : He.Bin {
     }
 
     construct{
-        var draw_area = new Gtk.DrawingArea();
+        draw_area = new Gtk.DrawingArea();
         draw_area.set_draw_func (on_draw);
         draw_area.vexpand = true;
         draw_area.set_size_request (504, 200);
+        var motion_controller = new Gtk.EventControllerMotion();
+        motion_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
+        motion_controller.motion.connect(on_mouse_motion);
+        draw_area.add_controller(motion_controller);
 
         child = draw_area;
+    }
+    private void on_mouse_motion(Gtk.EventControllerMotion controller, double x, double y) {
+        curr_time_x = (int)x;
+        draw_area.queue_draw();
     }
 
     private void on_draw (Gtk.DrawingArea draw_area,
@@ -48,12 +59,12 @@ public class Kairos.WeatherGraph : He.Bin {
                                      1,
                                      1,
                                      1,
-                                     0.5); // More opaque at top
+                                     0.5);
         gradient.add_color_stop_rgba (1,
                                      1,
                                      1,
                                      1,
-                                     0.0); // Fully transparent at bottom
+                                     0.0);
 
         cr.set_source (gradient);
         cr.fill_preserve ();
@@ -80,12 +91,10 @@ public class Kairos.WeatherGraph : He.Bin {
         double min_x = Math.fmax(min_index * x_scale - min_index * 2, 18);
 
         if (max_index == min_index) {
-            // If max and min are equal, display a single label "min / max"
             string label = "%s / %s".printf(min_text, max_text);
             cr.move_to(min_x, max_y);
             cr.show_text(label);
         } else {
-            // Display separate labels for max and min
             cr.move_to(max_x, max_y);
             cr.show_text(max_text);
 
@@ -93,6 +102,13 @@ public class Kairos.WeatherGraph : He.Bin {
             cr.show_text(min_text);
         }
 
+        cr.set_dash(new double[] { 4.0, 4.0 }, 2.0);
+        cr.set_source_rgba(1, 1, 1, 0.5);
+        cr.new_path();
+        cr.move_to(curr_time_x, 0);
+        cr.line_to(curr_time_x, height);
+        cr.stroke();
+        cr.set_dash(new double[] { }, 0);
     }
 
     private int get_max_value (int[] arr) {
