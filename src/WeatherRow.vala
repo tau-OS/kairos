@@ -10,7 +10,7 @@ public class Kairos.WeatherRow : He.Bin {
     public WeatherRow (GWeather.Info weather_info, string time) {
         time_label.label = time;
 
-        image.icon_name = weather_info.get_icon_name();
+        image.icon_name = weather_info.get_icon_name ();
 
         double temp;
         weather_info.get_value_temp (GWeather.TemperatureUnit.DEFAULT, out temp);

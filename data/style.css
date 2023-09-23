@@ -1,6 +1,16 @@
 .temp-display {
   font-size: 56px;
 }
+.temp-cond-display {
+  font-size: 20px;
+}
+.temp-feel-display {
+  color: @accent_container_bg_color;
+  font-size: 20px;
+}
+.location-display {
+  color: @accent_container_bg_color;
+}
 .search {
   border-radius: 999px;
 }
@@ -28,4 +38,66 @@
 
 .divider {
   margin: 0;
+  background: alpha(@accent_fg_color, 0.38);
+}
+
+link {
+  color: @accent_container_bg_color;
+  text-decoration-line: none;
+  font-weight: 900;
+}
+
+.overlay-button:not(:hover):not(:active) {
+  background: alpha(@view_bg_color, 0.02);
+  color: white;
+  transition: all 600ms ease-in-out;
+  box-shadow: 0 0 4px 0 alpha(white, 0.25),
+              0 4px 4px 0 alpha(black, 0.25),
+              0 -1px 0 1px alpha(white, 0.25);
+}
+
+
+/* Upstream when done 
+ * Note: @accent_container_bg_color should be @accent_color when upstreamed.
+ */
+.mini-view-switcher {
+  margin: 0;
+}
+
+.mini-view-switcher:disabled {
+  color: alpha(@view_fg_color, 0.38);
+}
+
+.mini-view-switcher button.toggle {
+  padding: 0;
+  padding-bottom: 4px;
+  margin-bottom: 2px;
+  background: transparent;
+  border-radius: 0;
+}
+
+.mini-view-switcher button.toggle label {
+  font-weight: 400;
+  font-size: 12pt;
+  line-height: 14pt;
+}
+
+.mini-view-switcher button.toggle:hover {
+  background: transparent;
+  box-shadow: 0 2px 0 0 @accent_container_bg_color;
+  border-radius: 8;
+}
+
+.mini-view-switcher button.toggle:checked {
+  background: transparent;
+  box-shadow: 0 2px 0 0 @accent_container_bg_color;
+  border-radius: 8;
+}
+
+.mini-view-switcher button.toggle:checked label {
+  font-weight: 700;
+}
+
+.mini-view-switcher button.toggle:checked:hover {
+  background: transparent;
 }

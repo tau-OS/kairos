@@ -41,6 +41,7 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         var loc_ct_label = new Gtk.Label (location);
         loc_ct_label.halign = Gtk.Align.START;
         loc_ct_label.add_css_class ("cb-subtitle");
+        loc_ct_label.add_css_class ("location-display");
 
         loc_geo_icon = new Gtk.Image.from_icon_name ("user-trash-symbolic");
         loc_geo_icon.add_css_class ("block");

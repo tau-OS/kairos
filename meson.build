@@ -49,6 +49,7 @@ sources = [
   'src/WeatherRow.vala',
   'src/WorldLocationFinder.vala',
   'src/Utils.vala',
+  'src/Helium/MiniViewSwitcher.vala',
 ]
 
 gweather = dependency('gweather4', version: '>= 3.90.0')

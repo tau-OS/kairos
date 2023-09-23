@@ -51,12 +51,6 @@ public class Kairos.WeatherPage : He.Bin {
     [GtkChild]
     unowned Gtk.Box graph;
     [GtkChild]
-    unowned He.MiniContentBlock dew_block;
-    [GtkChild]
-    unowned He.MiniContentBlock wind_block;
-    [GtkChild]
-    unowned He.MiniContentBlock pressure_block;
-    [GtkChild]
     unowned He.DisclosureButton refresh_button;
 
     public WeatherPage (MainWindow win, GWeather.Location location) {
@@ -69,17 +63,10 @@ public class Kairos.WeatherPage : He.Bin {
     construct {
         this.add_css_class ("window-bg");
         win.add_css_class ("side-window-bg");
-        wind_block.add_css_class ("block");
-        dew_block.add_css_class ("block");
-        pressure_block.add_css_class ("block");
         refresh_button.add_css_class ("block-button");
         win.menu_button.add_css_class ("block-button");
         win.listbox2.add_css_class ("block-row");
         win.sidebar.add_css_class ("block-sidebar");
-
-        ((Gtk.Box) wind_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
-        ((Gtk.Box) dew_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
-        ((Gtk.Box) pressure_block.get_last_child ()).orientation = Gtk.Orientation.VERTICAL;
 
         weather_info = new GWeather.Info (location);
         weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/com.fyralabs.Kairos.doap");
@@ -238,11 +225,10 @@ public class Kairos.WeatherPage : He.Bin {
         @define-color color_secondary %s;
 
         .window-bg {
-            background-image: url(%s);
-            background-position: 50% 50%;
+            background-image: url(%s), linear-gradient(0deg, @color_primary, mix(black, @color_primary, 0.88) 50%, @color_primary);
+            background-position: center;
             background-repeat: repeat;
             background-size: cover;
-            background-color: @color_primary;
             color: @color_secondary;
             transition: all 600ms ease-in-out;
         }
@@ -251,9 +237,9 @@ public class Kairos.WeatherPage : He.Bin {
             color: @color_secondary;
             border-radius: 12px;
             transition: all 600ms ease-in-out;
-            box-shadow: 0 0 4px 0 alpha(@window_bg_color, 0.25),
-                        0 4px 4px 0 alpha(@window_fg_color, 0.25),
-                        0 -1px 0 1px alpha(@window_bg_color, 0.25);
+            box-shadow: 0 0 4px 0 alpha(white, 0.25),
+                        0 4px 4px 0 alpha(black, 0.25),
+                        0 -1px 0 1px alpha(white, 0.25);
         }
         .block-row,.block-row-child {
             color: @color_secondary;
@@ -283,7 +269,7 @@ public class Kairos.WeatherPage : He.Bin {
         }
         .side-window-bg {
             background: mix(@color_secondary, @color_primary, 0.98);
-            box-shadow: inset 0 0 1px 0 alpha(@window_bg_color, 0.25);
+            box-shadow: inset 0 0 1px 0 alpha(white, 0.25);
         }
         """.printf(color_primary,color_secondary, graphic);
         provider.load_from_data (css.data);
