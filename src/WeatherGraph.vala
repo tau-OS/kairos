@@ -27,16 +27,15 @@ public class Kairos.WeatherGraph : He.Bin {
         cr.paint ();
         cr.set_source_rgba (1, 1, 1, 0.88);
 
-        int graph_height = height - margin * 5;
+        int graph_height = height - margin * 1;
 
         var x_scale = (double) 42.75; // For some reason this fills up the graph perfectly
-        var y_scale = (double) graph_height / get_max_value (data);
+        var y_scale = (double) graph_height / (40.0 - (-40.0));
 
         cr.move_to (0, height);
 
-        for (int i = 0; i <= (data.length); i++)
-            cr.line_to (i * x_scale,
-                       height - data[i] * y_scale);
+        for (int i = 0; i < data.length; i++)
+            cr.line_to (i * x_scale, height - (data[i] - (-40)) * y_scale);
 
         cr.line_to (data.length * x_scale, height);
         cr.close_path ();
@@ -62,26 +61,38 @@ public class Kairos.WeatherGraph : He.Bin {
 
         cr.set_source_rgba (1, 1, 1, 0.88);
         cr.move_to (0, height);
-        for (int i = 0; i <= data.length; i++)
-            cr.line_to (i * x_scale,
-                       height - data[i] * y_scale);
+        for (int i = 0; i < data.length; i++)
+            cr.line_to (i * x_scale, height - (data[i] - (-40)) * y_scale);
 
-        cr.set_font_size (12);
+        cr.select_font_face("Manrope", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
+        cr.set_font_size (14);
         cr.set_source_rgba (1, 1, 1, 0.88);
 
-        int max_index = get_max_index (data);
-        int min_index = get_min_index (data);
+        int max_index = get_max_index(data);
+        int min_index = get_min_index(data);
 
-        string max_text = """%s""".printf (get_max_value (data).to_string ());
-        string min_text = """%s""".printf (get_min_value (data).to_string ());
+        string max_text = """%s""".printf(get_max_value(data).to_string());
+        string min_text = """%s""".printf(get_min_value(data).to_string());
 
-        cr.move_to (max_index * x_scale - max_index * 2,
-                   (height) - data[max_index] * y_scale - margin);
-        cr.show_text (max_text);
+        double max_y = Math.fmax((height) - (data[max_index] - (-40)) * y_scale - margin, 18);
+        double min_y = Math.fmax((height) - (data[min_index] - (-40)) * y_scale - margin, 18);
+        double max_x = Math.fmax(max_index * x_scale - max_index * 2, 18);
+        double min_x = Math.fmax(min_index * x_scale - min_index * 2, 18);
 
-        cr.move_to (min_index * x_scale - min_index * 2,
-                   (height) - data[min_index] * y_scale - margin);
-        cr.show_text (min_text);
+        if (max_index == min_index) {
+            // If max and min are equal, display a single label "min / max"
+            string label = "%s / %s".printf(min_text, max_text);
+            cr.move_to(min_x, max_y);
+            cr.show_text(label);
+        } else {
+            // Display separate labels for max and min
+            cr.move_to(max_x, max_y);
+            cr.show_text(max_text);
+
+            cr.move_to(min_x, min_y);
+            cr.show_text(min_text);
+        }
+
     }
 
     private int get_max_value (int[] arr) {
