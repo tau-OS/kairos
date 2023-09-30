@@ -41,8 +41,11 @@
                           </object>
                         </child>
                         <property name="titlewidget">
-                          <object class="HeViewTitle">
+                          <object class="GtkLabel">
                             <property name="label">Locations</property>
+                            <style>
+                              <class name="view-title" />
+                            </style>
                           </object>
                         </property>
                         <child>
