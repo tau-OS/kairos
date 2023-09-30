@@ -14,18 +14,19 @@ public class Kairos.WeatherGraph : He.Bin {
         }
     }
 
-    construct{
+    construct {
         draw_area = new Gtk.DrawingArea();
         draw_area.set_draw_func (on_draw);
         draw_area.vexpand = true;
         draw_area.set_size_request (504, 200);
-        var motion_controller = new Gtk.EventControllerMotion();
-        motion_controller.set_propagation_phase(Gtk.PropagationPhase.CAPTURE);
-        motion_controller.motion.connect(on_mouse_motion);
-        draw_area.add_controller(motion_controller);
+        var motion_controller = new Gtk.EventControllerMotion ();
+        motion_controller.set_propagation_phase (Gtk.PropagationPhase.CAPTURE);
+        motion_controller.motion.connect (on_mouse_motion);
+        draw_area.add_controller (motion_controller);
 
         child = draw_area;
     }
+
     private void on_mouse_motion (Gtk.EventControllerMotion controller, double x, double y) {
         curr_time_x = (int)x;
         curr_time_y = (int)y;
@@ -38,9 +39,9 @@ public class Kairos.WeatherGraph : He.Bin {
                          int width) {
         cr.set_source_rgba (0, 0, 0, 0);
         cr.paint ();
-        cr.set_source_rgba (1, 1, 1, 0.88);
+        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
 
-        int graph_height = height - margin * 1;
+        int graph_height = height - margin;
 
         var x_scale = (double) 42.75; // For some reason this fills up the graph perfectly
         var y_scale = (double) graph_height / (40.0 - (-40.0));
@@ -58,28 +59,28 @@ public class Kairos.WeatherGraph : He.Bin {
                                                 0,
                                                 height);
         gradient.add_color_stop_rgba (0,
-                                     1,
-                                     1,
-                                     1,
+                                     0.98,
+                                     0.98,
+                                     0.98,
                                      0.5);
         gradient.add_color_stop_rgba (1,
-                                     1,
-                                     1,
-                                     1,
+                                     0.98,
+                                     0.98,
+                                     0.98,
                                      0.0);
 
         cr.set_source (gradient);
         cr.fill_preserve ();
         cr.stroke ();
 
-        cr.set_source_rgba (1, 1, 1, 0.88);
+        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
         cr.move_to (0, height);
         for (int i = 0; i < data.length; i++)
             cr.line_to (i * x_scale, height - (data[i] - (-40)) * y_scale);
 
         cr.select_font_face("Manrope", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size (14);
-        cr.set_source_rgba (1, 1, 1, 0.88);
+        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
 
         int max_index = get_max_index(data);
         int min_index = get_min_index(data);
@@ -105,7 +106,7 @@ public class Kairos.WeatherGraph : He.Bin {
         }
 
         cr.set_dash(new double[] { 4.0, 4.0 }, 2.0);
-        cr.set_source_rgba(1, 1, 1, 0.5);
+        cr.set_source_rgba(0.78, 0.78, 0.78, 1);
         cr.new_path();
         cr.move_to(curr_time_x, 0);
         cr.line_to(curr_time_x, height);
@@ -117,7 +118,7 @@ public class Kairos.WeatherGraph : He.Bin {
 
         cr.select_font_face("Manrope", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size(12);
-        cr.set_source_rgba(1, 1, 1, 0.88);
+        cr.set_source_rgba(0.98, 0.98, 0.98, 1);
 
         string data_value = data[data_index].to_string();
 

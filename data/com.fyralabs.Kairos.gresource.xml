@@ -12,9 +12,15 @@
     <file alias="mainwindow.ui">ui/mainwindow.ui</file>
     <file alias="weatherpage.ui">ui/weatherpage.ui</file>
     <file alias="weatherrow.ui">ui/weatherrow.ui</file>
+    <file alias="weatherhumidityrow.ui">ui/weatherhumidityrow.ui</file>
     <file alias="worldlocationfinder.ui">ui/worldlocationfinder.ui</file>
   </gresource>
   <gresource prefix="/com/fyralabs/Kairos/icons">
     <file alias="scalable/actions/city-symbolic.svg">icons/128/city-symbolic.svg</file>
+    <file alias="scalable/actions/humidity-0-symbolic.svg">icons/128/humidity-0-symbolic.svg</file>
+    <file alias="scalable/actions/humidity-25-symbolic.svg">icons/128/humidity-25-symbolic.svg</file>
+    <file alias="scalable/actions/humidity-50-symbolic.svg">icons/128/humidity-50-symbolic.svg</file>
+    <file alias="scalable/actions/humidity-75-symbolic.svg">icons/128/humidity-75-symbolic.svg</file>
+    <file alias="scalable/actions/humidity-100-symbolic.svg">icons/128/humidity-100-symbolic.svg</file>
   </gresource>
 </gresources>

@@ -6,6 +6,8 @@ public class Kairos.WeatherRow : He.Bin {
     unowned Gtk.Image image;
     [GtkChild]
     unowned Gtk.Label forecast_label;
+    [GtkChild]
+    unowned Gtk.Label cond_label;
 
     public WeatherRow (GWeather.Info weather_info, string time) {
         time_label.label = time;
@@ -15,5 +17,7 @@ public class Kairos.WeatherRow : He.Bin {
         double temp;
         weather_info.get_value_temp (GWeather.TemperatureUnit.DEFAULT, out temp);
         forecast_label.label = _("%i°").printf ((int) temp);
+
+        cond_label.label = _("%s").printf (weather_info.get_sky ());
     }
 }

@@ -19,6 +19,45 @@
   background: alpha(@view_bg_color, 0.02);
 }
 
+.block {
+  background: alpha(#fafafa, 0.1);
+  color: #fafafa;
+  border-radius: 12px;
+  transition: all 600ms ease-in-out;
+  box-shadow: 0 0 4px 0 alpha(#fafafa, 0.25),
+              0 4px 4px 0 alpha(#2d2d2d, 0.25),
+              0 -1px 0 1px alpha(#fafafa, 0.25);
+}
+.block-row,.block-row-child {
+  color: #fafafa;
+  background: none;
+}
+.block-row-child:hover,
+.block-row-child:selected {
+  background: alpha(#fafafa, 0.1);
+  color: #fafafa;
+  transition: all 600ms ease-in-out;
+}
+.block-button {
+  background: alpha(#fafafa, 0.08);
+  color: #fafafa;
+  transition: all 600ms ease-in-out;
+}
+.block-sidebar {
+  background: alpha(@window_fg_color, 0.2);
+  color: #fafafa;
+  transition: all 600ms ease-in-out;
+}
+.block-button:hover {
+  background: alpha(#fafafa, 0.14);
+}
+.block-button:active {
+  background: alpha(#fafafa, 0.15);
+}
+.side-window-bg {
+  background: mix(#fafafa, #2d2d2d, 0.98);
+}
+
 .scrim {
   color: #fafafa;
   padding: 0;
@@ -51,19 +90,20 @@ link {
 
 .overlay-button:not(:hover):not(:active) {
   background: alpha(@view_bg_color, 0.02);
-  color: white;
+  color: #fafafa;
   transition: all 600ms ease-in-out;
-  box-shadow: 0 0 4px 0 alpha(white, 0.25),
-              0 4px 4px 0 alpha(black, 0.25),
-              0 -1px 0 1px alpha(white, 0.25);
+  box-shadow: 0 0 4px 0 alpha(#fafafa, 0.25),
+              0 4px 4px 0 alpha(#2d2d2d, 0.25),
+              0 -1px 0 1px alpha(#fafafa, 0.25);
 }
 
 
-/* Upstream when done 
- * Note: @accent_container_bg_color should be @accent_color when upstreamed.
+/* 
+ * Upstream when done
  */
 .mini-view-switcher {
   margin: 0;
+  padding: 0;
 }
 
 .mini-view-switcher:disabled {

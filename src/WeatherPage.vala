@@ -49,6 +49,8 @@ public class Kairos.WeatherPage : He.Bin {
     [GtkChild]
     unowned Gtk.Box timeline;
     [GtkChild]
+    unowned Gtk.Box humidity_timeline;
+    [GtkChild]
     unowned Gtk.Box graph;
     [GtkChild]
     unowned He.DisclosureButton refresh_button;
@@ -127,6 +129,21 @@ public class Kairos.WeatherPage : He.Bin {
         var entry = new WeatherRow (info, time_label);
         timeline.append (entry);
     }
+    public void add_humidity_entry (GWeather.Info info, bool now) {
+        string time_label; string time_format;
+        long date; info.get_value_update (out date);
+        var datetime = new GLib.DateTime.from_unix_utc (date).to_local ();
+
+        if (now) {
+            time_label = _("Now");
+        } else {
+            time_format = "%R";
+            time_label = datetime.format (time_format);
+        }
+
+        var entry = new WeatherHumidityRow (info, time_label);
+        humidity_timeline.append (entry);
+    }
     public void add_graph (GLib.SList<GWeather.Info> hourlyinfo) {
         var entry = new WeatherGraph (hourlyinfo);
         graph.prepend (entry);
@@ -137,16 +154,18 @@ public class Kairos.WeatherPage : He.Bin {
 
         GLib.SList<GWeather.Info> hourlyinfo = preprocess (now, info, forecasts);
         uint length = hourlyinfo.length ();
-        if (length > 0 && has_forecast_info == false) {
-            for (var i = 0; i <= 12; i++) {
+        if (length > 1 && has_forecast_info == false) {
+            for (var i = 0; i <= 24; i++) {
                 var inf = hourlyinfo.nth (i).data;
                 var is_now = hourlyinfo.index (inf) == 1;
-                if (hourlyinfo.index (inf) >= 1)
+                if (hourlyinfo.index (inf) > 0)
                     add_hour_entry (inf, is_now);
                     has_forecast_info = true;
+                    add_humidity_entry (inf, is_now);
+                    has_forecast_info = true;
             }
-            if (hourlyinfo.length () > 1)
-                add_graph (hourlyinfo);
+            add_graph (hourlyinfo);
+            has_forecast_info = true;
         }
 
         this.hourly_info = hourlyinfo.copy ();
@@ -231,47 +250,9 @@ public class Kairos.WeatherPage : He.Bin {
             color: @color_secondary;
             transition: all 600ms ease-in-out;
         }
-        .block {
-            background: alpha(@color_secondary, 0.1);
-            color: @color_secondary;
-            border-radius: 12px;
-            transition: all 600ms ease-in-out;
-            box-shadow: 0 0 4px 0 alpha(white, 0.25),
-                        0 4px 4px 0 alpha(black, 0.25),
-                        0 -1px 0 1px alpha(white, 0.25);
-        }
-        .block-row,.block-row-child {
-            color: @color_secondary;
-            background: none;
-        }
-        .block-row-child:hover,
-        .block-row-child:selected {
-            background: alpha(@color_secondary, 0.1);
-            color: @color_secondary;
-            transition: all 600ms ease-in-out;
-        }
-        .block-button {
-            background: alpha(@color_secondary, 0.08);
-            color: @color_secondary;
-            transition: all 600ms ease-in-out;
-        }
-        .block-sidebar {
-            background: alpha(@window_fg_color, 0.2);
-            color: @color_secondary;
-            transition: all 600ms ease-in-out;
-        }
-        .block-button:hover {
-            background: alpha(@color_secondary, 0.14);
-        }
-        .block-button:active {
-            background: alpha(@color_secondary, 0.15);
-        }
-        .side-window-bg {
-            background: mix(@color_secondary, @color_primary, 0.98);
-        }
         """.printf(color_primary,color_secondary, graphic);
         provider.load_from_data (css.data);
-        Gtk.StyleContext.add_provider_for_display (win.get_display (), provider, 999);
+        this.get_style_context().add_provider_for_display (win.get_display (), provider, 999);
     }
 
     [GtkCallback]

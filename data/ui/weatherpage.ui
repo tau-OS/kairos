@@ -95,7 +95,7 @@
                                         <property name="stack">stack</property>
                                         <property name="margin-start">18</property>
                                         <property name="margin-end">18</property>
-                                        <property name="margin-top">18</property>
+                                        <property name="margin-top">12</property>
                                     </object>
                                 </child>
                                 <child>
@@ -113,9 +113,14 @@
                                                     <object class="GtkBox">
                                                         <property name="orientation">vertical</property>
                                                         <child>
-                                                            <object class="GtkBox" id="graph">
-                                                                <property name="vexpand_set">1</property>
-                                                                <property name="orientation">vertical</property>
+                                                            <object class="GtkScrolledWindow">
+                                                                <property name="vscrollbar_policy">never</property>
+                                                                <child>
+                                                                    <object class="GtkBox" id="graph">
+                                                                        <property name="vexpand_set">1</property>
+                                                                        <property name="orientation">vertical</property>
+                                                                    </object>
+                                                                </child>
                                                             </object>
                                                         </child>
                                                         <child>
@@ -126,9 +131,35 @@
                                                             <object class="GtkScrolledWindow">
                                                                 <property name="vscrollbar_policy">never</property>
                                                                 <child>
-                                                                    <object class="GtkBox" id="timeline">
+                                                                    <object class="GtkBox" id="humidity_timeline">
                                                                         <property name="orientation">horizontal</property>
                                                                         <property name="spacing">24</property>
+                                                                        <property name="margin-start">18</property>
+                                                                        <property name="margin-end">18</property>
+                                                                        <property name="vexpand_set">1</property>
+                                                                    </object>
+                                                                </child>
+                                                            </object>
+                                                        </child>
+                                                    </object>
+                                                </property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkStackPage">
+                                                <property name="name">Hourly</property>
+                                                <property name="title">Hourly</property>
+                                                <property name="child">
+                                                    <object class="GtkBox">
+                                                        <property name="orientation">vertical</property>
+                                                        <child>
+                                                            <object class="GtkScrolledWindow">
+                                                                <property name="hscrollbar_policy">never</property>
+                                                                <property name="vexpand">1</property>
+                                                                <child>
+                                                                    <object class="GtkBox" id="timeline">
+                                                                        <property name="orientation">vertical</property>
+                                                                        <property name="spacing">12</property>
                                                                         <property name="margin-start">18</property>
                                                                         <property name="margin-end">18</property>
                                                                         <property name="vexpand_set">1</property>
