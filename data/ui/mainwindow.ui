@@ -43,6 +43,8 @@
                         <property name="titlewidget">
                           <object class="GtkLabel">
                             <property name="label">Locations</property>
+                            <property name="halign">start</property>
+                            <property name="valign">center</property>
                             <style>
                               <class name="view-title" />
                             </style>
