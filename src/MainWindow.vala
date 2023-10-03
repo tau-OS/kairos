@@ -191,6 +191,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
             wp.set_style (row.data.location);
             return row;
         });
+        listbox2.select_row ((Gtk.ListBoxRow)listbox2.get_first_child ());
 
         set_size_request (360, 150);
     }

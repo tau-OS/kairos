@@ -50,8 +50,13 @@
   color: #fafafa;
   transition: all 600ms ease-in-out;
   box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-  inset 0 0 0 1px alpha(#fafafa, 0.20),
-  0 0 0 1px alpha(#2d2d2d, 0.10);
+              inset 0 0 0 1px alpha(#fafafa, 0.20),
+              0 0 0 1px alpha(#2d2d2d, 0.10);
+}
+.block-row row:selected .block {
+  background: alpha(#fafafa, 0.1);
+  box-shadow: inset 0 0 0 1px alpha(#fafafa, 0.20),
+              0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 .block-button {
   background: alpha(#fafafa, 0.08);
