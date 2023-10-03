@@ -179,21 +179,13 @@ public class Kairos.WeatherPage : He.Bin {
         weather_icon.icon_name = weather_info.get_symbolic_icon_name ();
         weather_label.label = dgettext ("libgweather", weather_info.get_sky ());
 
-        double temp;
-        weather_info.get_value_temp (GWeather.TemperatureUnit.DEFAULT, out temp);
-        temp_label.label = _("%i°").printf ((int) temp);
+        temp_label.label = _("%s").printf (weather_info.get_temp_summary ());
 
-        string appr = weather_info.get_temp_summary ();
-        temphilo = _("%s").printf (appr);
+        temphilo = weather_info.get_temp_summary ();
 
-        double windd; GWeather.WindDirection windir;
-        weather_info.get_value_wind (GWeather.SpeedUnit.DEFAULT, out windd, out windir);
-        wind = "%.0f %s".printf (windd, GWeather.SpeedUnit.DEFAULT.to_string ());
-        string deew = weather_info.get_dew ();
-        dew = "%s".printf (deew);
-
-        string pres = weather_info.get_pressure ();
-        pressure = _("%s").printf (pres);
+        wind = "%s".printf (weather_info.get_wind ());
+        dew = "%s".printf (weather_info.get_dew ());
+        pressure = _("%s").printf (weather_info.get_pressure ());
 
         kudos_label.label = weather_info.get_attribution ();
     }
@@ -210,14 +202,14 @@ public class Kairos.WeatherPage : He.Bin {
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
             case "weather-fog-symbolic":
-                color_primary = "#828292";
+                color_primary = "#828282";
                 color_secondary = "#fafafa";
                 graphic = "resource://com/fyralabs/Kairos/cloudy.svg";
                 break;
             case "weather-showers-symbolic":
             case "weather-showers-scattered-symbolic":
             case "weather-storm-symbolic":
-                color_primary = "#828292";
+                color_primary = "#828282";
                 color_secondary = "#fafafa";
                 graphic = "resource://com/fyralabs/Kairos/rain.svg";
                 break;
@@ -228,11 +220,11 @@ public class Kairos.WeatherPage : He.Bin {
                 break;
             case "weather-clear-symbolic":
                 color_primary = "#268ef9";
-                color_secondary = "#f0f0f2";
+                color_secondary = "#fafafa";
                 graphic = "resource://com/fyralabs/Kairos/sunny.svg";
                 break;
             default:
-                color_primary = "#f0f0f2";
+                color_primary = "#fafafa";
                 color_secondary = "#2d2d2d";
                 graphic = "";
                 break;
