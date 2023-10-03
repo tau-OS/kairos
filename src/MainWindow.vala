@@ -22,7 +22,6 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
     public Utils.ContentItem data { get; construct set; }
     public string? lname { get; set; default = null; }
     public string? location { get; set; default = null; }
-    public bool geo { get; set; default = false; }
 
     public Gtk.Box main_box;
     public He.DisclosureButton loc_delete_button;
@@ -33,7 +32,6 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
 
         lname = data.location.get_city_name ();
         location = data.location.get_country_name ();
-        geo = data.geo;
 
         var loc_label = new Gtk.Label (lname);
         loc_label.halign = Gtk.Align.START;
@@ -43,17 +41,12 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         loc_ct_label.add_css_class ("cb-subtitle");
         loc_ct_label.add_css_class ("location-display");
 
-        loc_geo_icon = new Gtk.Image.from_icon_name ("user-trash-symbolic");
-        loc_geo_icon.add_css_class ("block");
+        loc_geo_icon = new Gtk.Image.from_icon_name ("location-active-symbolic");
         loc_geo_icon.valign = Gtk.Align.START;
         loc_geo_icon.halign = Gtk.Align.START;
         loc_geo_icon.margin_end = 6;
 
-        if (data.geo) {
-            loc_geo_icon.visible = true;
-        } else {
-            loc_geo_icon.visible = false;
-        }
+        get_glocation ();
 
         loc_delete_button = new He.DisclosureButton ("user-trash-symbolic");
         loc_delete_button.add_css_class ("block");
@@ -72,6 +65,49 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         main_box.append (loc_delete_button);
 
         this.set_child (main_box);
+    }
+
+    private void get_glocation () {
+        bool geo = false;
+        get_gclue_simple.begin ((obj, res) => {
+            var simple = get_gclue_simple.end (res);
+            if (simple != null) {
+                simple.notify["location"].connect (() => {
+                    var loc = GWeather.Location.get_world ();
+                    loc = loc.find_nearest_city (simple.location.latitude, simple.location.longitude);
+                    var dloc = data.location;
+                    if (location != null && loc != dloc) {
+                        if (geo == true) {
+                            loc_geo_icon.visible = true;
+                        } else {
+                            loc_geo_icon.visible = false;
+                        }
+                    }
+                });
+                var loc = GWeather.Location.get_world ();
+                loc = loc.find_nearest_city (simple.location.latitude, simple.location.longitude);
+                var dloc = data.location;
+                if (location != null && loc != dloc) {
+                    if (geo == true) {
+                        loc_geo_icon.visible = true;
+                    } else {
+                        loc_geo_icon.visible = false;
+                    }
+                }
+            } else {
+                warning (_("Make sure location access is turned on in settings"));
+            }
+        });
+    }
+
+    private async GClue.Simple? get_gclue_simple () {
+        try {
+            var simple = yield new GClue.Simple ("com.fyralabs.Kairos", GClue.AccuracyLevel.CITY, null);
+            return simple;
+        } catch (Error e) {
+            warning ("Failed to connect to GeoClue2 service: %s", e.message);
+            return null;
+        }
     }
 }
 

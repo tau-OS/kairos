@@ -5,11 +5,11 @@
   font-size: 20px;
 }
 .temp-feel-display {
-  color: @accent_container_bg_color;
+  color: #64CCFF;
   font-size: 20px;
 }
 .location-display {
-  color: @accent_container_bg_color;
+  color: #64CCFF;
 }
 .search {
   border-radius: 999px;
@@ -33,22 +33,25 @@
 .block {
   background: alpha(#fafafa, 0.1);
   color: #fafafa;
-  border-radius: 12px;
   transition: all 600ms ease-in-out;
   box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
               inset 0 0 0 1px alpha(#fafafa, 0.20),
               0 0 0 1px alpha(#2d2d2d, 0.10);
   border-radius: 6px;
 }
-.block-row,.block-row-child {
+.block-row row,
+.block-row-child {
   color: #fafafa;
   background: none;
+  border-radius: 6px;
 }
-.block-row-child:hover,
-.block-row-child:selected {
+.block-row row:selected {
   background: alpha(#fafafa, 0.1);
   color: #fafafa;
   transition: all 600ms ease-in-out;
+  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
+  inset 0 0 0 1px alpha(#fafafa, 0.20),
+  0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 .block-button {
   background: alpha(#fafafa, 0.08);
@@ -98,7 +101,7 @@
 }
 
 link {
-  color: @accent_container_bg_color;
+  color: #64CCFF;
   text-decoration-line: none;
   font-weight: 900;
 }
@@ -120,7 +123,7 @@ link {
 
 
 /* 
- * Upstream when done
+ * Upstream when done, change #64CCFF to @accent_container_bg_color
  */
 .mini-view-switcher {
   margin: 0;
@@ -147,12 +150,12 @@ link {
 
 .mini-view-switcher button.toggle:hover {
   background: transparent;
-  box-shadow: 0 2px 0 0 @accent_container_bg_color;
+  box-shadow: 0 2px 0 0 #64CCFF;
 }
 
 .mini-view-switcher button.toggle:checked {
   background: transparent;
-  box-shadow: 0 2px 0 0 @accent_container_bg_color;
+  box-shadow: 0 2px 0 0 #64CCFF;
 }
 
 .mini-view-switcher button.toggle:checked label {
