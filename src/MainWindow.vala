@@ -199,6 +199,10 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkCallback]
     private void item_activated (Gtk.ListBoxRow? listbox_row) {
         var row = (AddedLocationRow) listbox_row;
+        for (var car = 0; car <= carousel.get_n_pages (); car++) {
+            if (locations.get_item (car) == row.data)
+                carousel.scroll_to (carousel.get_nth_page (car), true);
+        }
 
         row.loc_delete_button.clicked.connect (() => {
             for (var car = 0; car <= carousel.get_n_pages (); car++) {
