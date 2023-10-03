@@ -194,6 +194,8 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         listbox2.select_row ((Gtk.ListBoxRow)listbox2.get_first_child ());
 
         set_size_request (360, 150);
+
+        menu_button.get_popover ().has_arrow = false;
     }
 
     [GtkCallback]
