@@ -90,6 +90,8 @@
                     </child>
                     <child>
                       <object class="BisCarousel" id="carousel">
+                        <property name="allow-mouse-drag">0</property>
+                        <property name="allow-scroll-wheel">0</property>
                       </object>
                     </child>
                   </object>

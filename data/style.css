@@ -14,13 +14,20 @@
 .search {
   border-radius: 999px;
 }
-.disclosure-button button {
-  border-radius: 999px;
-  background: alpha(@view_bg_color, 0.02);
+.disclosure-button {
   transition: all 600ms ease-in-out;
   box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
               inset 0 0 0 1px alpha(#fafafa, 0.20),
               0 0 0 1px alpha(#2d2d2d, 0.10);
+}
+.disclosure-button button {
+  background: alpha(@view_bg_color, 0.02);
+}
+.disclosure-button button:hover {
+  background: alpha(@view_bg_color, 0.05);
+}
+.disclosure-button button:active {
+  background: alpha(@view_bg_color, 0.14);
 }
 
 .block {
