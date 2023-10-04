@@ -44,12 +44,13 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         loc_geo_icon = new Gtk.Image.from_icon_name ("location-active-symbolic");
         loc_geo_icon.valign = Gtk.Align.START;
         loc_geo_icon.halign = Gtk.Align.START;
-        loc_geo_icon.margin_end = 6;
+        loc_geo_icon.margin_end = 12;
 
         get_glocation ();
 
         loc_delete_button = new He.DisclosureButton ("user-trash-symbolic");
         loc_delete_button.add_css_class ("block");
+        loc_delete_button.add_css_class ("block-button");
         loc_delete_button.halign = Gtk.Align.END;
         loc_delete_button.hexpand = true;
 
