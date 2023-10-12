@@ -28,7 +28,6 @@
                     <property name="hexpand">0</property>
                     <child>
                       <object class="HeSideBar" id="sidebar">
-                        <property name="show-buttons">1</property>
                         <property name="show-back">0</property>
                         <property name="has-margins">0</property>
                         <style>
@@ -83,7 +82,8 @@
                     <property name="vexpand">1</property>
                     <child type="overlay">
                       <object class="HeAppBar" id="tb">
-                        <property name="show-buttons">0</property>
+                        <property name="show-left-title-buttons">0</property>
+                        <property name="show-right-title-buttons">1</property>
                         <property name="show-back">0</property>
                         <property name="valign">start</property>
                       </object>
