@@ -29,6 +29,7 @@
                     <child>
                       <object class="HeSideBar" id="sidebar">
                         <property name="show-back">0</property>
+                        <property name="show-right-title-buttons">0</property>
                         <property name="has-margins">0</property>
                         <style>
                           <class name="scrim" />
@@ -86,6 +87,9 @@
                         <property name="show-right-title-buttons">1</property>
                         <property name="show-back">0</property>
                         <property name="valign">start</property>
+                        <style>
+                          <class name="scrim" />
+                        </style>
                       </object>
                     </child>
                     <child>
