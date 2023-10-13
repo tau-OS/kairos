@@ -5,11 +5,11 @@
   font-size: 20px;
 }
 .temp-feel-display {
-  color: #64CCFF;
+  color: @accent_container_bg_color;
   font-size: 20px;
 }
 .location-display {
-  color: #64CCFF;
+  color: @accent_container_bg_color;
 }
 .search {
   border-radius: 999px;
@@ -107,7 +107,7 @@
 }
 
 link {
-  color: #64CCFF;
+  color: @accent_container_bg_color;
   text-decoration-line: none;
   font-weight: 900;
 }
@@ -132,7 +132,7 @@ link {
 
 
 /* 
- * Upstream when done, change #64CCFF to @accent_container_bg_color
+ * Upstream when done, change @accent_container_bg_color to @accent_container_bg_color
  */
 .mini-view-switcher {
   margin: 0;
@@ -160,12 +160,12 @@ link {
 
 .mini-view-switcher button.toggle:hover {
   background: transparent;
-  box-shadow: 0 2px 0 0 #64CCFF;
+  box-shadow: 0 2px 0 0 @accent_container_bg_color;
 }
 
 .mini-view-switcher button.toggle:checked {
   background: transparent;
-  box-shadow: 0 2px 0 0 #64CCFF;
+  box-shadow: 0 2px 0 0 @accent_container_bg_color;
 }
 
 .mini-view-switcher button.toggle:checked label {

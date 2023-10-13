@@ -2,6 +2,7 @@
 <gresources>
   <gresource prefix="/com/fyralabs/Kairos">
     <file alias="style.css">style.css</file>
+    <file alias="style-dark.css">style-dark.css</file>
 
     <file alias="cloudy.svg">assets/cloudy.svg</file>
     <file alias="night.svg">assets/night.svg</file>
