@@ -81,6 +81,27 @@
 .side-window-bg {
   background: mix(#fafafa, #2d2d2d, 0.98);
 }
+.side-window-bg .flat-appbar {
+  box-shadow: inset 0 2px 1px 0 alpha(#fafafa, 0.2);
+}
+.side-window-bg .close image,
+.side-window-bg .image-text-button,
+.side-window-bg .disclosure-button {
+  color: #fafafa;
+  background: alpha(#fafafa, 0.1);
+
+}
+.side-window-bg .close image {
+  color: #fafafa;
+  background: alpha(#fafafa, 0.1);
+  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
+              inset 0 1px 0 1px alpha(#fafafa, 0.30),
+              0 0 0 1px alpha(#2d2d2d, 0.20);
+}
+.side-window-bg .maximize image,
+.side-window-bg .minimize image {
+  color: #fafafa;
+}
 
 .scrim {
   color: #fafafa;

@@ -32,7 +32,7 @@
                         <property name="show-right-title-buttons">0</property>
                         <property name="has-margins">0</property>
                         <style>
-                          <class name="scrim" />
+                          <class name="side-window-bg" />
                         </style>
                         <child type="titlebar-button">
                           <object class="GtkMenuButton" id="menu_button">
