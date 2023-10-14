@@ -176,7 +176,7 @@ public class Kairos.WeatherPage : He.Bin {
             return;
         }
 
-        weather_icon.icon_name = weather_info.get_symbolic_icon_name ();
+        weather_icon.icon_name = weather_info.get_symbolic_icon_name ().replace ("-symbolic", "");
         weather_label.label = dgettext ("libgweather", weather_info.get_sky ());
 
         temp_label.label = _("%s").printf (weather_info.get_temp_summary ());

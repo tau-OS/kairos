@@ -27,13 +27,14 @@
                                             <object class="GtkImage" id="weather_icon">
                                                 <property name="valign">center</property>
                                                 <property name="pixel-size">64</property>
+                                                <property name="icon_name">weather-showers</property>
                                             </object>
                                         </child>
                                         <child>
                                             <object class="GtkLabel" id="temp_label">
                                                 <property name="valign">end</property>
                                                 <property name="halign">start</property>
-                                                <property name="label">—°C</property>
+                                                <property name="label">0°C</property>
                                                 <style>
                                                     <class name="temp-display"/>
                                                 </style>
@@ -49,7 +50,7 @@
                                                     <object class="GtkLabel" id="weather_label">
                                                         <property name="halign">start</property>
                                                         <property name="hexpand">1</property>
-                                                        <property name="label">————</property>
+                                                        <property name="label">Sunny</property>
                                                         <style>
                                                             <class name="temp-cond-display"/>
                                                             <class name="cb-title"/>

@@ -18,7 +18,7 @@ public class Kairos.WeatherRow : He.Bin {
 
         image.icon_name = weather_info.get_icon_name ();
 
-        forecast_label.label = _("%s").printf (weather_info.get_temp ());
+        forecast_label.label = _("%s").printf (weather_info.get_temp_summary ());
 
         double min, max;
         var ok1 = weather_info.get_value_temp_min (GWeather.TemperatureUnit.DEFAULT, out min);
