@@ -1,0 +1,16 @@
+.temp-feel-display {
+  color: @accent_container_fg_color;
+}
+.location-display {
+  color: @accent_container_fg_color;
+}
+link {
+  color: @accent_container_fg_color;
+}
+.mini-view-switcher button.toggle:hover {
+  box-shadow: 0 2px 0 0 @accent_container_fg_color;
+}
+
+.mini-view-switcher button.toggle:checked {
+  box-shadow: 0 2px 0 0 @accent_container_fg_color;
+}
