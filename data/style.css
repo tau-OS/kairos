@@ -170,6 +170,7 @@ link {
   margin-bottom: 2px;
   background: transparent;
   border-radius: 0;
+  box-shadow: none;
 }
 
 .mini-view-switcher button.toggle label {
