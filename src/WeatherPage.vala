@@ -53,6 +53,10 @@ public class Kairos.WeatherPage : He.Bin {
     [GtkChild]
     unowned Gtk.Box graph;
     [GtkChild]
+    unowned Gtk.Box sunrise_sunset;
+    [GtkChild]
+    public unowned Gtk.DrawingArea da_sun;
+    [GtkChild]
     unowned He.DisclosureButton refresh_button;
 
     public WeatherPage (MainWindow win, GWeather.Location location) {
@@ -148,6 +152,10 @@ public class Kairos.WeatherPage : He.Bin {
         var entry = new WeatherGraph (hourlyinfo);
         graph.prepend (entry);
     }
+    public void add_sun_graph (WeatherPage wp, DateTime sunrise, DateTime sunset) {
+        var entry = new SunGraph (wp, sunrise, sunset);
+        sunrise_sunset.prepend (entry);
+    }
     public void update_timeline (GWeather.Info info) {
         var forecasts = info.get_forecast_list ().copy ();
         var now = new GLib.DateTime.now_local ();
@@ -165,6 +173,17 @@ public class Kairos.WeatherPage : He.Bin {
                     has_forecast_info = true;
             }
             add_graph (hourlyinfo);
+            has_forecast_info = true;
+
+            // Sunrise & Sunset
+            ulong sunrise;
+            info.get_value_sunrise (out sunrise);
+            var sunrise_time = new GLib.DateTime.from_unix_local (sunrise);
+            ulong sunset;
+            info.get_value_sunset (out sunset);
+            var sunset_time = new GLib.DateTime.from_unix_local (sunset);
+
+            add_sun_graph (this, sunrise_time, sunset_time);
             has_forecast_info = true;
         }
 

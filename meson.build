@@ -44,6 +44,7 @@ asresources = gnome.compile_resources(
 sources = [
   'src/Application.vala',
   'src/MainWindow.vala',
+  'src/SunGraph.vala',
   'src/WeatherPage.vala',
   'src/WeatherGraph.vala',
   'src/WeatherHumidityRow.vala',

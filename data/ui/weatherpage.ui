@@ -118,32 +118,36 @@
                                                 <property name="title">Summary</property>
                                                 <property name="child">
                                                     <object class="GtkBox">
-                                                        <property name="orientation">vertical</property>
                                                         <child>
-                                                            <object class="GtkScrolledWindow">
-                                                                <property name="vscrollbar_policy">never</property>
+                                                            <object class="GtkBox">
+                                                                <property name="orientation">vertical</property>
                                                                 <child>
-                                                                    <object class="GtkBox" id="graph">
-                                                                        <property name="vexpand_set">1</property>
-                                                                        <property name="orientation">vertical</property>
+                                                                    <object class="GtkScrolledWindow">
+                                                                        <property name="vscrollbar_policy">never</property>
+                                                                        <child>
+                                                                            <object class="GtkBox" id="graph">
+                                                                                <property name="vexpand_set">1</property>
+                                                                                <property name="orientation">vertical</property>
+                                                                            </object>
+                                                                        </child>
                                                                     </object>
                                                                 </child>
-                                                            </object>
-                                                        </child>
-                                                        <child>
-                                                            <object class="HeDivider">
-                                                            </object>
-                                                        </child>
-                                                        <child>
-                                                            <object class="GtkScrolledWindow">
-                                                                <property name="vscrollbar_policy">never</property>
                                                                 <child>
-                                                                    <object class="GtkBox" id="humidity_timeline">
-                                                                        <property name="orientation">horizontal</property>
-                                                                        <property name="spacing">24</property>
-                                                                        <property name="margin-start">18</property>
-                                                                        <property name="margin-end">18</property>
-                                                                        <property name="vexpand_set">1</property>
+                                                                    <object class="HeDivider">
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="GtkScrolledWindow">
+                                                                        <property name="vscrollbar_policy">never</property>
+                                                                        <child>
+                                                                            <object class="GtkBox" id="humidity_timeline">
+                                                                                <property name="orientation">horizontal</property>
+                                                                                <property name="spacing">24</property>
+                                                                                <property name="margin-start">18</property>
+                                                                                <property name="margin-end">18</property>
+                                                                                <property name="vexpand_set">1</property>
+                                                                            </object>
+                                                                        </child>
                                                                     </object>
                                                                 </child>
                                                             </object>
@@ -271,7 +275,34 @@
                                                             </object>
                                                         </child>
                                                         <child>
-                                                            
+                                                            <object class="GtkBox">
+                                                                <property name="orientation">vertical</property>
+                                                                <property name="halign">start</property>
+                                                                <child>
+                                                                    <object class="GtkLabel">
+                                                                        <property name="halign">start</property>
+                                                                        <property name="hexpand">1</property>
+                                                                        <property name="valign">center</property>
+                                                                        <property name="label">Sunrise / Sunset:</property>
+                                                                        <style>
+                                                                            <class name="cb-subtitle"/>
+                                                                        </style>
+                                                                    </object>
+                                                                </child>
+                                                                <child>
+                                                                    <object class="GtkBox" id="sunrise_sunset">
+                                                                        <property name="orientation">horizontal</property>
+                                                                        <property name="spacing">24</property>
+                                                                        <property name="halign">end</property>
+                                                                        <property name="margin-start">18</property>
+                                                                        <property name="margin-end">18</property>
+                                                                        <property name="vexpand_set">1</property>
+                                                                        <child>
+                                                                            <object class="GtkDrawingArea" id="da_sun"></object>
+                                                                        </child>
+                                                                    </object>
+                                                                </child>
+                                                            </object>
                                                         </child>
                                                     </object>
                                                 </property>
