@@ -60,7 +60,8 @@ public class Kairos.SunGraph : He.Bin {
         cr.move_to(center_x - radius * Math.cos(start_angle) - 3*label_margin, center_y - radius * Math.sin(start_angle) + 3*label_margin);
         cr.set_source_rgba(1, 1, 1, 0.95);
         cr.set_antialias (Cairo.Antialias.GRAY);
-        cr.set_font_size(12);
+        cr.select_font_face("Manrope", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
+        cr.set_font_size (14);
         cr.show_text(sunset.format("%H:%M"));
 
         cr.move_to(center_x - radius * Math.cos(end_angle) - 3*label_margin, center_y - radius * Math.sin(end_angle) + 3*label_margin);
