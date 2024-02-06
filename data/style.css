@@ -1,3 +1,64 @@
+/*
+*  Weather Condition Classes
+*/
+.day {
+  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, #268ef9, mix(black, #268ef9, 0.88) 50%, #268ef9);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #268ef9;
+  color: #ffffff;
+  transition: all 600ms ease-in-out;
+}
+.night {
+  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, #2d2d2d, mix(black, #2d2d2d, 0.88) 50%, #2d2d2d);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #2d2d2d;
+  color: #ffffff;
+  transition: all 600ms ease-in-out;
+}
+.snow {
+  background-image: url("resource://com/fyralabs/Kairos/snow.svg"), linear-gradient(0deg, #efefef, mix(black, #efefef, 0.88) 50%, #efefef);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #efefef;
+  color: #ffffff;
+  transition: all 600ms ease-in-out;
+}
+.cloudy {
+  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, #828282, mix(black, #828282, 0.88) 50%, #828282);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #828282;
+  color: #ffffff;
+  transition: all 600ms ease-in-out;
+}
+.showers {
+  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, #828282, mix(black, #828282, 0.88) 50%, #828282);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #828282;
+  color: #ffffff;
+  transition: all 600ms ease-in-out;
+}
+@keyframes rain {
+  0% {
+     background-position:
+         0 0,
+         0 0;
+  }
+  100% {
+     background-position:
+         0 0,
+         400px 512px;
+  }
+}
+
 .temp-display {
   font-size: 56px;
 }
@@ -68,7 +129,7 @@
               0 0 0 1px alpha(#2d2d2d, 0.20);
 }
 .block-sidebar {
-  background: alpha(#2d2d2d, 0.2);
+  background: alpha(#000, 0.38);
   color: #fafafa;
   transition: all 600ms ease-in-out;
 }
@@ -78,11 +139,8 @@
 .block-button:active {
   background: alpha(#fafafa, 0.15);
 }
-.side-window-bg {
-  background: alpha(mix(#fafafa, #2d2d2d, 0.98), 0.1);
-}
 .side-window-bg .flat-appbar {
-  box-shadow: inset 0 2px 1px 0 alpha(#fafafa, 0.2);
+  box-shadow: none;
 }
 .side-window-bg .close image,
 .side-window-bg .image-text-button,

@@ -19,10 +19,6 @@
 
 [GtkTemplate (ui = "/com/fyralabs/Kairos/weatherpage.ui")]
 public class Kairos.WeatherPage : He.Bin {
-    private string color_primary = "";
-    private string color_secondary = "";
-    private string graphic = "";
-
     public Bis.Carousel car {get; set;}
     public GWeather.Info weather_info;
     public GWeather.Location location {get; construct;}
@@ -67,16 +63,16 @@ public class Kairos.WeatherPage : He.Bin {
     }
 
     construct {
-        this.add_css_class ("window-bg");
         win.add_css_class ("side-window-bg");
         refresh_button.add_css_class ("block-button");
         win.menu_button.add_css_class ("block-button");
         win.listbox2.add_css_class ("block-row");
         win.sidebar.add_css_class ("block-sidebar");
 
-        weather_info = new GWeather.Info (location);
-        weather_info.set_contact_info ("https://raw.githubusercontent.com/tau-OS/kairos/main/com.fyralabs.Kairos.doap");
-        weather_info.set_enabled_providers (GWeather.Provider.METAR | GWeather.Provider.MET_NO | GWeather.Provider.OWM);
+        weather_info = new GWeather.Info (location) {
+            contact_info = "https://raw.githubusercontent.com/tau-OS/kairos/main/com.fyralabs.Kairos.doap",
+            enabled_providers = METAR | MET_NO
+        };
 
         set_info (location);
         weather_info.update ();
@@ -210,60 +206,32 @@ public class Kairos.WeatherPage : He.Bin {
     }
 
     public void set_style (GWeather.Location? loc) {
-        var provider = new Gtk.CssProvider ();
+        if (loc == null) {
+            return;
+        }
+
         switch (weather_info.get_symbolic_icon_name ()) {
             case "weather-clear-night-symbolic":
             case "weather-few-clouds-night-symbolic":
-                color_primary = "#2d2d2d";
-                color_secondary = "#fafafa";
-                graphic = "resource://com/fyralabs/Kairos/night.svg";
+                css_classes = {"night"};
                 break;
             case "weather-few-clouds-symbolic":
             case "weather-overcast-symbolic":
             case "weather-fog-symbolic":
-                color_primary = "#828282";
-                color_secondary = "#fafafa";
-                graphic = "resource://com/fyralabs/Kairos/cloudy.svg";
+                css_classes = {"cloudy"};
                 break;
             case "weather-showers-symbolic":
             case "weather-showers-scattered-symbolic":
             case "weather-storm-symbolic":
-                color_primary = "#828282";
-                color_secondary = "#fafafa";
-                graphic = "resource://com/fyralabs/Kairos/rain.svg";
+                css_classes = {"showers"};
                 break;
             case "weather-snow-symbolic":
-                color_primary = "#efefef";
-                color_secondary = "#2d2d2d";
-                graphic = "resource://com/fyralabs/Kairos/snow.svg";
-                break;
-            case "weather-clear-symbolic":
-                color_primary = "#268ef9";
-                color_secondary = "#fafafa";
-                graphic = "resource://com/fyralabs/Kairos/sunny.svg";
+                css_classes = {"snow"};
                 break;
             default:
-                color_primary = "#fafafa";
-                color_secondary = "#2d2d2d";
-                graphic = "";
+                css_classes = {"day"};
                 break;
         }
-
-        string css = """
-        @define-color color_primary %s;
-        @define-color color_secondary %s;
-
-        .window-bg {
-            background-image: url(%s), linear-gradient(0deg, @color_primary, mix(black, @color_primary, 0.88) 50%, @color_primary);
-            background-position: center;
-            background-repeat: repeat;
-            background-size: cover;
-            color: @color_secondary;
-            transition: all 600ms ease-in-out;
-        }
-        """.printf(color_primary,color_secondary, graphic);
-        provider.load_from_data (css.data);
-        this.get_style_context().add_provider_for_display (win.get_display (), provider, 999);
     }
 
     [GtkCallback]
