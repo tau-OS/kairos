@@ -53,7 +53,7 @@ public class Kairos.WeatherPage : He.Bin {
     [GtkChild]
     public unowned Gtk.DrawingArea da_sun;
     [GtkChild]
-    unowned He.DisclosureButton refresh_button;
+    unowned He.Button refresh_button;
 
     public WeatherPage (MainWindow win, GWeather.Location location) {
         Object (

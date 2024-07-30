@@ -92,7 +92,7 @@ public class Kairos.WorldLocationFinder : He.Window {
     [GtkChild]
     unowned Gtk.SearchEntry search_entry;
     [GtkChild]
-    unowned He.PillButton add_button;
+    unowned He.Button add_button;
 
     public WorldLocationFinder (Gtk.Window parent, MainWindow window) {
         Object (transient_for: parent);

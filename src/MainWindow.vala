@@ -24,7 +24,7 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
     public string? location { get; set; default = null; }
 
     public Gtk.Box main_box;
-    public He.DisclosureButton loc_delete_button;
+    public He.Button loc_delete_button;
     public Gtk.Image loc_geo_icon;
 
     public AddedLocationRow (Utils.ContentItem data) {
@@ -48,7 +48,7 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
 
         get_glocation ();
 
-        loc_delete_button = new He.DisclosureButton ("user-trash-symbolic");
+        loc_delete_button = new He.Button ("user-trash-symbolic", null);
         loc_delete_button.add_css_class ("block");
         loc_delete_button.add_css_class ("block-button");
         loc_delete_button.halign = Gtk.Align.END;

@@ -76,10 +76,11 @@
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="HeDisclosureButton" id="refresh_button">
+                                            <object class="HeButton" id="refresh_button">
                                                 <property name="halign">end</property>
                                                 <property name="valign">start</property>
                                                 <property name="margin-top">4</property>
+                                                <property name="is-disclosure">1</property>
                                                 <property name="icon">view-refresh-symbolic</property>
                                             </object>
                                         </child>
