@@ -99,11 +99,14 @@
                                     <class name="block"/>
                                 </style>
                                 <child>
-                                    <object class="HeMiniViewSwitcher">
+                                    <object class="HeViewSwitcher">
                                         <property name="stack">stack</property>
                                         <property name="margin-start">18</property>
                                         <property name="margin-end">18</property>
                                         <property name="margin-top">12</property>
+                                        <style>
+                                            <class name="mini"/>
+                                        </style>
                                     </object>
                                 </child>
                                 <child>

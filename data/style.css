@@ -78,9 +78,7 @@
 .disclosure-button {
   transition: all 600ms ease-in-out;
   border-radius: 999px;
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
+  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 .disclosure-button button {
   background: alpha(#fafafa, 0.02);
@@ -96,9 +94,7 @@
   background: alpha(#fafafa, 0.1);
   color: #fafafa;
   transition: all 600ms ease-in-out;
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
+  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
   border-radius: 6px;
 }
 .block-row row,
@@ -111,9 +107,7 @@
   background: alpha(#fafafa, 0.1);
   color: #fafafa;
   transition: all 600ms ease-in-out;
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
+  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 .block-row row:selected .block {
   background: alpha(#fafafa, 0.1);
@@ -123,10 +117,10 @@
   background: alpha(#fafafa, 0.08);
   color: #fafafa;
   border-radius: 999px;
+  min-width: 48px;
+  min-height: 48px;
   transition: all 600ms ease-in-out;
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
+  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 .block-sidebar {
   background: alpha(#000, 0.38);
@@ -149,16 +143,12 @@
   background: alpha(#fafafa, 0.1);
 
 }
-.side-window-bg .close image {
-  color: #fafafa;
-  background: alpha(#fafafa, 0.1);
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
-}
+.side-window-bg .close image,
 .side-window-bg .maximize image,
 .side-window-bg .minimize image {
   color: #fafafa;
+  background: alpha(#fafafa, 0.1);
+  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 
 .scrim {
@@ -195,63 +185,18 @@ link {
   background: alpha(#fafafa, 0.08);
   color: #fafafa;
   transition: all 600ms ease-in-out;
-  box-shadow: 0 2px 3px 2px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
 }
 .overlay-button:hover {
   background: alpha(#fafafa, 0.14);
-  box-shadow: 0 4px 6px 4px alpha(#2d2d2d, 0.10),
-              inset 0 1px 0 1px alpha(#fafafa, 0.30),
-              0 0 0 1px alpha(#2d2d2d, 0.20);
 }
 .overlay-button:active {
   background: alpha(#fafafa, 0.15);
 }
 
-
-/* 
- * Upstream when done
- */
-.mini-view-switcher {
-  margin: 0;
-  padding: 0;
-}
-
-.mini-view-switcher:disabled {
+.view-switcher.mini:disabled {
   color: alpha(#fafafa, 0.38);
 }
 
-.mini-view-switcher button.toggle {
-  padding: 0;
-  padding-bottom: 4px;
-  margin-bottom: 2px;
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
-}
-
-.mini-view-switcher button.toggle label {
-  font-weight: 400;
-  font-size: 12pt;
-  line-height: 14pt;
+.view-switcher.mini button.toggle label {
   color: #fafafa;
-}
-
-.mini-view-switcher button.toggle:hover {
-  background: transparent;
-  box-shadow: 0 2px 0 0 @accent_container_bg_color;
-}
-
-.mini-view-switcher button.toggle:checked {
-  background: transparent;
-  box-shadow: 0 2px 0 0 @accent_container_bg_color;
-}
-
-.mini-view-switcher button.toggle:checked label {
-  font-weight: 700;
-}
-
-.mini-view-switcher button.toggle:checked:hover {
-  background: transparent;
 }

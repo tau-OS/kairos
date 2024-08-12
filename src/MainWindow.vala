@@ -48,7 +48,9 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
 
         get_glocation ();
 
-        loc_delete_button = new He.Button ("user-trash-symbolic", null);
+        loc_delete_button = new He.Button ("user-trash-symbolic", "") {
+            is_iconic = true
+        };
         loc_delete_button.add_css_class ("block");
         loc_delete_button.add_css_class ("block-button");
         loc_delete_button.halign = Gtk.Align.END;
@@ -148,6 +150,10 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     public unowned Gtk.MenuButton menu_button;
     [GtkChild]
     public unowned He.OverlayButton add_button;
+    [GtkChild]
+    public unowned He.EmptyPage empty_page;
+    [GtkChild]
+    public unowned Gtk.Stack stack;
 
     public MainWindow (He.Application application) {
         Object (
@@ -180,6 +186,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         locations = new Utils.ContentStore ();
         locations.items_changed.connect ((position, removed, added) => {
             save ();
+            stack.set_visible_child_name ("weather");
         });
         load ();
         use_geolocation.begin ((obj, res) => {
@@ -197,6 +204,10 @@ public class Kairos.MainWindow : He.ApplicationWindow {
         set_size_request (360, 150);
 
         menu_button.get_popover ().has_arrow = false;
+
+        empty_page.action_button.clicked.connect (() => {
+            empty_button_clicked ();
+        });
     }
 
     [GtkCallback]
@@ -213,6 +224,13 @@ public class Kairos.MainWindow : He.ApplicationWindow {
                     carousel.remove (carousel.get_nth_page (car));
             }
             locations.remove (row.data);
+            if (locations.get_n_items () == 0) {
+                stack.set_visible_child_name ("empty");
+                remove_css_class ("side-window-bg");
+                menu_button.remove_css_class ("block-button");
+                listbox2.remove_css_class ("block-row");
+                sidebar.remove_css_class ("block-sidebar");
+            }
         });
     }
 
@@ -253,6 +271,20 @@ public class Kairos.MainWindow : He.ApplicationWindow {
 
     [GtkCallback]
     private void add_button_clicked () {
+        var dialog = new WorldLocationFinder ((Gtk.Window) get_root (), this);
+
+        dialog.location_added.connect (() => {
+                var loc = dialog.get_selected_location ();
+                if (loc != null)
+                    add_location ((GWeather.Location) loc);
+                    save ();
+
+                dialog.destroy ();
+            });
+        dialog.present ();
+    }
+
+    private void empty_button_clicked () {
         var dialog = new WorldLocationFinder ((Gtk.Window) get_root (), this);
 
         dialog.location_added.connect (() => {
