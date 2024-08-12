@@ -37,6 +37,7 @@
                         <property name="icon">location-services-disabled-symbolic</property>
                         <property name="title" translatable="true">No Locations</property>
                         <property name="description" translatable="true">Add a location to start checking weather.</property>
+                        <property name="button" translatable="true">Add Location</property>
                       </object>
                     </child>
                   </object>
