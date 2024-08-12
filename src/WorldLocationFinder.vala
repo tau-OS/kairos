@@ -154,6 +154,11 @@ public class Kairos.WorldLocationFinder : He.Window {
         close ();
     }
 
+    [GtkCallback]
+    private void cancel_button_clicked () {
+        close ();
+    }
+
     private void query_locations (GWeather.Location lc, string search) {
         if (locations.get_n_items () >= RESULT_COUNT_LIMIT) return;
 
