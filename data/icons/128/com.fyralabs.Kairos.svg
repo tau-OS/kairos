@@ -1,17 +1,15 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_312_42)">
 <g filter="url(#filter0_ii_312_42)">
-<rect width="128" height="128" rx="24" fill="url(#paint0_linear_312_42)"/>
+<rect x="12" y="12" width="104" height="104" rx="24" fill="url(#paint0_linear_312_42)"/>
 </g>
-<g style="mix-blend-mode:overlay" filter="url(#filter1_d_312_42)">
-<rect x="38" y="37" width="53" height="54" rx="26.5" fill="#FED97C"/>
+<g filter="url(#filter1_d_312_42)">
+<rect x="42.6875" y="33" width="51.3438" height="52.3125" rx="25.6719" fill="#FFBB00"/>
 </g>
 <g filter="url(#filter2_d_312_42)">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M49 59C37.402 59 28 68.402 28 80C28 91.3877 37.0642 100.658 48.3714 100.991C48.5246 100.997 48.6785 101 48.8332 101H48.9819C48.9879 101 48.994 101 49 101H49.6665C49.6725 101 49.6785 101 49.6846 101H80.6487C86.9179 101 92.0001 95.9178 92.0001 89.6486C92.0001 83.3795 86.9179 78.2973 80.6487 78.2973H70.5984C69.7317 67.4956 60.6912 59 49.6665 59H49Z" fill="#FAFAFA"/>
-</g>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M53.3438 54.3125C42.1082 54.3125 33 63.4207 33 74.6562C33 85.6876 41.7802 94.6683 52.7334 94.991C52.8822 94.997 53.0318 95 53.1821 95H84.0035C90.0767 95 95.0001 90.0766 95.0001 84.0034C95.0001 77.9301 90.0767 73.0068 84.0035 73.0068H74.2673C73.4276 62.5426 64.6696 54.3125 53.9894 54.3125H53.3438Z" fill="#FAFAFA"/>
 </g>
 <defs>
-<filter id="filter0_ii_312_42" x="0" y="0" width="128" height="129" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_ii_312_42" x="12" y="12" width="104" height="105" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
@@ -26,7 +24,7 @@
 <feColorMatrix type="matrix" values="0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.25 0"/>
 <feBlend mode="normal" in2="effect1_innerShadow_312_42" result="effect2_innerShadow_312_42"/>
 </filter>
-<filter id="filter1_d_312_42" x="37" y="36" width="59" height="60" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter1_d_312_42" x="41.6875" y="32" width="57.3438" height="58.3125" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="2" dy="2"/>
@@ -36,7 +34,7 @@
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_312_42"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_312_42" result="shape"/>
 </filter>
-<filter id="filter2_d_312_42" x="27" y="58" width="70.0001" height="48" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter2_d_312_42" x="32" y="53.3125" width="68.0001" height="46.6875" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dx="2" dy="2"/>
@@ -46,12 +44,9 @@
 <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_312_42"/>
 <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_312_42" result="shape"/>
 </filter>
-<linearGradient id="paint0_linear_312_42" x1="26" y1="1.13947e-06" x2="108.5" y2="128" gradientUnits="userSpaceOnUse">
-<stop stop-color="#BF8856"/>
-<stop offset="1" stop-color="#8D5F35"/>
+<linearGradient id="paint0_linear_312_42" x1="33.125" y1="12" x2="100.156" y2="116" gradientUnits="userSpaceOnUse">
+<stop stop-color="#268EF9"/>
+<stop offset="1" stop-color="#166EC9"/>
 </linearGradient>
-<clipPath id="clip0_312_42">
-<rect width="128" height="128" rx="24" fill="white"/>
-</clipPath>
 </defs>
 </svg>
