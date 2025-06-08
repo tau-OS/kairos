@@ -60,14 +60,14 @@
 }
 
 .temp-display {
-  font-size: 56px;
+  font-size: 42pt;
 }
 .temp-cond-display {
-  font-size: 20px;
+  font-size: 15pt;
 }
 .temp-feel-display {
   color: @accent_container_bg_color;
-  font-size: 20px;
+  font-size: 15pt;
 }
 .location-display {
   color: @accent_container_bg_color;

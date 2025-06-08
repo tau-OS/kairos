@@ -1,15 +1,7 @@
-project('com.fyralabs.Kairos', 'vala',
-    version: '0.1.0'
-)
+project('com.fyralabs.Kairos', 'vala', version: '0.1.0')
 
 gnome = import('gnome')
 i18n = import('i18n')
-
-add_project_arguments([
-		'--target-glib=2.68',
-	],
-	language: 'vala',
-)
 
 if get_option('development')
   app_id = 'com.fyralabs.Kairos'
@@ -31,14 +23,16 @@ config_h_dir = include_directories('.')
 
 add_project_arguments(
   '-include', 'config.h',
+  '-w',
   '-DGETTEXT_PACKAGE="@0@"'.format(app_id),
-  language: 'c'
+  language: 'c',
 )
 
 asresources = gnome.compile_resources(
-    'as-resources', 'data/com.fyralabs.Kairos.gresource.xml',
-    source_dir: 'data',
-    c_name: 'as'
+  'as-resources',
+  'data/com.fyralabs.Kairos.gresource.xml',
+  source_dir: 'data',
+  c_name: 'as',
 )
 
 sources = [
@@ -64,21 +58,25 @@ dependencies = [
   dependency('gobject-2.0'),
   dependency('gee-0.8'),
   dependency('libhelium-1'),
-  dependency('libbismuth-1', fallback: [ 'libbismuth', 'libbismuth_dep' ], version: '>=1.0.0'),
+  dependency(
+    'libbismuth-1',
+    fallback: ['libbismuth', 'libbismuth_dep'],
+    version: '>=1.0.0',
+  ),
   dependency('geocode-glib-2.0', version: '>=1.0'),
   gweather,
   math,
   dependency('libgeoclue-2.0', version: '>= 0.12.99'),
-  dependency('gmodule-2.0')
+  dependency('gmodule-2.0'),
 ]
 
 executable(
-    meson.project_name(),
-    sources,
-    asresources,
-    dependencies: dependencies,
-    vala_args: [meson.project_source_root() + '/src/Config.vapi'],
-    install : true
+  meson.project_name(),
+  sources,
+  asresources,
+  dependencies: dependencies,
+  vala_args: [meson.project_source_root() + '/src/Config.vapi'],
+  install: true,
 )
 
 subdir('data')
@@ -86,5 +84,5 @@ subdir('data')
 gnome.post_install(
   glib_compile_schemas: true,
   gtk_update_icon_cache: true,
-  update_desktop_database: true
+  update_desktop_database: true,
 )
