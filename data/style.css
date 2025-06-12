@@ -2,21 +2,19 @@
 *  Weather Condition Classes
 */
 .day {
-  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, #268ef9, mix(black, #268ef9, 0.88) 50%, #268ef9);
+  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, #cde6ff, mix(black, #cde6ff, 0.88) 50%, #cde6ff);
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #268ef9;
-  color: #ffffff;
+  background-color: #cde6ff;
   transition: all 600ms ease-in-out;
 }
 .night {
-  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, #2d2d2d, mix(black, #2d2d2d, 0.88) 50%, #2d2d2d);
+  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, #b7a8c4, mix(black, #b7a8c4, 0.88) 50%, #b7a8c4);
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #2d2d2d;
-  color: #ffffff;
+  background-color: #b7a8c4;
   transition: all 600ms ease-in-out;
 }
 .snow {
@@ -25,25 +23,22 @@
   background-repeat: repeat;
   background-size: cover;
   background-color: #efefef;
-  color: #ffffff;
   transition: all 600ms ease-in-out;
 }
 .cloudy {
-  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, #828282, mix(black, #828282, 0.88) 50%, #828282);
+  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, #e6ebec, mix(black, #e6ebec, 0.88) 50%, #e6ebec);
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #828282;
-  color: #ffffff;
+  background-color: #e6ebec;
   transition: all 600ms ease-in-out;
 }
 .showers {
-  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, #828282, mix(black, #828282, 0.88) 50%, #828282);
+  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, #e6ebec, mix(black, #e6ebec, 0.88) 50%, #e6ebec);
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #828282;
-  color: #ffffff;
+  background-color: #e6ebec;
   transition: all 600ms ease-in-out;
 }
 @keyframes rain {
@@ -66,137 +61,19 @@
   font-size: 15pt;
 }
 .temp-feel-display {
-  color: @accent_container_bg_color;
   font-size: 15pt;
-}
-.location-display {
-  color: @accent_container_bg_color;
-}
-.search {
-  border-radius: 999px;
-}
-.disclosure-button {
-  transition: all 600ms ease-in-out;
-  border-radius: 999px;
-  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
-}
-.disclosure-button button {
-  background: alpha(#fafafa, 0.02);
-}
-.disclosure-button button:hover {
-  background: alpha(#fafafa, 0.05);
-}
-.disclosure-button button:active {
-  background: alpha(#fafafa, 0.14);
-}
-
-.block {
-  background: alpha(#fafafa, 0.1);
-  color: #fafafa;
-  transition: all 600ms ease-in-out;
-  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
-  border-radius: 6px;
-}
-.block-row row,
-.block-row-child {
-  color: #fafafa;
-  background: none;
-  border-radius: 6px;
-}
-.block-row row:selected {
-  background: alpha(#fafafa, 0.1);
-  color: #fafafa;
-  transition: all 600ms ease-in-out;
-  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
-}
-.block-row row:selected .block {
-  background: alpha(#fafafa, 0.1);
-  box-shadow: none;
-}
-.block-button {
-  background: alpha(#fafafa, 0.08);
-  color: #fafafa;
-  border-radius: 999px;
-  min-width: 48px;
-  min-height: 48px;
-  transition: all 600ms ease-in-out;
-  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
-}
-.block-sidebar {
-  background: alpha(#000, 0.38);
-  color: #fafafa;
-  transition: all 600ms ease-in-out;
-}
-.block-button:hover {
-  background: alpha(#fafafa, 0.14);
-}
-.block-button:active {
-  background: alpha(#fafafa, 0.15);
-}
-.side-window-bg .flat-appbar {
-  box-shadow: none;
-}
-.side-window-bg .close image,
-.side-window-bg .image-text-button,
-.side-window-bg .disclosure-button {
-  color: #fafafa;
-  background: alpha(#fafafa, 0.1);
-
-}
-.side-window-bg .close image,
-.side-window-bg .maximize image,
-.side-window-bg .minimize image {
-  color: #fafafa;
-  background: alpha(#fafafa, 0.1);
-  box-shadow: 0 0 0 1px alpha(#2d2d2d, 0.10);
 }
 
 .scrim {
-  color: #fafafa;
   padding: 0;
   margin: 0;
 }
-.scrim headerbar {
-  color: #fafafa;
-}
-.scrim .close image,
-.scrim .image-text-button,
-.scrim .disclosure-button {
-  color: #fafafa;
-  background: alpha(#fafafa, 0.1);
-}
-.scrim .maximize image,
-.scrim .minimize image {
-  color: #fafafa;
+
+.block {
+  background: alpha(@surface_dim_bg_color, 0.32);
+  border-radius: 12px;
 }
 
-.divider {
-  margin: 0;
-  background: alpha(#fafafa, 0.38);
-}
-
-link {
-  color: @accent_container_bg_color;
-  text-decoration-line: none;
-  font-weight: 900;
-}
-
-.overlay-button {
-  background: alpha(#fafafa, 0.08);
-  color: #fafafa;
-  transition: all 600ms ease-in-out;
-}
-.overlay-button:hover {
-  background: alpha(#fafafa, 0.14);
-}
-.overlay-button:active {
-  background: alpha(#fafafa, 0.15);
-}
-
-.view-switcher.mini:disabled {
-  color: alpha(#fafafa, 0.38);
-}
-
-.view-switcher.mini button.toggle label {
-  color: #fafafa;
+.side-window-bg {
+  background: alpha(@shadow, 0.16);
 }

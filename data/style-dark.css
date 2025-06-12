@@ -1,16 +1,52 @@
-.temp-feel-display {
-  color: @accent_container_fg_color;
+.day {
+  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, #616f7c, mix(black, #616f7c, 0.88) 50%, #616f7c);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #616f7c;
+  transition: all 600ms ease-in-out;
 }
-.location-display {
-  color: @accent_container_fg_color;
+.night {
+  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, #3a3341, mix(black, #3a3341, 0.88) 50%, #3a3341);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #3a3341;
+  transition: all 600ms ease-in-out;
 }
-link {
-  color: @accent_container_fg_color;
+.snow {
+  background-image: url("resource://com/fyralabs/Kairos/snow.svg"), linear-gradient(0deg, #505050, mix(black, #505050, 0.88) 50%, #505050);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #505050;
+  transition: all 600ms ease-in-out;
 }
-.mini-view-switcher button.toggle:hover {
-  box-shadow: 0 2px 0 0 @accent_container_fg_color;
+.cloudy {
+  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, #535d5f, mix(black, #535d5f, 0.88) 50%, #535d5f);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #535d5f;
+  transition: all 600ms ease-in-out;
 }
-
-.mini-view-switcher button.toggle:checked {
-  box-shadow: 0 2px 0 0 @accent_container_fg_color;
+.showers {
+  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, #535d5f, mix(black, #535d5f, 0.88) 50%, #535d5f);
+  background-position: center;
+  background-repeat: repeat;
+  background-size: cover;
+  background-color: #535d5f;
+  transition: all 600ms ease-in-out;
+}
+@keyframes rain {
+  0% {
+     background-position:
+         0 0,
+         0 0;
+  }
+  100% {
+     background-position:
+         0 0,
+         400px 512px;
+  }
 }

@@ -8,12 +8,12 @@ public class Kairos.SunGraph : He.Bin {
         this.sunrise = sunrise;
         this.sunset = sunset;
 
-        weather_page.da_sun.content_height = 120;
-        weather_page.da_sun.content_width = 200;
+        weather_page.da_sun.content_height = 200;
+        weather_page.da_sun.content_width = 400;
         weather_page.da_sun.vexpand = true;
         weather_page.da_sun.halign = Gtk.Align.CENTER;
         weather_page.da_sun.valign = Gtk.Align.CENTER;
-        weather_page.da_sun.set_size_request (360, 180);
+        weather_page.da_sun.set_size_request (400, 200);
         weather_page.da_sun.set_draw_func (draw_stuff);
     }
 
@@ -24,9 +24,9 @@ public class Kairos.SunGraph : He.Bin {
     }
 
     private void draw (Cairo.Context cr, DateTime sunrise, DateTime sunset, DateTime current_time, int width, int height) {
-        int center_x = width / 4;
-        int center_y = (height + 18) / 4;
-        int radius = height / 4;
+        int center_x = width / 2;
+        int center_y = (height + 18) / 2;
+        int radius = height / 3;
 
         // Draw day arc (above horizon)
         double start_angle = Math.PI; // Left side
@@ -114,16 +114,16 @@ public class Kairos.SunGraph : He.Bin {
         // Draw sun/moon indicator
         cr.arc (dot_x, dot_y, 8, 0, 2 * Math.PI);
         if (is_daytime) {
-            cr.set_source_rgba (1, 1, 1, 0.80); // Sun color
+            cr.set_source_rgba (1, 1, 0, 0.80); // Sun color
         } else {
-            cr.set_source_rgba (1, 1, 1, 0.40); // Moon color
+            cr.set_source_rgba (0.8, 0.8, 0.8, 0.40); // Moon color
         }
         cr.fill ();
 
         // Draw time labels
         cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size (12);
-        cr.set_source_rgba (1, 1, 1, 0.95);
+        cr.set_source_rgba (0, 0, 0, 0.95);
 
         // Sunrise label (left side)
         string sunrise_text = sunrise.format ("%H:%M");

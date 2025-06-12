@@ -241,6 +241,8 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     public unowned He.EmptyPage empty_page;
     [GtkChild]
     public unowned Gtk.Stack stack;
+    [GtkChild]
+    public unowned Gtk.Overlay about_overlay;
 
     public MainWindow (He.Application application) {
         Object (
@@ -444,6 +446,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
                                         He.AboutWindow.Licenses.GPLV3,
                                         He.Colors.BROWN
         );
+        about_overlay.add_overlay (about);
         about.present ();
     }
 }

@@ -26,11 +26,11 @@ public class Kairos.WeatherGraph : He.Bin {
 
                         // Validate temperature is within reasonable range
                         if (use_fahrenheit) {
-                            if (temp >= -50 && temp <= 130) {     // Reasonable Fahrenheit range
+                            if (temp >= -50 && temp <= 130) { // Reasonable Fahrenheit range
                                 data += temp;
                             }
                         } else {
-                            if (temp >= -40 && temp <= 60) {     // Reasonable Celsius range
+                            if (temp >= -40 && temp <= 60) { // Reasonable Celsius range
                                 data += temp;
                             }
                         }
@@ -79,7 +79,7 @@ public class Kairos.WeatherGraph : He.Bin {
 
         cr.set_source_rgba (0, 0, 0, 0);
         cr.paint ();
-        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
+        cr.set_source_rgba (0, 0, 0, 0.95);
 
         int graph_height = height - margin;
 
@@ -112,15 +112,15 @@ public class Kairos.WeatherGraph : He.Bin {
         cr.close_path ();
 
         var gradient = new Cairo.Pattern.linear (0, 0, 0, height);
-        gradient.add_color_stop_rgba (0, 0.98, 0.98, 0.98, 0.5);
-        gradient.add_color_stop_rgba (1, 0.98, 0.98, 0.98, 0.0);
+        gradient.add_color_stop_rgba (0, 1, 1, 1, 0.5);
+        gradient.add_color_stop_rgba (1, 1, 1, 1, 0.0);
 
         cr.set_source (gradient);
         cr.fill_preserve ();
         cr.stroke ();
 
         // Draw line graph
-        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
+        cr.set_source_rgba (1, 1, 1, 0.95);
         cr.move_to (margin, height - (data[0] - scale_min) * y_scale);
 
         for (int i = 1; i < data.length; i++) {
@@ -133,7 +133,7 @@ public class Kairos.WeatherGraph : He.Bin {
         // Draw labels
         cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size (14);
-        cr.set_source_rgba (0.98, 0.98, 0.98, 1);
+        cr.set_source_rgba (1, 1, 1, 0.95);
 
         int max_index = get_max_index (data);
         int min_index = get_min_index (data);
@@ -162,7 +162,7 @@ public class Kairos.WeatherGraph : He.Bin {
         // Draw cursor line with bounds checking
         if (curr_time_x >= margin && curr_time_x <= width - margin) {
             cr.set_dash (new double[] { 4.0, 4.0 }, 2.0);
-            cr.set_source_rgba (0.78, 0.78, 0.78, 1);
+            cr.set_source_rgba (1, 1, 1, 0.85);
             cr.new_path ();
             cr.move_to (curr_time_x, 0);
             cr.line_to (curr_time_x, height);
@@ -174,8 +174,8 @@ public class Kairos.WeatherGraph : He.Bin {
             int data_index = (int) Math.floor ((curr_time_x - margin) / x_scale);
             if (data_index >= 0 && data_index < data.length) {
                 cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
-                cr.set_font_size (12);
-                cr.set_source_rgba (0.98, 0.98, 0.98, 1);
+                cr.set_font_size (14);
+                cr.set_source_rgba (1, 1, 1, 0.95);
 
                 string data_value = "%s%s".printf (data[data_index].to_string (), unit_suffix);
 
