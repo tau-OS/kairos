@@ -64,6 +64,7 @@ public class Kairos.AddedLocationRow : Gtk.ListBoxRow {
         loc_delete_button.add_css_class ("block");
         loc_delete_button.add_css_class ("block-button");
         loc_delete_button.halign = Gtk.Align.END;
+        loc_delete_button.valign = Gtk.Align.CENTER;
         loc_delete_button.hexpand = true;
 
         var loc_box = new Gtk.Box (Gtk.Orientation.VERTICAL, 0);
@@ -230,7 +231,7 @@ public class Kairos.MainWindow : He.ApplicationWindow {
     [GtkChild]
     public unowned Gtk.Box main_box;
     [GtkChild]
-    public unowned He.SideBar sidebar;
+    public unowned Gtk.Box sidebar;
     [GtkChild]
     public unowned He.AppBar tb;
     [GtkChild]

@@ -54,3 +54,11 @@
          400px 512px;
   }
 }
+
+.side-window-bg {
+  margin: 6px;
+  border-radius: 10px;
+  background: alpha(@shadow, 0.16);
+  color: white;
+  box-shadow: inset 0 0 0 1px alpha(white, 0.32), 0 2px 4px 0 alpha(black, 0.32);
+}

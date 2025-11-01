@@ -169,7 +169,7 @@ public class Kairos.WeatherGraph : He.Bin {
         }
 
         // Draw labels
-        cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
+        cr.select_font_face ("Natrium", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size (14);
         cr.set_source_rgba (text_r, text_g, text_b, text_a);
 
@@ -219,7 +219,7 @@ public class Kairos.WeatherGraph : He.Bin {
             }
             
             if (data_index >= 0 && data_index < data.length) {
-                cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
+                cr.select_font_face ("Natrium", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
                 cr.set_font_size (14);
                 cr.set_source_rgba (text_r, text_g, text_b, text_a);
 

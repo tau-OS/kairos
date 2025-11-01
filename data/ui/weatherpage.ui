@@ -80,7 +80,7 @@
                                                 <property name="halign">end</property>
                                                 <property name="valign">start</property>
                                                 <property name="margin-top">4</property>
-                                                <property name="is-disclosure">1</property>
+                                                <property name="is-iconic">1</property>
                                                 <property name="icon">view-refresh-symbolic</property>
                                             </object>
                                         </child>
