@@ -2,44 +2,45 @@
 *  Weather Condition Classes
 */
 .day {
-  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, #cde6ff, mix(black, #cde6ff, 0.88) 50%, #cde6ff);
+  background-image: url("resource://com/fyralabs/Kairos/sunny.svg"), linear-gradient(0deg, mix(@accent_bg_color, white, 0.15), mix(black, mix(@accent_bg_color, white, 0.15), 0.88) 50%, mix(@accent_bg_color, white, 0.15));
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #cde6ff;
-  transition: all 600ms ease-in-out;
+  background-color: mix(@accent_bg_color, white, 0.15);
+  transition: background-color 600ms ease-in-out, background-image 600ms ease-in-out;
 }
 .night {
-  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, #b7a8c4, mix(black, #b7a8c4, 0.88) 50%, #b7a8c4);
+  background-image: url("resource://com/fyralabs/Kairos/night.svg"), linear-gradient(0deg, mix(@accent_bg_color, black, 0.25), mix(black, mix(@accent_bg_color, black, 0.25), 0.88) 50%, mix(@accent_bg_color, black, 0.25));
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #b7a8c4;
-  transition: all 600ms ease-in-out;
+  background-color: mix(@accent_bg_color, black, 0.25);
+  transition: background-color 600ms ease-in-out, background-image 600ms ease-in-out;
 }
 .snow {
-  background-image: url("resource://com/fyralabs/Kairos/snow.svg"), linear-gradient(0deg, #efefef, mix(black, #efefef, 0.88) 50%, #efefef);
+  background-image: url("resource://com/fyralabs/Kairos/snow.svg"), linear-gradient(0deg, mix(@accent_bg_color, white, 0.05), mix(black, mix(@accent_bg_color, white, 0.05), 0.88) 50%, mix(@accent_bg_color, white, 0.05));
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #efefef;
-  transition: all 600ms ease-in-out;
+  background-color: mix(@accent_bg_color, white, 0.05);
+  transition: background-color 600ms ease-in-out, background-image 600ms ease-in-out;
 }
 .cloudy {
-  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, #e6ebec, mix(black, #e6ebec, 0.88) 50%, #e6ebec);
+  background-image: url("resource://com/fyralabs/Kairos/cloudy.svg"), linear-gradient(0deg, mix(@accent_bg_color, @window_bg_color, 0.20), mix(black, mix(@accent_bg_color, @window_bg_color, 0.20), 0.88) 50%, mix(@accent_bg_color, @window_bg_color, 0.20));
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #e6ebec;
-  transition: all 600ms ease-in-out;
+  background-color: mix(@accent_bg_color, @window_bg_color, 0.20);
+  transition: background-color 600ms ease-in-out, background-image 600ms ease-in-out;
 }
 .showers {
-  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, #e6ebec, mix(black, #e6ebec, 0.88) 50%, #e6ebec);
+  background-image: url("resource://com/fyralabs/Kairos/rain.svg"), linear-gradient(0deg, mix(@accent_bg_color, @window_bg_color, 0.15), mix(black, mix(@accent_bg_color, @window_bg_color, 0.15), 0.88) 50%, mix(@accent_bg_color, @window_bg_color, 0.15));
   background-position: center;
   background-repeat: repeat;
   background-size: cover;
-  background-color: #e6ebec;
-  transition: all 600ms ease-in-out;
+  background-color: mix(@accent_bg_color, @window_bg_color, 0.15);
+  transition: background-color 600ms ease-in-out, background-image 600ms ease-in-out;
+  animation: rain 1s linear infinite;
 }
 @keyframes rain {
   0% {
@@ -70,8 +71,9 @@
 }
 
 .block {
-  background: alpha(@surface_dim_bg_color, 0.32);
-  border-radius: 12px;
+  background: alpha(@surface_dim_bg_color, 0.36);
+  border-radius: 16px;
+  padding: 4px;
 }
 
 .side-window-bg {
