@@ -55,6 +55,15 @@
   }
 }
 
+/* White text for readability on colored weather backgrounds */
+.day *,
+.night *,
+.cloudy *,
+.snow *,
+.showers * {
+  color: white;
+}
+
 .temp-display {
   font-size: 42pt;
 }
@@ -78,4 +87,5 @@
 
 .side-window-bg {
   background: alpha(@shadow, 0.16);
+  color: white;
 }

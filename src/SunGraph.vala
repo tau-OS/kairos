@@ -120,10 +120,10 @@ public class Kairos.SunGraph : He.Bin {
         }
         cr.fill ();
 
-        // Draw time labels
+        // Draw time labels - always use white since drawn on colored weather backgrounds
         cr.select_font_face ("Geist", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
         cr.set_font_size (12);
-        cr.set_source_rgba (0, 0, 0, 0.95);
+        cr.set_source_rgba (1, 1, 1, 0.95); // White for contrast on colored backgrounds
 
         // Sunrise label (left side)
         string sunrise_text = sunrise.format ("%H:%M");
