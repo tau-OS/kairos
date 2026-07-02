@@ -1,3 +1,7 @@
+# Kairos is Deprecated
+
+Try out any of [these great apps](https://flathub.org/en/apps/search?q=weather)!
+
 <img align="left" style="vertical-align: middle" width="120" height="120" src="data/icons/128/com.fyralabs.Kairos.svg">
 
 # Kairos
